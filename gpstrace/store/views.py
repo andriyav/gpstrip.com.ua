@@ -6,4 +6,5 @@ from .models import Item
 
 class HomeView(ListView):
     model = Item
-    template_name = "store/index.html"
+    template_name = "store/store.html"
+
