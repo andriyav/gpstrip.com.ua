@@ -21,9 +21,9 @@ class Item(models.Model):
         self.discount_price = self.price - (self.price * (self.discount/100))
         return self.discount_price
 
-    def get_top_sales(self):
-        self.top_sales = Item.objects.filter(label='Популярне')
-        return self.top_sales
+    # def get_top_sales(self):
+    #     self.top_sales = Item.objects.filter(label='Популярне')
+    #     return self.top_sales
 
 
 
