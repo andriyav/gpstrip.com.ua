@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 LABEL_CHOICES = (
     ('Новика', 'Новинка'),
     ('Популярне', 'Популярне'),
@@ -7,16 +9,20 @@ LABEL_CHOICES = (
 
 
 class Item(models.Model):
-    title = models.CharField(max_length=100, null=True)
-    price = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
-    discount = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
-    description = models.TextField(max_length=1000, null=True, blank=True)
-    label = models.CharField(choices=LABEL_CHOICES, max_length=20, null=True, blank=True)
+    title = models.CharField(max_length=100, null=True, verbose_name='Назва товару')
+    slug = models.SlugField(max_length=100, unique=True, db_index=True, null=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='Ціна товару')
+    discount = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='Знижка у %')
+    description = models.TextField(max_length=1000, null=True, blank=True, verbose_name='Опис')
+    label = models.CharField(choices=LABEL_CHOICES, max_length=20, null=True, blank=True, verbose_name='Акційна мітка')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True )
 
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('itemvie', kwargs={'item_slug': self.slug})
 
     def discount_price_calculation(self):
         self.discount_price = self.price - (self.price * (self.discount/100))
