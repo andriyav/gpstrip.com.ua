@@ -171,7 +171,7 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="#">Home</a></li>
+						<li class="active"><a href="{% url 'home' %}">Home</a></li>
 						<li><a href="#">Hot Deals</a></li>
 						<li><a href="#">Categories</a></li>
 						<li><a href="#">Laptops</a></li>
@@ -277,7 +277,7 @@
 								<h3 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h3>
 								<span class="product-available">In Stock</span>
 							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+							<p>{{item_view.description}}</p>
 
 							<div class="product-options">
 								<label>
@@ -346,7 +346,7 @@
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-12">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+											<p></p>
 										</div>
 									</div>
 								</div>
@@ -356,7 +356,7 @@
 								<div id="tab2" class="tab-pane fade in">
 									<div class="row">
 										<div class="col-md-12">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+											<p>{{items.description}}ececeefrfrefrrrrrrrrrrrrrrrrrrr</p>
 										</div>
 									</div>
 								</div>

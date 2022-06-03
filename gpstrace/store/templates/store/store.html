@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load store_tags %}
 {% block content %}
 
 <html lang="en">
@@ -38,6 +39,8 @@
 	<body>
 		<!-- HEADER -->
 		<header>
+			{% get_categories  %}
+
 			<!-- TOP HEADER -->
 			<div id="top-header">
 				<div class="container">
@@ -219,60 +222,18 @@
 						<div class="aside">
 							<h3 class="aside-title">Categories</h3>
 							<div class="checkbox-filter">
-
+	                          {% for k in getcats %}
 								<div class="input-checkbox">
 									<input type="checkbox" id="category-1">
 									<label for="category-1">
 										<span></span>
-										Laptops
+										{{k.name}}
 										<small>(120)</small>
 									</label>
 								</div>
+								{% endfor %}
 
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-2">
-									<label for="category-2">
-										<span></span>
-										Smartphones
-										<small>(740)</small>
-									</label>
-								</div>
 
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-3">
-									<label for="category-3">
-										<span></span>
-										Cameras
-										<small>(1450)</small>
-									</label>
-								</div>
-
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-4">
-									<label for="category-4">
-										<span></span>
-										Accessories
-										<small>(578)</small>
-									</label>
-								</div>
-
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-5">
-									<label for="category-5">
-										<span></span>
-										Laptops
-										<small>(120)</small>
-									</label>
-								</div>
-
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-6">
-									<label for="category-6">
-										<span></span>
-										Smartphones
-										<small>(740)</small>
-									</label>
-								</div>title
 							</div>
 						</div>
 						<!-- /aside Widget -->
@@ -365,7 +326,7 @@
 								</div>
 								<div class="product-body" >
 									<p class="product-category">Category</p>
-									<h3 class="product-name"><a href="{{itemvie}}">{{item}}</a></h3>
+									<h3 class="product-name"><a href="{{item.get_absolute_url}}">{{item}}</a></h3>
 									{% if item.discount %}
 										<h4 class="product-price">{{item.discount_price_calculation | floatformat:2}} грн
 											<del class="product-old-price">{{item.price}} грн	</del></h4>
@@ -427,7 +388,7 @@
 									</div>
 									<div class="product-body">
 										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href='{{item.get_absolute_url}}'>{{item.title}}</a></h3>
+										<h3 class="product-name"><a href='#'>{{item.title}}</a></h3>
 
 										{% if item.discount %}
 										<h4 class="product-price">{{item.discount_price_calculation | floatformat:2}} грн <del class="product-old-price">{{item.price}} грн	</del></h4>

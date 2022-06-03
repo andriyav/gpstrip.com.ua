@@ -13,7 +13,7 @@ class Item(models.Model):
     slug = models.SlugField(max_length=100, unique=True, db_index=True, null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='Ціна товару')
     discount = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='Знижка у %')
-    description = models.TextField(max_length=1000, null=True, blank=True, verbose_name='Опис')
+    description = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Опис')
     label = models.CharField(choices=LABEL_CHOICES, max_length=20, null=True, blank=True, verbose_name='Акційна мітка')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True )
 
@@ -22,7 +22,7 @@ class Item(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('itemvie', kwargs={'item_slug': self.slug})
+        return reverse('itemv', kwargs={'item_slug': self.slug})
 
     def discount_price_calculation(self):
         self.discount_price = self.price - (self.price * (self.discount/100))
@@ -30,7 +30,8 @@ class Item(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
+    name = models.CharField(max_length=100, db_index=True, verbose_name = 'Категорія')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', null=True)
 
     def __str__(self):
         return self.name
