@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
     {% for c in cats %}
-    {{ c.name }}
-
+	<div class="input-checkbox">
+		<lp><a href="{{c.get_absolute_url}}">{{c.name}}</a></lp>
+		<small>(120)</small>
+		</label>
+	</div>
     {% endfor %}
-</head>
-<body>
-
-</body>
-</html>

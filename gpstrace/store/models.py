@@ -11,6 +11,7 @@ LABEL_CHOICES = (
 class Item(models.Model):
     title = models.CharField(max_length=100, null=True, verbose_name='Назва товару')
     slug = models.SlugField(max_length=100, unique=True, db_index=True, null=True)
+    photo = models.ImageField(upload_to='img', null=True)
     price = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='Ціна товару')
     discount = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='Знижка у %')
     description = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Опис')
@@ -36,7 +37,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_slug': self.slug})
     # def get_top_sales(self):
     #     self.top_sales = Item.objects.filter(label='Популярне')
     #     return self.top_sales

@@ -39,7 +39,7 @@
 	<body>
 		<!-- HEADER -->
 		<header>
-			{% get_categories  %}
+
 
 			<!-- TOP HEADER -->
 			<div id="top-header">
@@ -222,18 +222,7 @@
 						<div class="aside">
 							<h3 class="aside-title">Categories</h3>
 							<div class="checkbox-filter">
-	                          {% for k in getcats %}
-								<div class="input-checkbox">
-									<input type="checkbox" id="category-1">
-									<label for="category-1">
-										<span></span>
-										{{k.name}}
-										<small>(120)</small>
-									</label>
-								</div>
-								{% endfor %}
-
-
+                               {% get_categories  %}
 							</div>
 						</div>
 						<!-- /aside Widget -->
@@ -322,7 +311,7 @@
 
 							<div class="product-widget">
 								<div class="product-img">
-									<img src="{% static './img/product01.png' %}" alt="">
+									<img src="{{ item.photo.url }}" alt="">
 								</div>
 								<div class="product-body" >
 									<p class="product-category">Category</p>
@@ -376,7 +365,9 @@
 							<div class="col-md-4 col-xs-6">
 								<div class="product">
 									<div class="product-img">
-										<img src="{% static './img/product01.png' %}" alt="">
+										{% if item.photo %}
+										<img src="{{ item.photo.url }}" alt="">
+										{% endif %}
 																				<div class="product-label">
 											{% if item.discount %}
 											<span class="sale">Знижка {{item.discount | floatformat:0}}%</span>
@@ -387,8 +378,8 @@
 										</div>
 									</div>
 									<div class="product-body">
-										<p class="product-category">Category</p>
-										<h3 class="product-name"><a href='#'>{{item.title}}</a></h3>
+										<p class="product-category">{{item.cat}}</p>
+										<h3 class="product-name"><a href='{{item.get_absolute_url}}'>{{item.title}}</a></h3>
 
 										{% if item.discount %}
 										<h4 class="product-price">{{item.discount_price_calculation | floatformat:2}} грн <del class="product-old-price">{{item.price}} грн	</del></h4>
