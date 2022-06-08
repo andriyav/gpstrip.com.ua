@@ -218,8 +218,10 @@
 					<!-- Product main img -->
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
+
+
 							<div class="product-preview">
-								<img src="{{ item_view.photo.url }}" alt="">
+								<img src="{{ image.gallery.url }}" alt="">
 							</div>
 
 							<div class="product-preview">
@@ -240,21 +242,24 @@
 					<!-- Product thumb imgs -->
 					<div class="col-md-2  col-md-pull-5">
 						<div id="product-imgs">
-							<div class="product-preview">
-								<img src="{% static './img/product01.png' %}" alt="">
-							</div>
 
+							{% for image in object.images.all %}
 							<div class="product-preview">
-								<img src="{% static './img/product03.png' %}" alt="">
+								<img src="{{image.image.url}}" alt="">
 							</div>
+                              {% endfor %}
+<!--							<div class="product-preview">-->
+<!--								<img src="{% static './img/product03.png' %}" alt="">-->
+<!--							</div>-->
 
-							<div class="product-preview">
-								<img src="{% static './img/product06.png' %}" alt="">
-							</div>
+<!--							<div class="product-preview">-->
+<!--								<img src="{% static './img/product06.png' %}" alt="">-->
+<!--							</div>-->
 
-							<div class="product-preview">
-								<img src="{% static './img/product08.png' %}" alt="">
-							</div>
+<!--							<div class="product-preview">-->
+<!--								<img src="{% static './img/product08.png' %}" alt="">-->
+<!--							</div>-->
+
 						</div>
 					</div>
 					<!-- /Product thumb imgs -->

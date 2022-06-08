@@ -29,6 +29,10 @@ class Item(models.Model):
         self.discount_price = self.price - (self.price * (self.discount/100))
         return self.discount_price
 
+class Gallery(models.Model):
+    image = models.ImageField(upload_to='gallery')
+    Item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='images')
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name = 'Категорія')
