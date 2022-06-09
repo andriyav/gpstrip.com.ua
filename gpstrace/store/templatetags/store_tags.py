@@ -1,5 +1,5 @@
 from django import template
-from ..models import Category
+from ..models import Category, Item
 
 register = template.Library()
 
@@ -17,4 +17,8 @@ def get_categories():
     return {'cats': cats}
 
 
+@register.inclusion_tag('store/list_related.html')
+def get_items():
+    related = Item.objects.filter(id__lte = 4)
+    return {'related': related}
 

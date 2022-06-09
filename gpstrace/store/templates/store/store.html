@@ -222,7 +222,7 @@
 						<div class="aside">
 							<h3 class="aside-title">Categories</h3>
 							<div class="checkbox-filter">
-                               {% get_categories  %}
+                               {% get_categories %}
 							</div>
 						</div>
 						<!-- /aside Widget -->
@@ -314,7 +314,7 @@
 									<img src="{{ item.photo.url }}" alt="">
 								</div>
 								<div class="product-body" >
-									<p class="product-category">Category</p>
+									<p class="product-category">{{item.cat}}</p>
 									<h3 class="product-name"><a href="{{item.get_absolute_url}}">{{item}}</a></h3>
 									{% if item.discount %}
 										<h4 class="product-price">{{item.discount_price_calculation | floatformat:2}} грн
