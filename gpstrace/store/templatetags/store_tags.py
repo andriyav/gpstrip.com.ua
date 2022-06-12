@@ -3,12 +3,12 @@ from ..models import Category, Item
 
 register = template.Library()
 
-@register.simple_tag(name='getcats')
-def get_categories(filter=None):
+@register.simple_tag()
+def get_labeled(filter='Популярне'):
     if not filter:
-        return Category.objects.all()
+        return Item.objects.all()
     else:
-        return Category.objects.filter(pk=filter)
+        return Item.objects.filter(label=filter)
 
 
 @register.inclusion_tag('store/list_categories.html')

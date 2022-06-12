@@ -1,10 +1,9 @@
 from django.db import models
 from django.urls import reverse
-from selenium
 
 LABEL_CHOICES = (
     ('Новика', 'Новинка'),
-    ('Популярне', 'Популярне'),
+    ('popular', 'Популярне'),
 )
 
 
