@@ -3,7 +3,7 @@ from django.urls import reverse
 
 LABEL_CHOICES = (
     ('Новика', 'Новинка'),
-    ('popular', 'Популярне'),
+    ('Популярне', 'Популярне'),
 )
 
 

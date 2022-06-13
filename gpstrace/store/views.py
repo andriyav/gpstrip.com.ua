@@ -9,16 +9,19 @@ class HomeView(ListView):
     template_name = "store/store.html"
     context_object_name = 'items'
 
-    # @staticmethod
-    # def pageobjects(request):
-    #     return request.GET['dropdown']
-
     def get_queryset(self):
-        filter = self.request.GET['dropdown']
-        if filter != 'popular':
-            return Item.objects.all()
+        if 'dropdown' in self.request.GET:
+            filter = self.request.GET['dropdown']
         else:
-            return Item.objects.filter(label=filter)
+            filter = False
+        if filter == 'popular':
+            return Item.objects.order_by('-label')
+        if filter == 'price':
+            return Item.objects.order_by('price')
+        if filter == 'discount':
+            return Item.objects.order_by('-discount')
+        else:
+            return Item.objects.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
