@@ -7,7 +7,5 @@ from . views import *
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('item/<slug:item_slug>/', ShowItem.as_view(), name='itemv'),
-    path('category/<slug:cat_slug>/', CategoryTracker.as_view(), name='category'),
-    path('blank', BlankView.as_view(), name='home')
-
+    path('category/<slug:cat_slug>/', CategoryTracker.as_view(), name='category')
     ]
