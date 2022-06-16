@@ -44,7 +44,7 @@ class ShowItem(DetailView):
 
 class CategoryTracker(ListView):
     model = Item
-    template_name = 'store/store.html'
+    template_name = 'store/items.html'
     context_object_name = 'items'
     allow_empty = False
 

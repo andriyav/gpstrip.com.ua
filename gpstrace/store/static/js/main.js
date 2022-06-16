@@ -143,26 +143,47 @@
 		} else if ( elem.hasClass('price-max')) {
 			console.log('max')
 			priceSlider.noUiSlider.set([null, value]);
+
 		}
 	}
 
 	// Price Slider
-	var priceSlider = document.getElementById('price-slider');
+	const priceSlider = document.getElementById('price-slider');
+    console.log(priceSlider)
 	if (priceSlider) {
 		noUiSlider.create(priceSlider, {
-			start: [1, 3999],
+			start: [0, 3999],
 			connect: true,
 			step: 1,
 			range: {
-				'min': 1,
+				'min': 0,
 				'max': 3999
 			}
 		});
-
-		priceSlider.noUiSlider.on('update', function( values, handle ) {
+		priceSlider.noUiSlider.on('change', function( values, handle ) {
 			var value = values[handle];
-			handle ? priceInputMax.value = value : priceInputMin.value = value
+			handle ? priceInputMax.value = value : priceInputMin.value = value;
+			goSearch()
+
+
 		});
+		  function goSearch() {
+        let winHref = window.location.href.split('?')[0];
+        winHref += `?pricerange=${priceSlider.noUiSlider.get()}`;
+
+        window.location.href = winHref;
+    }
+
+
+	const params = new URLSearchParams(window.location.search);
+
+    const priceRange = params.get("pricerange");
+	    if (priceRange) {
+        priceSlider.noUiSlider.set(priceRange.split(','));
+    }
+
+
 	}
+
 
 })(jQuery);
