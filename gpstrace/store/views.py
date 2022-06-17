@@ -12,10 +12,13 @@ class HomeView(ListView):
     def get_queryset(self):
         if 'dropdown' in self.request.GET:
             filter = self.request.GET['dropdown']
+
         else:
-            if 'max' in self.request.GET and 'min' in self.request.GET:
-                price_max = self.request.GET['max']
-                price_min = self.request.GET['min']
+            if 'pricerange' in self.request.GET:
+                price_range = self.request.GET['pricerange']
+                f = price_range.split(',')
+                price_min = float(f[0])
+                price_max = float(f[1])
                 return Item.objects.filter(price__lte=price_max, price__gte=price_min)
             else:
                 return Item.objects.all()
@@ -61,4 +64,3 @@ class ShowCategory(ListView):
     model = Category
     template_name = 'store/store.html'
     context_object_name = 'cats'
-

@@ -5,7 +5,13 @@ LABEL_CHOICES = (
     ('Новика', 'Новинка'),
     ('Популярне', 'Популярне'),
 )
+BATTERY_CHOICES = (
+    ('1000 мАгод', '1000 мАгод'),
+    ('5000 мАгод', '5000 мАгод'),
+    ('10000 мАгод', '10000 мАгод'),
+    ('20000 мАгод', '20000 мАгод'),
 
+)
 
 
 class Item(models.Model):
@@ -16,8 +22,9 @@ class Item(models.Model):
     discount = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='Знижка у %')
     description = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Опис')
     label = models.CharField(choices=LABEL_CHOICES, max_length=20, null=True, blank=True, verbose_name='Акційна мітка')
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True )
-
+    battery = models.CharField(choices=BATTERY_CHOICES, max_length=20, null=True, blank=True,
+                               verbose_name='Ємність акумуляторної батареї')
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.title
@@ -26,8 +33,9 @@ class Item(models.Model):
         return reverse('itemv', kwargs={'item_slug': self.slug})
 
     def discount_price_calculation(self):
-        self.discount_price = self.price - (self.price * (self.discount/100))
+        self.discount_price = self.price - (self.price * (self.discount / 100))
         return self.discount_price
+
 
 class Gallery(models.Model):
     image = models.ImageField(upload_to='gallery')
@@ -35,7 +43,7 @@ class Gallery(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True, verbose_name = 'Категорія')
+    name = models.CharField(max_length=100, db_index=True, verbose_name='Категорія')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', null=True)
 
     def __str__(self):
@@ -43,9 +51,3 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
-    # def get_top_sales(self):
-    #     self.top_sales = Item.objects.filter(label='Популярне')
-    #     return self.top_sales
-
-
-
