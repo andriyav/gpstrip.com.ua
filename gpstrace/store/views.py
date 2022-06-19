@@ -10,8 +10,14 @@ class HomeView(ListView):
     context_object_name = 'items'
 
     def get_queryset(self):
-        if 'dropdown' in self.request.GET:
-            filter = self.request.GET['dropdown']
+        if '1000' in self.request.GET:
+            return Item.objects.filter(battery='1000 мАгод')
+        elif '5000' in self.request.GET:
+            return Item.objects.filter(battery='5000 мАгод')
+        elif '10000' in self.request.GET:
+            return Item.objects.filter(battery='10000 мАгод')
+        elif '20000' in self.request.GET:
+            return Item.objects.filter(battery='20000 мАгод')
 
         else:
             if 'pricerange' in self.request.GET:
@@ -20,17 +26,16 @@ class HomeView(ListView):
                 price_min = float(f[0])
                 price_max = float(f[1])
                 return Item.objects.filter(price__lte=price_max, price__gte=price_min)
-            else:
-                return Item.objects.all()
-
-        if filter == 'popular':
-            return Item.objects.order_by('-label')
-        if filter == 'price':
-            return Item.objects.order_by('price')
-        if filter == 'discount':
-            return Item.objects.order_by('-discount')
+        if 'dropdown' in self.request.GET:
+            filter = self.request.GET['dropdown']
         else:
             return Item.objects.all()
+        if filter == 'popular':
+            return Item.objects.order_by('-label')
+        elif filter == 'price':
+            return Item.objects.order_by('price')
+        elif filter == 'discount':
+            return Item.objects.order_by('-discount')
 
 
 class ShowItem(DetailView):

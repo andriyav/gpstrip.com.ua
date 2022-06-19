@@ -227,67 +227,75 @@
                 </div>
                 <!-- /aside Widget -->
                 <!-- aside Widget -->
-                <form action="#"  id="form">
+                <form action="#" id="form">
 
-                <div class="aside">
-                    <h3 class="aside-title">Price</h3>
-                    <div class="price-filter" >
-                        <div id="price-slider" ></div>
-                        <div class="input-number price-min">
-                            <input id="price-min" type="number" name="min" >
-                            <span class="qty-up">+</span>
-                            <span class="qty-down">-</span>
-                        </div>
-                        <span>-</span>
-                        <div class="input-number price-max">
-                            <input id="price-max" type="number" name="max" >
-                            <span class="qty-up">+</span>
-                            <span class="qty-down">-</span>
+                    <div class="aside">
+                        <h3 class="aside-title">Price</h3>
+                        <div class="price-filter">
+                            <div id="price-slider"></div>
+                            <div class="input-number price-min">
+                                <input id="price-min" type="number" name="min">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                            <span>-</span>
+                            <div class="input-number price-max">
+                                <input id="price-max" type="number" name="max">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                 </form>
+                </form>
                 <!-- /aside Widget -->
                 <!-- aside Widget -->
-                <div class="aside">
-                    <h3 class="aside-title">Батарея</h3>
-                    <div class="checkbox-filter">
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="brand-1">
-                            <label for="brand-1">
-                                <span></span>
-                                1000 мАгод
-                                <small>(578)</small>
-                            </label>
-                        </div>
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="brand-2">
-                            <label for="brand-2">
-                                <span></span>
-                                5000 мАгод
-                                <small>(125)</small>
-                            </label>
-                        </div>
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="brand-3">
-                            <label for="brand-3">
-                                <span></span>
-                                10000 мАгод
-                                <small>(755)</small>
-                            </label>
-                        </div>
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="brand-4">
-                            <label for="brand-4">
-                                <span></span>
-                                20000 мАгод
-                                <small>(578)</small>
-                            </label>
-                        </div>
+                <form action="">
+                    <div class="aside">
+                        <h3 class="aside-title">Батарея</h3>
+                        <div class="checkbox-filter">
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="brand-1" name = '1000' onchange="javascript:
+									if(this.value != '0') this.form.submit();">
+                                <label for="brand-1">
+                                    <span></span>
+                                    1000 мАгод
+                                    <small>(578)</small>
+                                </label>
+                            </div>
+                            <div class="input-checkbox">
 
+                                <input type="checkbox" id="brand-2" name='5000' onchange="javascript:
+									if(this.value != '0') this.form.submit();">
+
+                                <label for="brand-2">
+                                    <span></span>
+                                    5000 мАгод
+                                    <small>(125)</small>
+                                </label>
+                            </div>
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="brand-3" name='10000' onchange="javascript:
+									if(this.value != '0') this.form.submit();">
+                                <label for="brand-3">
+                                    <span></span>
+                                    10000 мАгод
+                                    <small>(755)</small>
+                                </label>
+                            </div>
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="brand-4" name='20000' onchange="javascript:
+									if(this.value != '0') this.form.submit();">
+                                <label for="brand-4">
+                                    <span></span>
+                                    20000 мАгод
+                                    <small>(578)</small>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                </form>
                 <!-- /aside Widget -->
 
                 <!-- aside Widget -->
@@ -354,58 +362,58 @@
                 <!-- store products -->
                 {% block content %}
                 {% endblock %}
-<!--                <div class="row">-->
-<!--                    &lt;!&ndash; product &ndash;&gt;-->
-<!--                    {% for item in items %}-->
-<!--                    <div class="col-md-4 col-xs-6">-->
-<!--                        <a href="{{item.get_absolute_url}}">-->
-<!--                            <div class="product">-->
-<!--                                <div class="product-img">-->
-<!--                                    {% if item.photo %}-->
-<!--                                    <img src="{{ item.photo.url }}" alt="">-->
-<!--                                    {% endif %}-->
-<!--                                    <div class="product-label">-->
-<!--                                        {% if item.discount %}-->
-<!--                                        <span class="sale">Знижка {{item.discount | floatformat:0}}%</span>-->
-<!--                                        {% endif %}-->
-<!--                                        {% if item.label %}-->
-<!--                                        <span class="new">{{item.label}}</span>-->
-<!--                                        {% endif %}-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="product-body">-->
-<!--                                    <p class="product-category">{{item.cat}}</p>-->
-<!--                                    <h3 class="product-name"><a href='{{item.get_absolute_url}}'>{{item.title}}</a></h3>-->
-<!--                                    {% if item.discount %}-->
-<!--                                    <h4 class="product-price">{{item.discount_price_calculation | floatformat:2}} грн-->
-<!--                                        <del class="product-old-price">{{item.price}} грн</del>-->
-<!--                                    </h4>-->
-<!--                                    {% else %}-->
-<!--                                    <h4 class="product-price">{{item.price}} грн </h4>-->
-<!--                                    {% endif %}-->
-<!--                                    &lt;!&ndash;										<div class="product-rating">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;										</div>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;										<div class="product-btns">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;										</div>&ndash;&gt;-->
-<!--                                </div>-->
-<!--                                <div class="add-to-cart">-->
-<!--                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart-->
-<!--                                    </button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                    </div>-->
-<!--                    {% endfor %}-->
-<!--                    <div class="clearfix visible-sm visible-xs"></div>-->
-<!--                    &lt;!&ndash; /p roduct &ndash;&gt;-->
-<!--                </div>-->
+                <!--                <div class="row">-->
+                <!--                    &lt;!&ndash; product &ndash;&gt;-->
+                <!--                    {% for item in items %}-->
+                <!--                    <div class="col-md-4 col-xs-6">-->
+                <!--                        <a href="{{item.get_absolute_url}}">-->
+                <!--                            <div class="product">-->
+                <!--                                <div class="product-img">-->
+                <!--                                    {% if item.photo %}-->
+                <!--                                    <img src="{{ item.photo.url }}" alt="">-->
+                <!--                                    {% endif %}-->
+                <!--                                    <div class="product-label">-->
+                <!--                                        {% if item.discount %}-->
+                <!--                                        <span class="sale">Знижка {{item.discount | floatformat:0}}%</span>-->
+                <!--                                        {% endif %}-->
+                <!--                                        {% if item.label %}-->
+                <!--                                        <span class="new">{{item.label}}</span>-->
+                <!--                                        {% endif %}-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                                <div class="product-body">-->
+                <!--                                    <p class="product-category">{{item.cat}}</p>-->
+                <!--                                    <h3 class="product-name"><a href='{{item.get_absolute_url}}'>{{item.title}}</a></h3>-->
+                <!--                                    {% if item.discount %}-->
+                <!--                                    <h4 class="product-price">{{item.discount_price_calculation | floatformat:2}} грн-->
+                <!--                                        <del class="product-old-price">{{item.price}} грн</del>-->
+                <!--                                    </h4>-->
+                <!--                                    {% else %}-->
+                <!--                                    <h4 class="product-price">{{item.price}} грн </h4>-->
+                <!--                                    {% endif %}-->
+                <!--                                    &lt;!&ndash;										<div class="product-rating">&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;											<i class="fa fa-star"></i>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;										</div>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;										<div class="product-btns">&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>&ndash;&gt;-->
+                <!--                                    &lt;!&ndash;										</div>&ndash;&gt;-->
+                <!--                                </div>-->
+                <!--                                <div class="add-to-cart">-->
+                <!--                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart-->
+                <!--                                    </button>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                    </div>-->
+                <!--                    {% endfor %}-->
+                <!--                    <div class="clearfix visible-sm visible-xs"></div>-->
+                <!--                    &lt;!&ndash; /p roduct &ndash;&gt;-->
+                <!--                </div>-->
                 <!-- /STORE -->
             </div>
             <!-- /row -->
