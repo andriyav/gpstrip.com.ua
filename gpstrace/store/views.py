@@ -69,3 +69,8 @@ class ShowCategory(ListView):
     model = Category
     template_name = 'store/store.html'
     context_object_name = 'cats'
+
+class CheckOutView(ListView):
+    model = Item
+    template_name = "store/checkout.html"
+    context_object_name = 'ordered_items'
