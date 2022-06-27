@@ -8,5 +8,8 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('item/<slug:item_slug>/', ShowItem.as_view(), name='itemv'),
     path('category/<slug:cat_slug>/', CategoryTracker.as_view(), name='category'),
-    path('checkout', CheckOutView.as_view(), name='checkout')
+    path('checkout', CheckOutView.as_view(), name='checkout'),
+    path('register', RegisterUser.as_view(), name='register'),
+    path('logout/', logout_user, name='logout'),
+    path('login/', LoginUser.as_view(), name='login'),
     ]

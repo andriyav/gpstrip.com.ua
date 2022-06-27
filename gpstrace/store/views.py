@@ -1,7 +1,10 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import logout, login
 from .models import Item, Category
+from .forms import RegisterUserForm, LoginUserForm
+from django.urls import reverse_lazy
 
 
 class HomeView(ListView):
@@ -74,3 +77,34 @@ class CheckOutView(ListView):
     model = Item
     template_name = "store/checkout.html"
     context_object_name = 'ordered_items'
+
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'store/register.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('home')
+
+
+class LoginUser(LoginView):
+    forms_class = LoginUserForm
+    template_name = 'store/login.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+
