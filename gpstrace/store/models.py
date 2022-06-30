@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
+from django.conf import settings
+
 LABEL_CHOICES = (
     ('Новика', 'Новинка'),
     ('Популярне', 'Популярне'),
@@ -25,6 +27,7 @@ class Item(models.Model):
     battery = models.CharField(choices=BATTERY_CHOICES, max_length=20, null=True, blank=True,
                                verbose_name='Ємність акумуляторної батареї')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
+    quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return self.title
@@ -51,3 +54,27 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
+
+
+
+class OrderItem(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    ordered = models.BooleanField(default=False)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.quantity} of {self.item.title}'
+
+
+class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    items = models.ManyToManyField(OrderItem)
+    start_date = models.DateTimeField(auto_now_add=True)
+    ordered_date = models.DateTimeField()
+    ordered = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.username
