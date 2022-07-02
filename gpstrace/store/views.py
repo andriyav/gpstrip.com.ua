@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
@@ -128,5 +129,5 @@ def add_to_cart(request, slug):
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-    return redirect("core:product", slug=slug)
+    return redirect("itemv", slug=slug)
 

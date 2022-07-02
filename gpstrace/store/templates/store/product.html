@@ -226,9 +226,6 @@
 								<img src="{{image.image.url}}" alt="">
 							</div>
                               {% endfor %}
-
-
-
 						</div>
 					</div>
 					<!-- /Product main img -->
@@ -307,7 +304,8 @@
 										<span class="qty-down">-</span>
 									</div>
 								</div>
-								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+<!--								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>-->
+								<a href="{{ item_view.get_add_to_cart_url }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
 							</div>
 
 							<ul class="product-btns">

@@ -39,6 +39,8 @@ class Item(models.Model):
         self.discount_price = self.price - (self.price * (self.discount / 100))
         return self.discount_price
 
+    def get_add_to_cart_url(self):
+        return reverse('add-to-cart', kwargs={'item_slug': self.slug})
 
 class Gallery(models.Model):
     image = models.ImageField(upload_to='gallery')
@@ -54,6 +56,8 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
+
+
 
 
 
