@@ -109,8 +109,8 @@ def logout_user(request):
     logout(request)
     return redirect('home')
 
-def add_to_cart(request, slug):
-    item = get_object_or_404(Item, slug=slug)
+def add_to_cart(request, item_slug):
+    item = get_object_or_404(Item, slug=item_slug)
     order_item, created = OrderItem.objects.get_or_create(
             item=item,
             user=request.user,
@@ -129,5 +129,5 @@ def add_to_cart(request, slug):
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-    return redirect("itemv", slug=slug)
+    return redirect("itemv", item_slug)
 

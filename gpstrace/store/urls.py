@@ -12,5 +12,5 @@ urlpatterns = [
     path('register', RegisterUser.as_view(), name='register'),
     path('logout/', logout_user, name='logout'),
     path('login/', LoginUser.as_view(), name='login'),
-    path('add-to-cart/<slug:slug>/', add_to_cart, name='add-to-cart')
+    path('add-to-cart/<slug:item_slug>/', add_to_cart, name='add-to-cart')
     ]
