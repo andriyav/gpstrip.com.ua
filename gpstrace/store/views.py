@@ -130,4 +130,4 @@ def add_to_cart(request, item_slug):
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
     return redirect("itemv", item_slug)
-
+    

@@ -280,34 +280,35 @@
 							</div>
 							<p>{{item_view.description}}</p>
 
-							<div class="product-options">
-								<label>
-									Size
-									<select class="input-select">
-										<option value="0">X</option>
-									</select>
-								</label>
-								<label>
-									Color
-									<select class="input-select">
-										<option value="0">Red</option>
-									</select>
-								</label>
-							</div>
-
+<!--							<div class="product-options">-->
+<!--								<label>-->
+<!--									Size-->
+<!--									<select class="input-select">-->
+<!--										<option value="0">X</option>-->
+<!--									</select>-->
+<!--								</label>-->
+<!--								<label>-->
+<!--									Color-->
+<!--									<select class="input-select">-->
+<!--										<option value="0">Red</option>-->
+<!--									</select>-->
+<!--								</label>-->
+<!--							</div>-->
+							<form method="get" action="{{ item_view.get_add_to_cart_url }}">
 							<div class="add-to-cart">
 								<div class="qty-label">
-									Qty
+									  Кіл-ть
 									<div class="input-number">
 										<input type="number">
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>
-								</div>
-<!--								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>-->
-								<a href="{{ item_view.get_add_to_cart_url }}" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</a>
-							</div>
 
+								</div>
+
+								<button  class="add-to-cart-btn" ><i class="fa fa-shopping-cart" ></i> add to cart</button>
+							</div>
+							</form>
 							<ul class="product-btns">
 								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
 								<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
