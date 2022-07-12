@@ -1,3 +1,5 @@
+from django.contrib import messages
+
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
@@ -122,12 +124,17 @@ def add_to_cart(request, item_slug):
         if order.items.filter(item__slug=item.slug).exists():
             order_item.quantity += 1
             order_item.save()
+            messages.info(request, "Кількість товару в корзині збільшена")
+            return redirect("itemv", item_slug)
         else:
             order.items.add(order_item)
+            messages.info(request, "Товар добавлено до корзини")
+            return redirect("itemv", item_slug)
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
-    return redirect("itemv", item_slug)
+        messages.info(request, "Товар добавлено до корзини")
+        return redirect("itemv", item_slug)
     
