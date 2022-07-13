@@ -1,5 +1,5 @@
 from django import template
-from ..models import Category, Item
+from ..models import Category, Item, Order
 
 register = template.Library()
 
@@ -21,4 +21,14 @@ def get_categories():
 def get_items():
     related = Item.objects.filter(id__lte = 4)
     return {'related': related}
+
+
+@register.filter
+def cart_item_count(user):
+    if user.is_authenticated:
+        qs = Order.objects.filter(user=user, ordered=False)
+        if qs.exists():
+            return qs[0].items.count()
+    return 0
+
 

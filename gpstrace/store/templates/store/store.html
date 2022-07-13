@@ -102,7 +102,7 @@
                             <a href="#">
                                 <i class="fa fa-heart-o"></i>
                                 <span>Your Wishlist</span>
-                                <div class="qty">2</div>
+                                <div class="qty">21</div>
                             </a>
                         </div>
                         <!-- /Wishlist -->
@@ -112,7 +112,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
-                                <div class="qty">3</div>
+                                <div class="qty">{{ request.user|cart_item_count }}</div>
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                                 <div class="cart-summary">
-                                    <small>3 Item(s) selected</small>
+                                    <small>{{ request.user|cart_item_count }} Item(s) selected</small>
                                     <h5>SUBTOTAL: $2940.00</h5>
                                 </div>
                                 <div class="cart-btns">

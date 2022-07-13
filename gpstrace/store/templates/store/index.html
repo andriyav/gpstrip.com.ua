@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load cart_template_tags %}
 
 <html lang="en">
 	<head>
@@ -106,7 +107,7 @@
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div class="qty">3</div>
+										<div class="qty">{{ request.user|cart_item_count }}</div>
 									</a>
 									<div class="cart-dropdown">
 										<div class="cart-list">
@@ -133,8 +134,8 @@
 											</div>
 										</div>
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
+											<small>5 Item(s) selected</small>
+											<h5>SUBTOTAL: $294.00</h5>
 										</div>
 										<div class="cart-btns">
 											<a href="#">View Cart</a>
