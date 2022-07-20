@@ -307,11 +307,12 @@
 <!--								</label>-->
 <!--							</div>-->
 							<form method="get" action="{{ item_view.get_add_to_cart_url }}">
+								{% csrf_token %}
 							<div class="add-to-cart">
 								<div class="qty-label">
 									  Кіл-ть
 									<div class="input-number">
-										<input type="number">
+										<input name="order-qty" type="number" value=1>
 										<span class="qty-up">+</span>
 										<span class="qty-down">-</span>
 									</div>

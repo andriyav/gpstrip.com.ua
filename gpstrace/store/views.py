@@ -1,5 +1,5 @@
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
@@ -8,6 +8,7 @@ from django.contrib.auth import logout, login
 from .models import Item, Category, OrderItem, Order
 from .forms import RegisterUserForm, LoginUserForm
 from django.urls import reverse_lazy
+import requests
 
 
 class HomeView(ListView):
@@ -111,7 +112,10 @@ def logout_user(request):
     logout(request)
     return redirect('home')
 
+
+@login_required(login_url='/login/')
 def add_to_cart(request, item_slug):
+    order_qty = request.GET["order-qty"]
     item = get_object_or_404(Item, slug=item_slug)
     order_item, created = OrderItem.objects.get_or_create(
             item=item,
@@ -122,12 +126,14 @@ def add_to_cart(request, item_slug):
     if order_qs.exists():
         order = order_qs[0]
         if order.items.filter(item__slug=item.slug).exists():
-            order_item.quantity += 1
+            order_item.quantity += int(order_qty)
             order_item.save()
             messages.info(request, "Кількість товару в корзині збільшена")
             return redirect("itemv", item_slug)
         else:
             order.items.add(order_item)
+            order_item.quantity = int(order_qty)
+            order_item.save()
             messages.info(request, "Товар добавлено до корзини")
             return redirect("itemv", item_slug)
     else:
@@ -137,4 +143,3 @@ def add_to_cart(request, item_slug):
         order.items.add(order_item)
         messages.info(request, "Товар добавлено до корзини")
         return redirect("itemv", item_slug)
-    
