@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 {% load static %}
-{% load cart_template_tags %}
-
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -107,7 +105,7 @@
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div class="qty">{{ request.user|cart_item_count }}</div>
+										<div class="qty"></div>
 									</a>
 									<div class="cart-dropdown">
 										<div class="cart-list">

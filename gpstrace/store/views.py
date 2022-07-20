@@ -7,6 +7,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
 from .models import Item, Category, OrderItem, Order
 from .forms import RegisterUserForm, LoginUserForm
+from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
 import requests
 
@@ -80,6 +81,24 @@ class ShowCategory(ListView):
 class CheckOutView(ListView):
     model = Item
     template_name = "store/checkout.html"
+    context_object_name = 'ordered_items'
+
+class CartView(ListView):
+    def get(self, *args, **kwargs):
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            context = {
+                'object': order
+            }
+            return render(self.request, 'store/cart.html', context)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have an active order")
+            return redirect("/")
+
+
+class IndexView(ListView):
+    model = Item
+    template_name = "store/index.html"
     context_object_name = 'ordered_items'
 
 
