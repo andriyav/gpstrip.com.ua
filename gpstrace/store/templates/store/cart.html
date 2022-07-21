@@ -194,10 +194,10 @@
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="breadcrumb-header">Checkout</h3>
+						<h3 class="breadcrumb-header">Корзина</h3>
 						<ul class="breadcrumb-tree">
 							<li><a href="#">Home</a></li>
-							<li class="active">Checkout</li>
+							<li class="active">Корзина</li>
 						</ul>
 					</div>
 				</div>
@@ -309,20 +309,23 @@
 <!--					</div>-->
 
 					<!-- Order Details -->
-					<div class="col-md-5 order-details">
-						<div class="section-title text-center">
+					<div class="col-md-6 order-details">
+						<div class="section-title text-center" align="left">
 							<h3 class="title">Your Order</h3>
 						</div>
 						<div class="order-summary">
 							<div class="order-col">
-								<div><strong>PRODUCT</strong></div>
-								<div><strong>TOTAL</strong></div>
+								<div><strong>Продукт</strong></div>
+								<div><strong>Ціна</strong></div>
+								<div><strong>Разом</strong></div>
 							</div>
 							{% for order_item in object.items.all %}
+
 							<div class="order-products">
 								<div class="order-col">
-									<div>{{order_item.quantity}} x {{order_item.item.title}}</div>
-									<div>$980.00</div>
+									<div>{{order_item.item.title}}</div>
+									<div>{{order_item.quantity}} X {{order_item.item.price}} грн.</div>
+									<div>{{order_item.get_total_item_price}} грн.</div>
 								</div>
                              {% endfor %}
 							</div>
@@ -332,7 +335,7 @@
 							</div>
 							<div class="order-col">
 								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
+								<div><strong class="order-total">{{object.get_total}}</strong></div>
 							</div>
 						</div>
 						<div class="payment-method">
