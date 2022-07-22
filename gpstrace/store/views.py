@@ -83,6 +83,7 @@ class CheckOutView(ListView):
     template_name = "store/checkout.html"
     context_object_name = 'ordered_items'
 
+
 class CartView(ListView):
     def get(self, *args, **kwargs):
         try:
