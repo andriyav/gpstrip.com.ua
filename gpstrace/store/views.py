@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
@@ -84,7 +85,9 @@ class CheckOutView(ListView):
     context_object_name = 'ordered_items'
 
 
-class CartView(ListView):
+class CartView(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = 'cart'
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
