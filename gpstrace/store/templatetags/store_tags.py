@@ -31,10 +31,10 @@ def cart_item_count(user):
             return qs[0].items.count()
     return 0
 
-@register.simple_tag()
+@register.filter
 def get_cart_navbar(user):
     if user.is_authenticated:
-        cart_item = Order.objects.all
+        cart_item = OrderItem.objects.filter(user=user, ordered=False)
         if cart_item.exists():
-            return {'cart_item': cart_item}
-    return 'Ваша козина пуста'
+            return cart_item
+    return 'Ваша коrзина пуста'
