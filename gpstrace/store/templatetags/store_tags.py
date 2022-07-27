@@ -38,3 +38,14 @@ def get_cart_navbar(user):
         if cart_item.exists():
             return cart_item
     return 'Ваша коrзина пуста'
+
+@register.filter
+def get_cart_total_price(user):
+    if user.is_authenticated:
+        qs = OrderItem.objects.filter(user=user, ordered=False)
+        total = 0
+        if qs.exists():
+            for prices in qs:
+                total += prices.item.price * prices.item.quantity
+    return total
+

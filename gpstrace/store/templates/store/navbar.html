@@ -114,7 +114,7 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">{{order_item.item.title}}</a></h3>
                                             <h4 class="product-price"><span class="qty">{{order_item.quantity}}
-                                                x</span>{{order_item.item.price}}</h4>
+                                                x</span>{{order_item.item.price}} грн.</h4>
                                         </div>
                                         <button class="delete"><i class="fa fa-close"></i></button>
 
@@ -125,8 +125,8 @@
                                 </div>
 
                                 <div class="cart-summary">
-                                    <small>{{ request.user|cart_item_count }} Item(s) selected</small>
-                                    <h5>Разом: {{get_cart_navbar.get_total}}</h5>
+                                    <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
+                                    <h5>Разом: {{ request.user|get_cart_total_price }} грн.</h5>
                                 </div>
                                 <div class="cart-btns">
                                     <a href="{% url 'cart' %}">View Cart</a>
