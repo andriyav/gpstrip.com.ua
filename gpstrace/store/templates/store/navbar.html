@@ -103,7 +103,7 @@
 
                                 <div class="cart-list">
 
-
+             {% if user.is_authenticated %}
            {% for order_item in request.user|get_cart_navbar %}
                                     <div class="product-widget">
 
@@ -119,7 +119,7 @@
                                         <button class="delete"><i class="fa fa-close"></i></button>
 
                                     </div>
- {% endfor %}
+           {% endfor %}
 
 
                                 </div>
@@ -132,6 +132,16 @@
                                     <a href="{% url 'cart' %}">View Cart</a>
                                     <a href="{% url 'checkout' %}">Checkout <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
+                                {% else %}
+                               </div>
+                                <div class="cart-summary">
+                                    Увійдіть під своїм логіном та паролем або зареєструйтесь.
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="{% url 'login' %}">Увійти</a>
+                                    <a href="{% url 'register' %}">Реєстрація</a>
+                                </div>
+                                {% endif %}
                             </div>
 
                         </div>
