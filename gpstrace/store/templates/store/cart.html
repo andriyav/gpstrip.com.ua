@@ -67,7 +67,7 @@
 					<!-- Order Details -->
 					<div class="col-md-5 order-details">
 						<div class="section-title text-center" align="left">
-							<h3 class="title">Your Order</h3>
+							<h3 class="title">Ваше замовлення</h3>
 						</div>
 						<div class="order-summary">
 								<div class="order-col">
@@ -83,11 +83,11 @@
                             {% endfor %}
 							</div>
 							<div class="order-col">
-								<div>Shiping</div>
-								<div><strong>FREE</strong></div>
+								<div>Доставка</div>
+								<div><strong>Безкоштовна</strong></div>
 							</div>
 							<div class="order-col">
-								<div><strong>TOTAL</strong></div>
+								<div><strong>Разом</strong></div>
 								<div><strong class="order-total">{{object.get_total}}</strong></div>
 							</div>
 						</div>
@@ -105,7 +105,7 @@
 	<h3> Ваша корзина пуста </h3>
 	{% endif %}
 
-
+{% include "store/footer.html" %}
 		<!-- jQuery Plugins -->
 		<script src="{% static 'js/jquery.min.js' %}"></script>
 		<script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -115,4 +115,3 @@
 		<script src="{% static 'js/main.js' %}"></script>
 
 
-{% include "store/footer.html" %}

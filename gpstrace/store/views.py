@@ -79,10 +79,6 @@ class ShowCategory(ListView):
     template_name = 'store/store.html'
     context_object_name = 'cats'
 
-class CheckOutView(ListView):
-    model = Item
-    template_name = "store/checkout.html"
-    context_object_name = 'ordered_items'
 
 
 class CartView(LoginRequiredMixin, ListView):
@@ -98,6 +94,20 @@ class CartView(LoginRequiredMixin, ListView):
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect("/")
+class CheckOutView(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = '/checkout/'
+    def get(self, *args, **kwargs):
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            context = {
+                'object': order
+            }
+            return render(self.request, 'store/checkout.html', context)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have an active order")
+            return redirect("/")
+
 
 
 class IndexView(ListView):

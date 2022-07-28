@@ -32,7 +32,7 @@
                 <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
             </ul>
             <ul class="header-links pull-right">
-                <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
+                <li><a href="#"><i class="fa fa-dollar"></i> Грн.сруслщге </a></li>
                 {% if request.user.is_authenticated %}
                 <li><a href="#"><i class="fa fa-user-o"></i>{{ user.username }}</a>}|
                     <a href="{% url 'logout'  %}"><i class="fa fa-user-o"></i>Вийти</li>
@@ -83,7 +83,7 @@
                         <div>
                             <a href="#">
                                 <i class="fa fa-heart-o"></i>
-                                <span>Your Wishlist</span>
+                                <span>Улюблене</span>
                                 <div class="qty">21</div>
                             </a>
                         </div>
@@ -93,7 +93,7 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
+                                <span>Корзина</span>
                                 <div class="qty">{{ request.user|cart_item_count }}</div>
 
 
@@ -129,8 +129,8 @@
                                     <h5>Разом: {{ request.user|get_cart_total_price }} грн.</h5>
                                 </div>
                                 <div class="cart-btns">
-                                    <a href="{% url 'cart' %}">View Cart</a>
-                                    <a href="{% url 'checkout' %}">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="{% url 'cart' %}">Корзина</a>
+                                    <a href="{% url 'checkout' %}">Замовлення <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                                 {% else %}
                                </div>
