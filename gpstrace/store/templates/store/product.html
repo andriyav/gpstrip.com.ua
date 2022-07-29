@@ -46,6 +46,7 @@
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
+
         </div>
         {% endfor %}
     {% endif %}
@@ -250,19 +251,9 @@
 							{% for image in object.images.all %}
 							<div class="product-preview">
 								<img src="{{image.image.url}}" alt="">
+
 							</div>
                               {% endfor %}
-<!--							<div class="product-preview">-->
-<!--								<img src="{% static './img/product03.png' %}" alt="">-->
-<!--							</div>-->
-
-<!--							<div class="product-preview">-->
-<!--								<img src="{% static './img/product06.png' %}" alt="">-->
-<!--							</div>-->
-
-<!--							<div class="product-preview">-->
-<!--								<img src="{% static './img/product08.png' %}" alt="">-->
-<!--							</div>-->
 
 						</div>
 					</div>
