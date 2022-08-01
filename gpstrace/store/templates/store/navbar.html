@@ -104,6 +104,7 @@
                                 <div class="cart-list">
 
              {% if user.is_authenticated %}
+
            {% for order_item in request.user|get_cart_navbar %}
                                     <div class="product-widget">
 
@@ -112,13 +113,12 @@
                                         </div>
 
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">{{order_item.items.title}}</a></h3>
+                                            <h3 class="product-name"><a href="#">{{order_item.item.title}}</a></h3>
                                             <h4 class="product-price"><span class="qty">{{order_item.quantity}}
                                                 x</span>{{order_item.item.price}} грн.</h4>
                                         </div>
 
-                                        <button class="delete"><a style='color: red;' href="{% url 'remove-from-cart' order_item.item.slug %}">
-                                        </a><i class="fa fa-close"></i></button>
+                                        <a class="delete"  href="{% url 'remove-from-cart' order_item.item.slug %}"> <i class="fa fa-close"></i> </a>
 
                                     </div>
            {% endfor %}
