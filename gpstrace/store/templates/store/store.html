@@ -41,8 +41,6 @@
 <!-- HEADER -->
 
 {% include "store/navbar.html" %}
-
-
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
     <!-- container -->
@@ -119,10 +117,8 @@
                                 </label>
                             </div>
                             <div class="input-checkbox">
-
                                 <input type="checkbox" id="brand-2" name='5000' onchange="javascript:
 									if(this.value != '0') this.form.submit();">
-
                                 <label for="brand-2">
                                     <span></span>
                                     5000 мАгод
@@ -245,9 +241,10 @@
                                                     {% endif %}
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart
+                                                    <button class="add-to-cart-btn"><a href="{{ item.get_add_to_cart_url }}"><i class="fa fa-shopping-cart"></i>add to cart
+                                                    </a>
                                                     </button>
-                                                </div>
+                               </div>
                                             </div>
                                     </div>
                                     {% endfor %}

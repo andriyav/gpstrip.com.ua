@@ -104,6 +104,7 @@
                                 <div class="cart-list">
 
              {% if user.is_authenticated %}
+                                    {% if request.user|get_cart_navbar %}
 
            {% for order_item in request.user|get_cart_navbar %}
                                     <div class="product-widget">
@@ -134,6 +135,19 @@
                                     <a href="{% url 'cart' %}">Корзина</a>
                                     <a href="{% url 'checkout' %}">Замовлення <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
+                                {% else %}
+
+                                </div>
+
+                                <div class="cart-summary">
+                                    <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
+                                    <h5>Ваша корзина пуста</h5>
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="{% url 'home' %}">До магазину</a>
+                                    <a href="{% url 'checkout' %}">Замовлення <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                             {% endif %}
                                 {% else %}
                                </div>
                                 <div class="cart-summary">
