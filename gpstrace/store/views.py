@@ -148,7 +148,11 @@ def logout_user(request):
 
 @login_required(login_url='/login/')
 def add_to_cart(request, item_slug):
-    order_qty = request.GET["order-qty"]
+    try:
+        order_qty = request.GET["order-qty"]
+    except:
+        order_qty = 1
+
     item = get_object_or_404(Item, slug=item_slug)
     order_item, created = OrderItem.objects.get_or_create(
             item=item,
@@ -162,20 +166,20 @@ def add_to_cart(request, item_slug):
             order_item.quantity += int(order_qty)
             order_item.save()
             messages.info(request, "Кількість товару в корзині збільшена")
-            return redirect("itemv", item_slug)
+            return redirect("home")
         else:
             order.items.add(order_item)
             order_item.quantity = int(order_qty)
             order_item.save()
             messages.info(request, "Товар добавлено до корзини")
-            return redirect("itemv", item_slug)
+            return redirect("home")
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
         messages.info(request, "Товар добавлено до корзини")
-        return redirect("itemv", item_slug)
+        return redirect("home")
 
 @login_required()
 def remove_from_cart(request, slug):
@@ -194,11 +198,11 @@ def remove_from_cart(request, slug):
             )[0]
             order.items.remove(order_item)
             order_item.delete()
-            messages.info(request, "This item was removed from your cart.")
+            messages.info(request, "Товар було видалено з корзини")
             return redirect("cart")
         else:
-            messages.info(request, "This item was not in your cart")
+            messages.info(request, "Товар відсутній в корзині")
             return redirect("cart")
     else:
-        messages.info(request, "You do not have an active order")
+        messages.info(request, "У вас не має активних замовлень")
         return redirect("cart")
