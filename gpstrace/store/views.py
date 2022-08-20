@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
 from .models import Item, Category, OrderItem, Order
-from .forms import RegisterUserForm, LoginUserForm
+from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
 import requests
@@ -98,15 +98,11 @@ class CheckOutView(LoginRequiredMixin, ListView):
     login_url = '/login/'
     redirect_field_name = '/checkout/'
     def get(self, *args, **kwargs):
-        try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            context = {
-                'object': order
-            }
-            return render(self.request, 'store/checkout.html', context)
-        except ObjectDoesNotExist:
-            messages.warning(self.request, "You do not have an active order")
-            return redirect("/")
+        form = CheckoutForms()
+        context = {
+            'form': form
+        }
+        return render(self.request, "store/checkout.html", context)
 
 
 

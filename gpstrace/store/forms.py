@@ -16,3 +16,15 @@ class RegisterUserForm(UserCreationForm):
 class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+
+
+class CheckoutForms(forms.Form):
+    street_address = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Вулиця', 'class': 'form-input'
+    }))
+    city = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Місто', 'class': 'form-input'
+    }))
+    email = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': ' Електронна адреса', 'class': 'form-input'
+    }))

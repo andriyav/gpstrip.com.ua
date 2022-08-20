@@ -78,6 +78,7 @@
 							<div class="section-title">
 								<h3 class="title">Адресса оплати</h3>
 							</div>
+							<form method="POST" class="form-group">
 							<div class="form-group">
 								<input class="input" type="text" name="first-name" placeholder="Ім'я">
 							</div>
@@ -87,11 +88,12 @@
 							<div class="form-group">
 								<input class="input" type="email" name="email" placeholder="Email">
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="address" placeholder="Адресса">
+							<div class="form-group">{{ form.street_address }}
+
+								 {% comment %}<input class="input" type="text" name="address" placeholder="Адресса">{% endcomment %}
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="city" placeholder="Місто">
+							<div class="form-group">{{ form.city }}
+								{% comment %}<input class="input" type="text" name="city" placeholder="Місто">{% endcomment %}
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="country" placeholder="Країна">
@@ -165,6 +167,7 @@
 						</div>
 						<!-- /Order notes -->
 					</div>
+					</form>
 
 					<!-- Order Details -->
 					<div class="col-md-5 order-details">
