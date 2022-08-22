@@ -38,10 +38,7 @@
     </head>
 	<body>
 		<!-- HEADER -->
-
 			<!-- TOP HEADER -->
-
-
 		<!-- /HEADER -->
 {% include "store/navbar.html" %}
 
@@ -71,39 +68,38 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-
+						<form method="POST" class="card-body">
+              {% csrf_token %}
 					<div class="col-md-7">
-						<!-- Billing Details -->
+
+							<!-- Billing Details -->
 						<div class="billing-details">
 							<div class="section-title">
 								<h3 class="title">Адресса оплати</h3>
 							</div>
 							<form method="POST" class="form-group">
-							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="Ім'я">
+							<div class="form-group"> {{ form.first_name }}
+								{% comment %}<input class="input" type="text" name="first-name" placeholder="Ім'я">{% endcomment %}
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Прізвище">
+							<div class="form-group"> {{ form.last_name }}
+								{% comment %}<input class="input" type="text" name="last-name" placeholder="Прізвище">{% endcomment %}
 							</div>
-							<div class="form-group">
-								<input class="input" type="email" name="email" placeholder="Email">
+							<div class="form-group">{{ form.email }}
+								{% comment %}<input class="input" type="email" name="email" placeholder="Email">{% endcomment %}
 							</div>
 							<div class="form-group">{{ form.street_address }}
-
 								 {% comment %}<input class="input" type="text" name="address" placeholder="Адресса">{% endcomment %}
 							</div>
 							<div class="form-group">{{ form.city }}
 								{% comment %}<input class="input" type="text" name="city" placeholder="Місто">{% endcomment %}
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="country" placeholder="Країна">
+							<div class="form-group">{{ form.index }}
+								{% comment %}<input class="input" type="text" name="zip-code" placeholder="Індекс">{% endcomment %}
 							</div>
-							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="Індекс">
+							<div class="form-group">{{ form.phone }}
+								{% comment %}<<input class="input" type="tel" name="tel" placeholder="Телефон">{% endcomment %}
 							</div>
-							<div class="form-group">
-								<input class="input" type="tel" name="tel" placeholder="Телефон">
-							</div>
+
 							<div class="form-group">
 								<div class="input-checkbox">
 									<input type="checkbox" id="create-account">
@@ -167,7 +163,8 @@
 						</div>
 						<!-- /Order notes -->
 					</div>
-					</form>
+
+
 
 					<!-- Order Details -->
 					<div class="col-md-5 order-details">
@@ -249,7 +246,8 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-
+<button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+            </form>
 		<!-- NEWSLETTER -->
 		<div id="newsletter" class="section">
 			<!-- container -->

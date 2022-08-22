@@ -19,6 +19,12 @@ class LoginUserForm(AuthenticationForm):
 
 
 class CheckoutForms(forms.Form):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': "Ім'я", 'class': 'form-input'
+    }))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Прізвище', 'class': 'form-input'
+    }))
     street_address = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Вулиця', 'class': 'form-input'
     }))
@@ -26,5 +32,11 @@ class CheckoutForms(forms.Form):
         'placeholder': 'Місто', 'class': 'form-input'
     }))
     email = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': ' Електронна адреса', 'class': 'form-input'
+        'placeholder': 'Електронна адреса', 'class': 'form-input'
+    }))
+    index = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': ' Індекс', 'class': 'form-input'
+    }))
+    phone = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Телефон', 'class': 'form-input'
     }))
