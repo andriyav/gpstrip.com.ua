@@ -95,14 +95,23 @@ class CartView(LoginRequiredMixin, ListView):
             messages.warning(self.request, "You do not have an active order")
             return redirect("/")
 class CheckOutView(LoginRequiredMixin, ListView):
-    login_url = '/login/'
-    redirect_field_name = '/checkout/'
+
     def get(self, *args, **kwargs):
         form = CheckoutForms()
         context = {
             'form': form
         }
         return render(self.request, "store/checkout.html", context)
+    def post(self, *args, **kwargs):
+        form = CheckoutForms(self.request.POST or None)
+        print(self.request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            print("Форма корректна")
+            return redirect('checkout')
+        messages.warning(self.request, 'Помилка форми')
+        return redirect('checkout')
+
 
 
 

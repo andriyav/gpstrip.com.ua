@@ -5,6 +5,7 @@ from .models import *
 admin.site.register(OrderItem)
 admin.site.register(Category)
 admin.site.register(Order)
+admin.site.register(ShippingAddress)
 
 class GalleryInline(admin.TabularInline):
 
