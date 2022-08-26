@@ -93,6 +93,7 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
+    shipping_address = models.ForeignKey('ShippingAddress', on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
@@ -103,10 +104,15 @@ class Order(models.Model):
             total += order_item.get_final_price()
         return total
 class ShippingAddress(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
     street_address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=200, null=True)
     index = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.user.username

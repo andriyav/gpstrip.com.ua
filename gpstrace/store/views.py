@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
-from .models import Item, Category, OrderItem, Order
+from .models import Item, Category, OrderItem, Order,ShippingAddress
 from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
@@ -104,13 +104,36 @@ class CheckOutView(LoginRequiredMixin, ListView):
         return render(self.request, "store/checkout.html", context)
     def post(self, *args, **kwargs):
         form = CheckoutForms(self.request.POST or None)
-        print(self.request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            print("Форма корректна")
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            if form.is_valid():
+                first_name = form.cleaned_data.get('first_name')
+                last_name = form.cleaned_data.get('last_name')
+                street_address = form.cleaned_data.get('street_address')
+                city = form.cleaned_data.get('city')
+                email = form.cleaned_data.get('email')
+                index = form.cleaned_data.get('index')
+                phone = form.cleaned_data.get('phone')
+                shipping_address = ShippingAddress(
+                    user=self.request.user,
+                    first_name=first_name,
+                    last_name=last_name,
+                    street_address=street_address,
+                    city=city,
+                    email=email,
+                    index=index,
+                    phone=phone,
+                )
+                shipping_address.save()
+                order.shipping_address = shipping_address
+                order.save()
+                return redirect('checkout')
+            messages.warning(self.request, 'Помилка форми')
             return redirect('checkout')
-        messages.warning(self.request, 'Помилка форми')
-        return redirect('checkout')
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have an active order")
+            return redirect('checkout')
+
 
 
 
