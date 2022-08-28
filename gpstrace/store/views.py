@@ -127,16 +127,16 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 shipping_address.save()
                 order.shipping_address = shipping_address
                 order.save()
+                order_items = order.items.all()
+                order_items.update(ordered=True)
+                for item in order_items:
+                    item.save()
                 return redirect('checkout')
             messages.warning(self.request, 'Помилка форми')
             return redirect('checkout')
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect('checkout')
-
-
-
-
 
 class IndexView(ListView):
     model = Item
