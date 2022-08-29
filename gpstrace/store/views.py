@@ -126,6 +126,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 )
                 shipping_address.save()
                 order.shipping_address = shipping_address
+                order.ordered = True
                 order.save()
                 order_items = order.items.all()
                 order_items.update(ordered=True)
