@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 LABEL_CHOICES = (
-    ('Новика', 'Новинка'),
+    ('Новинка', 'Новинка'),
     ('Популярне', 'Популярне'),
 )
 BATTERY_CHOICES = (

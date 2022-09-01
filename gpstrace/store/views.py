@@ -142,7 +142,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
 class IndexView(ListView):
     model = Item
     template_name = "store/index.html"
-    context_object_name = 'ordered_items'
+    context_object_name = 'index_items'
 
 
 class RegisterUser(CreateView):
