@@ -91,6 +91,13 @@
 							<div class="order-products">
 								<div class="order-col">
 									<div>{{order_item.quantity}} X {{order_item.item.title}}</div>
+									{% if order_item.item.discount %}
+									<div class="order-products"> <div>{{order_item.item.discount_price_calculation | floatformat:2}} грн</div>
+                                <del class="product-old-price">{{order_item.item.price}} грн</del>
+                            </h4>
+                            {% else %}
+                            <h4 class="product-price">{{order_item.price}} грн </h4>
+                            {% endif %}
 									<div>{{order_item.get_total_item_price}} грн.</div>
 
 								</div>
