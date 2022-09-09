@@ -173,7 +173,7 @@
 								<div><strong>Товар</strong></div>
 								<div><strong>Разом</strong></div>
 							</div>
-							{% for items_checkout in object.items.all %}
+							{% for items_checkout in ob_item.items.all %}
 							<div class="order-products">
 								<div class="order-col">
 									<div>{{items_checkout.quantity}} x {{items_checkout.item.title}}</div>

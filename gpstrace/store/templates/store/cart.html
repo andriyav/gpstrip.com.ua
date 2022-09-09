@@ -78,42 +78,40 @@
 				<div class="row">
                        {% if object.items.all %}
 					<!-- Order Details -->
-					<div class="col-md-5 order-details">
+					<div class="col-md-6 order-details">
 						<div class="section-title text-center" align="left">
 							<h3 class="title">Ваше замовлення</h3>
 						</div>
 						<div class="order-summary">
-								<div class="order-col">
-								<div><strong>Продукт</strong></div>
-								<div><strong>Разом</strong></div>
+							<div class="row">
+							<div class="col-sm-3"><strong>Продукт</strong></div>
+							<div class="col-sm-3"><strong>Кількість</strong></div>
+							<div class="col-sm-3"><strong>Ціна зі знижкою</strong></div>
+							<div class="col-sm-3"><strong>Знижка</strong></div>
 							</div>
 							{% for order_item in object.items.all %}
-							<div class="order-products">
-								<div class="order-col">
-									<div>{{order_item.quantity}} X {{order_item.item.title}}</div>
+
+							<div class="row">
+								<br>
+								<div class="col-sm-3">{{order_item.item.title}}</div>
+								<div class="col-sm-3">{{order_item.quantity}} шт.</div>
 									{% if order_item.item.discount %}
-									<div class="order-products"> <div>{{order_item.item.discount_price_calculation | floatformat:2}} грн</div>
-                                <del class="product-old-price">{{order_item.item.price}} грн</del>
-                            </h4>
-                            {% else %}
-                            <h4 class="product-price">{{order_item.price}} грн </h4>
-                            {% endif %}
-									<div>{{order_item.get_total_item_price}} грн.</div>
-
-								</div>
-
-                            {% endfor %}
+								<div class="col-sm-3">
+									{{order_item.item.discount_price_calculation | floatformat:2}} грн</div>
+									{% else %}
+									<div class="col-sm-3">
+									{{order_item.item.price}} грн.</div>
+									{% endif %}
+									{% if order_item.item.discount %}
+								<div class="col-sm-3">{{ order_item.item.discount_save_calculation | floatformat:2 }}грн</div>
+									{% endif %}
 							</div>
+							{% endfor %}
+							<br>
 							<div class="order-col">
-								<div>Доставка</div>
-								<div><strong>Безкоштовна</strong></div>
+								<div class="order-total"><strong>Разом</strong></div>
+								<div><strong class="order-total">{{object.get_total|floatformat:1}} грн</strong></div>
 							</div>
-							<div class="order-col">
-								<div><strong>Разом</strong></div>
-								<div><strong class="order-total">{{object.get_total}}</strong></div>
-							</div>
-						</div>
-
 						<a href="{% url 'checkout' %}" class="primary-btn order-submit">Оформити замовлення</a>
 					</div>
 					<!-- /Order Details -->

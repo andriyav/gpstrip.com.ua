@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
-from .models import Item, Category, OrderItem, Order,ShippingAddress
+from .models import Item, Category, OrderItem, Order, ShippingAddress
 from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
@@ -80,10 +80,10 @@ class ShowCategory(ListView):
     context_object_name = 'cats'
 
 
-
 class CartView(LoginRequiredMixin, ListView):
     login_url = '/login/'
     redirect_field_name = 'cart'
+
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -94,14 +94,22 @@ class CartView(LoginRequiredMixin, ListView):
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect("/")
-class CheckOutView(LoginRequiredMixin, ListView):
 
+
+class CheckOutView(LoginRequiredMixin, ListView):
     def get(self, *args, **kwargs):
         form = CheckoutForms()
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have an active order")
+            return redirect("/")
         context = {
-            'form': form
+            'form': form,
+            'ob_item': order
         }
         return render(self.request, "store/checkout.html", context)
+
     def post(self, *args, **kwargs):
         form = CheckoutForms(self.request.POST or None)
         try:
@@ -138,6 +146,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect('checkout')
+
 
 class IndexView(ListView):
     model = Item
@@ -181,13 +190,12 @@ def add_to_cart(request, item_slug):
         order_qty = request.GET["order-qty"]
     except:
         order_qty = 1
-
     item = get_object_or_404(Item, slug=item_slug)
     order_item, created = OrderItem.objects.get_or_create(
-            item=item,
-            user=request.user,
-            ordered=False
-        )
+        item=item,
+        user=request.user,
+        ordered=False
+    )
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
@@ -209,6 +217,7 @@ def add_to_cart(request, item_slug):
         order.items.add(order_item)
         messages.info(request, "Товар добавлено до корзини")
         return redirect("home")
+
 
 @login_required()
 def remove_from_cart(request, slug):

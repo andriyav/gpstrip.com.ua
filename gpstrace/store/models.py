@@ -46,6 +46,9 @@ class Item(models.Model):
     def discount_price_calculation(self):
         self.discount_price = self.price - (self.price * (self.discount / 100))
         return self.discount_price
+    def discount_save_calculation(self):
+        self.discount_save = self.price - self.discount_price
+        return self.discount_save
 
     def get_add_to_cart_url(self):
         return reverse('add-to-cart', kwargs={'item_slug': self.slug})
@@ -77,7 +80,10 @@ class OrderItem(models.Model):
         return f'{self.quantity} of {self.item.title}'
 
     def get_total_item_price(self):
-        return self.quantity * self.item.price
+        if self.item.discount:
+            return self.quantity * self.item.price - (self.item.price * (self.item.discount / 100))
+        else:
+            return self.quantity * self.item.price
 
     def get_total_order_price(self):
         return self.get_total_item_price()

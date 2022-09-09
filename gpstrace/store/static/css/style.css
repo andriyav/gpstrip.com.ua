@@ -1884,7 +1884,7 @@ textarea.input {
 }
 
 .order-summary .order-col:after {
-  content: "";
+  content: "  ";
   display: block;
   clear: both;
 }
