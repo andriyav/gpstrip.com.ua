@@ -252,4 +252,5 @@ def add_to_favorite(request, item_slug):
             item=item,
             user=request.user,
     )
-
+    item_favorite.add(item)
+    return redirect("home")

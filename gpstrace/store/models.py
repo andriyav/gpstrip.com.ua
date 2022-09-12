@@ -15,6 +15,7 @@ BATTERY_CHOICES = (
 
 )
 
+
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=True)
     name = models.CharField(max_length=200, null=True)
@@ -46,12 +47,14 @@ class Item(models.Model):
     def discount_price_calculation(self):
         self.discount_price = self.price - (self.price * (self.discount / 100))
         return self.discount_price
+
     def discount_save_calculation(self):
         self.discount_save = self.price - self.discount_price
         return self.discount_save
 
     def get_add_to_cart_url(self):
         return reverse('add-to-cart', kwargs={'item_slug': self.slug})
+
 
 class Gallery(models.Model):
     image = models.ImageField(upload_to='gallery')
@@ -67,6 +70,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
+
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -102,6 +106,7 @@ class Order(models.Model):
     ordered = models.BooleanField(default=False)
     ordered_date = models.DateTimeField(blank=True)
     shipping_address = models.ForeignKey('ShippingAddress', on_delete=models.SET_NULL, blank=True, null=True)
+
     def __str__(self):
         return self.user.username
 
@@ -110,6 +115,8 @@ class Order(models.Model):
         for order_item in self.items.all():
             total += order_item.get_final_price()
         return total
+
+
 class ShippingAddress(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
@@ -124,9 +131,11 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return self.user.username
 
+
 class Favorite(models.Model):
     item_favorite = models.ForeignKey(Item, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
+
     def __str__(self):
-        return self.item
+        return self.user.username
