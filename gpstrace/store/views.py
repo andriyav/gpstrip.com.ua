@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
-from .models import Item, Category, OrderItem, Order, ShippingAddress
+from .models import Item, Category, OrderItem, Order, ShippingAddress, Favorite
 from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
@@ -244,3 +244,12 @@ def remove_from_cart(request, slug):
     else:
         messages.info(request, "У вас не має активних замовлень")
         return redirect("cart")
+
+@login_required()
+def add_to_favorite(request, item_slug):
+    item = get_object_or_404(Item, slug=item_slug)
+    item_favorite, created = Favorite.objects.get_or_create(
+            item=item,
+            user=request.user,
+    )
+

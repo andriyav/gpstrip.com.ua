@@ -123,3 +123,10 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Favorite(models.Model):
+    item_favorite = models.ForeignKey(Item, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    def __str__(self):
+        return self.item
