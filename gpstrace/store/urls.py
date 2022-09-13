@@ -17,7 +17,7 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('add-to-cart/<slug:item_slug>/', add_to_cart, name='add-to-cart'),
     path('remove-from-cart/<slug>/', remove_from_cart, name='remove-from-cart'),
-    path('add-to-favorite/<slug>/', add_to_favorite, name='add-to-favorite'),
+    path('add-to-favorite/<slug:item_slug>/', add_to_favorite, name='add-to-favorite')
     # path('remove-from-favorite/<slug>/', remove_from_favorite, name='remove-from-favorite')
 
     ]

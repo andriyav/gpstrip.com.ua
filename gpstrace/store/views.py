@@ -203,23 +203,23 @@ def add_to_cart(request, item_slug):
             order_item.quantity += int(order_qty)
             order_item.save()
             messages.info(request, "Кількість товару в корзині збільшена")
-            return redirect("home")
+            return redirect("index")
         else:
             order.items.add(order_item)
             order_item.quantity = int(order_qty)
             order_item.save()
             messages.info(request, "Товар добавлено до корзини")
-            return redirect("home")
+            return redirect("index")
     else:
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
         messages.info(request, "Товар добавлено до корзини")
-        return redirect("home")
+        return redirect("index")
 
 
-@login_required()
+@login_required(login_url='/login/')
 def remove_from_cart(request, slug):
     item = get_object_or_404(Item, slug=slug)
     order_qs = Order.objects.filter(
@@ -245,12 +245,40 @@ def remove_from_cart(request, slug):
         messages.info(request, "У вас не має активних замовлень")
         return redirect("cart")
 
-@login_required()
-def add_to_favorite(request, item_slug):
-    item = get_object_or_404(Item, slug=item_slug)
-    item_favorite, created = Favorite.objects.get_or_create(
-            item=item,
-            user=request.user,
+# @login_required()
+# def add_to_favorite(request, item_slug):
+#     item = get_object_or_404(Item, slug=item_slug)
+#     item_favorite, created = Favorite.objects.get_or_create(
+#             item=item,
+#             user=request.user,
+#     )
+#     item_favorite.add(item)
+#     item_favorite.save()
+#     messages.info(request, "Товар добавлено до улюблених")
+#     return redirect("home")
+
+@login_required(login_url='/login/')
+def add_to_favorite(request, slug):
+    item = get_object_or_404(Item, slug=slug)
+    order_qs = Order.objects.filter(
+        user=request.user,
+        ordered=False
     )
-    item_favorite.add(item)
-    return redirect("home")
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.items.filter(item__slug=item.slug).exists():
+            order_item = OrderItem.objects.filter(
+                item=item,
+                user=request.user,
+                ordered=False
+            )[0]
+            order.items.remove(order_item)
+            order_item.delete()
+            messages.info(request, "Товар було видалено з корзини")
+            return redirect("cart")
+        else:
+            messages.info(request, "Товар відсутній в корзині")
+            return redirect("cart")
+    else:
+        messages.info(request, "У вас не має активних замовлень")
+        return redirect("cart")
