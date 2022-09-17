@@ -1,5 +1,5 @@
 from django import template
-from ..models import Category, Item, Order, OrderItem
+from ..models import Category, Item, Order, OrderItem, Favorite
 
 register = template.Library()
 
@@ -37,6 +37,13 @@ def get_cart_navbar(user):
         cart_item = OrderItem.objects.filter(user=user, ordered=False)
         if cart_item.exists():
             return cart_item
+
+@register.filter
+def get_favorite(user):
+    if user.is_authenticated:
+        favorite_item = Favorite.objects.filter(user=user)
+        if favorite_item.exists():
+            return favorite_item
 
 @register.filter
 def get_cart_total_price(user):

@@ -80,14 +80,75 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
-                        <div>
-                            <a href="#">
+
+
+<div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-heart-o"></i>
-                                <span>Улюблене</span>
-                                <div class="qty">21</div>
+                               <span>Улюблене</span>
+                                <div class="qty">{{ request.user|cart_item_count }}</div>
                             </a>
+                            <div class="cart-dropdown">
+                                <div class="cart-list">
+
+             {% if user.is_authenticated %}
+                                    {% if request.user|get_favorite %}
+
+           {% for favorite_item in request.user|get_favorite %}
+                                    <div class="product-widget">
+
+                                        <div class="product-img">
+                                            <img src="{{ favorite_item.item.photo.url }}" alt="">
+                                        </div>
+
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="#">{{favorite_item.item.title}}</a></h3>
+                                            <h4 class="product-price"><span class="qty">{{favorite_item.quantity}}
+                                                x</span>{{favorite_item.item.price}} грн.</h4>
+                                        </div>
+
+                                        <a class="delete"  href="#"> <i class="fa fa-close"></i> </a>
+
+                                    </div>
+           {% endfor %}
+
+
+                                </div>
+
+                                <div class="cart-summary">
+
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="{% url 'cart' %}">Корзина</a>
+                                    <a href="{% url 'checkout' %}">Замовлення <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                                {% else %}
+
+                                </div>
+
+                                <div class="cart-summary">
+                                    <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
+                                    <h5>Ваша корзина пуста</h5>
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="{% url 'home' %}">До магазину</a>
+                                    <a href="{% url 'checkout' %}">Замовлення <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                             {% endif %}
+                                {% else %}
+                               </div>
+                                <div class="cart-summary">
+                                    Увійдіть під своїм логіном та паролем або зареєструйтесь.
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="{% url 'login' %}">Увійти</a>
+                                    <a href="{% url 'register' %}">Реєстрація</a>
+                                </div>
+                                {% endif %}
+                            </div>
+
                         </div>
-                        <!-- /Wishlist -->
+                    <!-- /Wishlist -->
 
                         <!-- Cart -->
                         <div class="dropdown">

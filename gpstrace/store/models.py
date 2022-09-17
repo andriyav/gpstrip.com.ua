@@ -55,6 +55,9 @@ class Item(models.Model):
     def get_add_to_cart_url(self):
         return reverse('add-to-cart', kwargs={'item_slug': self.slug})
 
+    def get_add_to_cart1_url(self):
+        return reverse('add-to-cart1', kwargs={'item_slug': self.slug})
+
 
 class Gallery(models.Model):
     image = models.ImageField(upload_to='gallery')
@@ -95,6 +98,7 @@ class OrderItem(models.Model):
     def get_final_price(self):
 
         return self.get_total_item_price()
+
 
 
 class Order(models.Model):
@@ -139,3 +143,4 @@ class Favorite(models.Model):
 
     def __str__(self):
         return self.user.username
+

@@ -245,14 +245,13 @@ def remove_from_cart(request, slug):
         messages.info(request, "У вас не має активних замовлень")
         return redirect("cart")
 
-@login_required()
-def add_to_favorite(request, item_slug):
+@login_required(login_url='/login/')
+def add_to_cart1(request, item_slug):
     item = get_object_or_404(Item, slug=item_slug)
     item_favorite, created = Favorite.objects.get_or_create(
             item_favorite=item,
             user=request.user,
     )
-    favorite.add(item)
     item_favorite.save()
-    messages.info(request, "Товар добавлено до улюблених")
-    return redirect("home")
+    messages.info(request, "Товар добавлено в улюблене")
+    return redirect("index")
