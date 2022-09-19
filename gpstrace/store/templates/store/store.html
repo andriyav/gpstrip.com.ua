@@ -253,7 +253,7 @@
                                                     {% else %}
                                                     <h4 class="product-price">{{item.price}} грн </h4>
                                                     {% endif %}
-                                                    <form method="get" action="{{ item.get_add_to_cart1_url }}">
+                                                    <form method="get" action='{{item.get_add_to_favorite_url}}'>
                                                     <div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>

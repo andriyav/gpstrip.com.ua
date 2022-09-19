@@ -55,8 +55,8 @@ class Item(models.Model):
     def get_add_to_cart_url(self):
         return reverse('add-to-cart', kwargs={'item_slug': self.slug})
 
-    def get_add_to_cart1_url(self):
-        return reverse('add-to-cart1', kwargs={'item_slug': self.slug})
+    def get_add_to_favorite_url(self):
+        return reverse('add-to-favorite', kwargs={'item_slug': self.slug})
 
 
 class Gallery(models.Model):
@@ -140,6 +140,7 @@ class Favorite(models.Model):
     item_favorite = models.ForeignKey(Item, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.user.username
