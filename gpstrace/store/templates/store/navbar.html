@@ -86,49 +86,37 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-heart-o"></i>
                                <span>Улюблене</span>
-                                <div class="qty">{{ request.user|cart_item_count }}</div>
+                                <div class="qty">{{ request.user|favorite_item_count }}</div>
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
-
              {% if user.is_authenticated %}
                                     {% if request.user|get_favorite %}
-
            {% for favorite_item in request.user|get_favorite %}
                                     <div class="product-widget">
-
                                         <div class="product-img">
                                             <img src="{{ favorite_item.item_favorite.photo.url }}" alt="">
                                         </div>
-
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">{{favorite_item.item_favorite.title}}</a></h3>
-
                                                 </span>{{favorite_item.item_favorite.price}} грн.</h4>
                                         </div>
-
                                         <a class="delete"  href="{% url 'remove-from-favorite' favorite_item.item_favorite.slug %}"> <i class="fa fa-close"></i> </a>
-
                                     </div>
            {% endfor %}
-
-
                                 </div>
-
                                 <div class="cart-summary">
-
                                 </div>
                                 <div class="cart-btns">
                                     <a href="{% url 'cart' %}">Корзина</a>
                                     <a href="{% url 'checkout' %}">Замовлення <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                                 {% else %}
-
                                 </div>
 
                                 <div class="cart-summary">
-                                    <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
-                                    <h5>Ваша корзина пуста</h5>
+                                    <small>{{ request.user|favorite_item_count }} Товар(ів) додано до улюбленого</small>
+                                    <h5>Улюблене вільне від товарів</h5>
                                 </div>
                                 <div class="cart-btns">
                                     <a href="{% url 'home' %}">До магазину</a>

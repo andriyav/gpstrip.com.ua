@@ -55,3 +55,11 @@ def get_cart_total_price(user):
                 total_item = prices.quantity * prices.item.price
                 total += total_item
         return total
+
+@register.filter
+def favorite_item_count(user):
+    if user.is_authenticated:
+        qs = Favorite.objects.filter(user=user)
+        if qs.exists():
+            return qs.count()
+    return 0

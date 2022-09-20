@@ -258,25 +258,12 @@ def add_to_favorite(request, item_slug):
 
 
 @login_required(login_url='/login/')
-def remove_from_favorite(request, slug):
-    item = get_object_or_404(Item, slug=slug)
-    favorite_qs = Favorite.objects.filter(
+def remove_from_favorite(request, item_slug):
+    item = get_object_or_404(Item, slug=item_slug)
+    item_favorite = Favorite.objects.filter(
+        item_favorite=item,
         user=request.user,
     )
-    if favorite_qs.exists():
-        item_favorite = favorite_qs[0]
-        if item_favorite.items.filter(item__slug=item.slug).exists():
-            favorite_item = Favorite.objects.filter(
-                item=item,
-                user=request.user,
-            )[0]
-            item_favorite.items.remove(favorite_item)
-            favorite_item.delete()
-            messages.info(request, "Товар було видалено з корзини")
-            return redirect("cart")
-        else:
-            messages.info(request, "Товар відсутній в корзині")
-            return redirect("cart")
-    else:
-        messages.info(request, "У вас не має активних замовлень")
-        return redirect("cart")
+    item_favorite.delete()
+    messages.info(request, "Товар було видалено з улюблених")
+    return redirect("index")
