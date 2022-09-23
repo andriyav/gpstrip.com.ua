@@ -79,246 +79,123 @@
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
-                        								<!-- Wishlist -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
-										<span>Улюблене</span>
-										<div class="qty">3</div>
-									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-                                             {% if user.is_authenticated %}
-                                            {% if request.user|get_favorite %}
-                                            {% for favorite_item in request.user|get_favorite %}
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="{{ favorite_item.item_favorite.photo.url }}" alt="">
-												</div>
-												<div class="product-body">
+                        <!-- Wishlist -->
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Улюблене</span>
+                                <div class="qty">{{ request.user|favorite_item_count }}</div>
+                            </a>
+                            <div class="cart-dropdown">
+                                <div class="cart-list">
+                                    {% if user.is_authenticated %}
+                                    {% if request.user|get_favorite %}
+                                    {% for favorite_item in request.user|get_favorite %}
+                                    <div class="product-widget">
+                                        <div class="product-img">
+                                            <img src="{{ favorite_item.item_favorite.photo.url }}" alt="">
+                                        </div>
+                                        <div class="product-body">
                                             <h3 class="product-name"><a
                                                     href="{% url 'itemv' favorite_item.item_favorite.slug %}">{{favorite_item.item_favorite.title}}</a>
                                             </h3>
                                             </span>{{favorite_item.item_favorite.price}} грн.</h4>
                                         </div>
-												<a class="delete"
+                                        <a class="delete"
                                            href="{% url 'remove-from-favorite' favorite_item.item_favorite.slug %}"> <i
                                                 class="fa fa-close"></i> </a>
-											</div>
-                                            {% endfor %}
+                                    </div>
+                                    {% endfor %}
 
-                                            {% endif %}
+                                    {% endif %}
 
+                                    {% endif %}
+
+                                </div>
+                                <div class="cart-summary">
+                                    <small>{{ request.user|favorite_item_count }} Товар(ів) відмічено</small>
+                                </div>
+                                <!--										<div class="cart-btns">-->
+                                <!--											<a href="#">View Cart</a>-->
+                                <!--											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>-->
+                                <!--										</div>-->
+                            </div>
+                        </div>
+                        <!-- /Wishlist -->
+
+                        <!-- Cart -->
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Корзина</span>
+                                <div class="qty">{{ request.user|cart_item_count }}</div>
+                            </a>
+                            <div class="cart-dropdown">
+                                <div class="cart-list">
+                                    {% if user.is_authenticated %}
+                                    {% if request.user|get_cart_navbar %}
+                                    {% for order_item in request.user|get_cart_navbar %}
+                                    <div class="product-widget">
+                                        <div class="product-img">
+                                            <img src="{{ order_item.item.photo.url }}" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a href="{% url 'itemv' order_item.item.slug %}">{{order_item.item.title}}</a>
+                                            </h3>
+                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.price}}
+                                                грн.</h4>
+                                        </div>
+                                        <a class="delete" href="{% url 'remove-from-cart' order_item.item.slug %}"><i
+                                                class="fa fa-close"></i></a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="cart-summary">
+                                    <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
+                                    <h5>Разом: {{ request.user|get_cart_total_price }} грн.</h5>
+                                </div>
+                                <div class="cart-btns">
+                                    <a href="{% url 'cart' %}">Корзина</a>
+                                    <a href="{% url 'checkout' %}">Замовлення<i
+                                            class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                                {% else %}
+                            </div>
+                            <div class="cart-summary">
+                                <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
+                                <h5>Ваша корзина пуста</h5>
+                            </div>
+                            <div class="cart-btns">
+                                <a href="{% url 'home' %}">Корзина</a>
+                                <a href="{% url 'checkout' %}">Замовлення<i
+                                        class="fa fa-arrow-circle-right"></i></a>
+                            </div>
                             {% endif %}
-
-										</div>
-										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
-										</div>
-										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
-									</div>
-								</div>
-								<!-- /Wishlist -->
-
-								<!-- Cart -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
-										<div class="qty">3</div>
-									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product02.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-										</div>
-										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
-										</div>
-										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
-									</div>
-								</div>
-								<!-- /Cart -->
-<!--                        &lt;!&ndash; Wishlist &ndash;&gt;-->
-
-
-<!--                        <div class="dropdown">-->
-<!--                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">-->
-<!--                                <i class="fa fa-heart-o"></i>-->
-<!--                                <span>Улюблене</span>-->
-<!--                                <div class="qty">{{ request.user|favorite_item_count }}</div>-->
-<!--                            </a>-->
-<!--                            <div class="cart-dropdown">-->
-<!--                                <div class="cart-list">-->
-<!--                                    {% if user.is_authenticated %}-->
-<!--                                    {% if request.user|get_favorite %}-->
-<!--                                    {% for favorite_item in request.user|get_favorite %}-->
-<!--                                    <div class="product-widget">-->
-<!--                                        <div class="product-img">-->
-<!--                                            <img src="{{ favorite_item.item_favorite.photo.url }}" alt="">-->
-<!--                                        </div>-->
-<!--                                        <div class="product-body">-->
-<!--                                            <h3 class="product-name"><a-->
-<!--                                                    href="{% url 'itemv' favorite_item.item_favorite.slug %}">{{favorite_item.item_favorite.title}}</a>-->
-<!--                                            </h3>-->
-<!--                                            </span>{{favorite_item.item_favorite.price}} грн.</h4>-->
-<!--                                        </div>-->
-<!--                                        <a class="delete"-->
-<!--                                           href="{% url 'remove-from-favorite' favorite_item.item_favorite.slug %}"> <i-->
-<!--                                                class="fa fa-close"></i> </a>-->
-<!--                                    </div>-->
-<!--                                    {% endfor %}-->
-<!--                                </div>-->
-<!--                                <div class="cart-summary">-->
-<!--                                    <small>{{ request.user|favorite_item_count }} Товар(ів) додано до улюблене</small>-->
-<!--                                </div>-->
-<!--                                {% else %}-->
-
-<!--                                <div class="cart-summary">-->
-<!--                                    <small>{{ request.user|favorite_item_count }} Товар(ів) додано до улюбленого</small>-->
-<!--                                    <h5>Улюблене вільне від товарів</h5>-->
-<!--                                </div>-->
-<!--                                <div class="cart-btns">-->
-<!--                                    <a href="{% url 'home' %}">До магазину</a>-->
-<!--                                    <a href="{% url 'checkout' %}">Замовлення <i-->
-<!--                                            class="fa fa-arrow-circle-right"></i></a>-->
-<!--                                </div>-->
-<!--                                {% endif %}-->
-<!--                                {% else %}-->
-<!--                            </div>-->
-<!--                            <div class="cart-summary">-->
-<!--                                Увійдіть під своїм логіном та паролем або зареєструйтесь.-->
-<!--                            </div>-->
-<!--                            <div class="cart-btns">-->
-<!--                                <a href="{% url 'login' %}">Увійти</a>-->
-<!--                                <a href="{% url 'register' %}">Реєстрація</a>-->
-<!--                            </div>-->
-<!--                            {% endif %}-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash; /Wishlist &ndash;&gt;-->
-
-
-<!--                        <div class="col-md-3 clearfix">-->
-<!--                            <div class="header-ctn">-->
-<!--                                &lt;!&ndash; Cart &ndash;&gt;-->
-<!--                                <div class="dropdown">-->
-<!--                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">-->
-<!--                                        <i class="fa fa-shopping-cart"></i>-->
-<!--                                        <span>Корзина</span>-->
-<!--                                        <div class="qty">{{ request.user|cart_item_count }}</div>-->
-<!--                                    </a>-->
-<!--                                    <div class="cart-dropdown">-->
-<!--                                        <div class="cart-list">-->
-<!--                                            {% if user.is_authenticated %}-->
-<!--                                            {% if request.user|get_cart_navbar %}-->
-
-<!--                                            {% for order_item in request.user|get_cart_navbar %}-->
-<!--                                            <div class="product-widget">-->
-
-<!--                                                <div class="product-img">-->
-<!--                                                    <img src="{{ order_item.item.photo.url }}" alt="">-->
-<!--                                                </div>-->
-
-<!--                                                <div class="product-body">-->
-<!--                                                    <h3 class="product-name"><a-->
-<!--                                                            href="{% url 'itemv' order_item.item.slug %}">{{order_item.item.title}}</a>-->
-<!--                                                    </h3>-->
-<!--                                                    <h4 class="product-price"><span class="qty">{{order_item.quantity}}-->
-<!--                                                x</span>{{order_item.item.price}} грн.</h4>-->
-<!--                                                </div>-->
-
-<!--                                                <a class="delete"-->
-<!--                                                   href="{% url 'remove-from-cart' order_item.item.slug %}"> <i-->
-<!--                                                        class="fa fa-close"></i> </a>-->
-
-<!--                                            </div>-->
-<!--                                            {% endfor %}-->
-
-
-<!--                                            <div class="cart-summary">-->
-<!--                                                <small>{{ request.user|cart_item_count }} Товар(ів) додано до-->
-<!--                                                    корзини</small>-->
-<!--                                                <h5>Разом: {{ request.user|get_cart_total_price }} грн.</h5>-->
-<!--                                            </div>-->
-<!--                                            <div class="cart-btns">-->
-<!--                                                <a href="{% url 'cart' %}">Корзина</a>-->
-<!--                                                <a href="{% url 'checkout' %}">Замовлення <i-->
-<!--                                                        class="fa fa-arrow-circle-right"></i></a>-->
-<!--                                            </div>-->
-<!--                                            {% else %}-->
-
-<!--                                        </div>-->
-
-<!--                                        <div class="cart-summary">-->
-<!--                                            <small>{{ request.user|cart_item_count }} Товар(ів) додано до-->
-<!--                                                корзини</small>-->
-<!--                                            <h5>Ваша корзина пуста</h5>-->
-<!--                                        </div>-->
-<!--                                        <div class="cart-btns">-->
-<!--                                            <a href="{% url 'home' %}">До магазину</a>-->
-<!--                                            <a href="{% url 'checkout' %}">Замовлення <i-->
-<!--                                                    class="fa fa-arrow-circle-right"></i></a>-->
-<!--                                        </div>-->
-<!--                                        {% endif %}-->
-<!--                                        {% else %}-->
-<!--                                    </div>-->
-<!--                                    <div class="cart-summary">-->
-<!--                                        Увійдіть під своїм логіном та паролем або зареєструйтесь.-->
-<!--                                    </div>-->
-<!--                                    <div class="cart-btns">-->
-<!--                                        <a href="{% url 'login' %}">Увійти</a>-->
-<!--                                        <a href="{% url 'register' %}">Реєстрація</a>-->
-<!--                                    </div>-->
-<!--                                    {% endif %}-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                &lt;!&ndash; /Cart &ndash;&gt;-->
-
-
-                <!-- Menu Toogle -->
-                <div class="menu-toggle">
-                    <a href="#">
-                        <i class="fa fa-bars"></i>
-                        <span>Menu</span>
-                    </a>
+                            {% else %}
+                        </div>
+                        <div class="cart-summary">
+                            Увійдіть під своїм логіном та паролем або зареєструйтесь.
+                        </div>
+                        <div class="cart-btns">
+                            <a href="{% url 'login' %}">Увійти</a>
+                            <a href="{% url 'register' %}">Реєстрація</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!-- Menu Toogle -->
+                    <div class="menu-toggle">
+                        <a href="#">
+                            <i class="fa fa-bars"></i>
+                            <span>Menu</span>
+                        </a>
+                    </div>
+                    <!-- Cart -->
+                    <!-- /Menu Toogle -->
                 </div>
-                <!-- /Menu Toogle -->
             </div>
+            <!-- /ACCOUNT -->
         </div>
-        <!-- /ACCOUNT -->
-    </div>
-    <!-- row -->
+        <!-- row -->
     </div>
     <!-- container -->
     </div>
