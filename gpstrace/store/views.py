@@ -10,6 +10,7 @@ from .models import Item, Category, OrderItem, Order, ShippingAddress, Favorite
 from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 import requests
 
 
