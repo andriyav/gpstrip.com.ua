@@ -212,16 +212,16 @@
             <ul class="main-nav nav navbar-nav">
 
                 <p id="demo"></p>
-                <script>
-                    document.getElementById("demo").innerHTML =
-                        "The full URL of this page is:<br>" + window.location.href;
-                </script>
+<!--                <script>-->
+<!--                    document.getElementById("demo").innerHTML =-->
+<!--                        "The full URL of this page is:<br>" + window.location.href;-->
+<!--                </script>-->
 
-                {% if 'id' == 'home' %}
+
                 <li class="active"><a href="{% url 'home' %}">Вітрина</a></li>
-                {% else %}
+
                 <li><a href="{% url 'index' %}">Крамниця</a></li>
-                {% endif %}
+
                 <li><a href="#">Про нас</a></li>
                 <li><a href="#">Доставка</a></li>
                 <li><a href="#">Оплата</a></li>
