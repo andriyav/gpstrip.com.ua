@@ -264,7 +264,7 @@
 							<p>До 30%</p>
 							<form action= "{{ item.show_discount_30 }}" method="get">
 <!--							<a class="primary-btn cta-btn" href=""{% url 'category' 'avtomotive' %}"">Купуй зараз</a>-->
-								<input class="primary-btn cta-btn" id="submit" type="button" name= '30' value="Купуй зараз" />
+								{% get_discount_30 %}
 							</form>
 						</div>
 					</div>

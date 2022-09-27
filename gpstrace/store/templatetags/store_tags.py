@@ -10,12 +10,11 @@ def get_labeled(filter='Популярне'):
     else:
         return Item.objects.filter(label=filter)
 #
-# @register.simple_tag()
-# def get_labeled(filter='30'):
-#     if not filter:
-#         return Item.objects.all()
-#     else:
-#         return Item.objects.filter(discount=filter)
+
+@register.inclusion_tag('store/list_discount.html')
+def get_discount_30():
+    item_discount = Item.objects.filter(discount='30')
+    return {'item_discount': item_discount}
 
 @register.inclusion_tag('store/list_categories.html')
 def get_categories():

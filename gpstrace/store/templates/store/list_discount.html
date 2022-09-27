@@ -1,0 +1,12 @@
+    {% for d in item_discount %}
+
+		<div class="col-md-4 col-xs-6">
+		<lp><a class="primary-btn cta-btn" href="{{d.get_absolute_url}}">Купити {{d.title}}</a></lp>
+ <div class="product">
+<div class="product-img">
+								<img src="{{d.photo.url}}" alt="">
+							</div>
+		</label>
+	</div>
+			</div>
+    {% endfor %}
