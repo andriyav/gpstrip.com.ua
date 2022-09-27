@@ -9,7 +9,13 @@ def get_labeled(filter='Популярне'):
         return Item.objects.all()
     else:
         return Item.objects.filter(label=filter)
-
+#
+# @register.simple_tag()
+# def get_labeled(filter='30'):
+#     if not filter:
+#         return Item.objects.all()
+#     else:
+#         return Item.objects.filter(discount=filter)
 
 @register.inclusion_tag('store/list_categories.html')
 def get_categories():

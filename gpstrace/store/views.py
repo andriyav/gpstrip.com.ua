@@ -46,6 +46,8 @@ class HomeView(ListView):
             return Item.objects.order_by('price')
         elif filter == 'discount':
             return Item.objects.order_by('-discount')
+    def show_discount_30(self):
+        return Item.objects.filter(discount = '30')
 
 
 class ShowItem(DetailView):

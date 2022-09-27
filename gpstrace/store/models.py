@@ -44,6 +44,7 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse('itemv', kwargs={'item_slug': self.slug})
 
+
     def discount_price_calculation(self):
         self.discount_price = self.price - (self.price * (self.discount / 100))
         return self.discount_price
