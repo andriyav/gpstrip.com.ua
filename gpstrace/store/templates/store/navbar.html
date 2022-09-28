@@ -142,8 +142,13 @@
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="{% url 'itemv' order_item.item.slug %}">{{order_item.item.title}}</a>
                                             </h3>
-                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.price}}
+                                            {% if order_item.item.discount %}
+                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.discount_price_calculation | floatformat:2}}
                                                 грн.</h4>
+                                            {% else %}
+                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.price | floatformat:2}}
+                                                грн.</h4>
+                                            {% endif %}
                                         </div>
                                         <a class="delete" href="{% url 'remove-from-cart' order_item.item.slug %}"><i
                                                 class="fa fa-close"></i></a>

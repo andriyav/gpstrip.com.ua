@@ -176,8 +176,13 @@
 							{% for items_checkout in ob_item.items.all %}
 							<div class="order-products">
 								<div class="order-col">
+									{% if items_checkout.item.discount %}
+									<div>{{items_checkout.quantity}} x {{items_checkout.item.title}}</div>
+									<div>{{items_checkout.item.discount_price_calculation | floatformat:2}}</div>
+									{% else %}
 									<div>{{items_checkout.quantity}} x {{items_checkout.item.title}}</div>
 									<div>{{items_checkout.item.price}}</div>
+									{% endif %}
 								</div>
 
 							</div>
