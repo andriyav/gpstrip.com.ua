@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="cart-summary">
                                     <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
-                                    <h5>Разом: {{ request.user|get_cart_total_price }} грн.</h5>
+                                    <h5>Разом: {{ request.user|get_cart_total_price|floatformat:2 }} грн.</h5>
                                 </div>
                                 <div class="cart-btns">
                                     <a href="{% url 'cart' %}">Корзина</a>
