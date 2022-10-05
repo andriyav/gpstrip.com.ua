@@ -17,12 +17,17 @@ BATTERY_CHOICES = (
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=True)
-    name = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    email = models.CharField(max_length=200, null=True, blank=True)
+    device = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        if self.name:
+            name = self.name
+        else:
+            name = self.device
+        return str(name)
 
 
 class Item(models.Model):
