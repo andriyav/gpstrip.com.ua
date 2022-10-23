@@ -111,6 +111,7 @@
 							<div class="order-col">
 								<div class="order-total"><strong>Разом</strong></div>
 								<div><strong class="order-total">{{object.get_total|floatformat:1}} грн</strong></div>
+								{{object.cart_item_count}}
 							</div>
 						<a href="{% url 'checkout' %}" class="primary-btn order-submit">Оформити замовлення</a>
 					</div>

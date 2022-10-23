@@ -1,0 +1,23 @@
+<div>{{ request.session.key }}</div>
+<div>{{ favorites_list }}</div>
+<div>ecc</div>
+<div>
+    <img src="{{ blog_posts.photo.url }}" alt="">
+</div>
+{% for fav in favorite_lists %}
+<div class="product-widget">
+                        <div class="product-img">
+                            <img src="{{ fav.photo.url }}" alt="">
+                        </div>
+                        <div class="product-body">
+                            <h3 class="product-name"><a href="">{{fav.title}}</a></h3>
+                            {% endfor%}
+
+<div>{{ favorite_lists }}</div>
+                            <div>{{ favorite_lists }}</div>
+
+
+
+
+
+

@@ -68,6 +68,12 @@
                               {% endfor %}
 						</div>
 					</div>
+<p>{{request.session.keys}}</p>
+										<p>{{request.user}}</p>
+										<p>{{request.session.recently_viewed}}</p>
+					{% for item in favorite_lists %}
+										{{item.title}}
+					{% endfor %}
 					<!-- /Product main img -->
 					<!-- Product thumb imgs -->
 					<div class="col-md-2  col-md-pull-5">

@@ -23,12 +23,7 @@ class Customer(models.Model):
     device = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        if self.name:
-            name = self.name
-        else:
-            name = self.device
-        return str(name)
-
+        return self.name
 
 class Item(models.Model):
     title = models.CharField(max_length=100, null=True, verbose_name='Назва товару')
@@ -83,7 +78,7 @@ class Category(models.Model):
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
+                             on_delete=models.CASCADE, null=True, blank=True)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
@@ -108,7 +103,8 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE, null=True, blank=True)
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
@@ -148,4 +144,3 @@ class Favorite(models.Model):
 
     def __str__(self):
         return self.user.username
-

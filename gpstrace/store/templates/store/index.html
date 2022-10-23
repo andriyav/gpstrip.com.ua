@@ -91,6 +91,7 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
+
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
@@ -112,6 +113,7 @@
 							</div>
 						</div>
 					</div>
+{%get_viewed request.session.recently_viewed%}
 					<!-- /section title -->
 					<!-- Products tab & slick -->
 					<div class="col-md-12">
@@ -120,8 +122,10 @@
 								<!-- tab -->
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
+
+
 										<!-- product -->
-										{% for item in index_items %}
+										{% for item in index_item %}
 										{% if item.label == "Новинка" %}
 										<div class="product">
 											<div class="product-img">

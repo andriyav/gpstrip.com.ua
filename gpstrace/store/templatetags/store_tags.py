@@ -65,6 +65,7 @@ def get_cart_total_price(user):
                 else:
                     total_item = prices.quantity * prices.item.price
                     total += total_item
+
         return total
 # self.quantity * self.item.price - (self.item.price * (self.item.discount / 100))
 @register.filter
@@ -74,3 +75,10 @@ def favorite_item_count(user):
         if qs.exists():
             return qs.count()
     return 0
+
+
+@register.inclusion_tag('store/list_viewed.html')
+def get_viewed(n):
+
+    item_viewed = Item.objects.filter(slug__in=n)
+    return {'item_viewed': item_viewed }

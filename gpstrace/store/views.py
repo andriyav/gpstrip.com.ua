@@ -46,8 +46,9 @@ class HomeView(ListView):
             return Item.objects.order_by('price')
         elif filter == 'discount':
             return Item.objects.order_by('-discount')
+
     def show_discount_30(self):
-        return Item.objects.filter(discount = '30')
+        return Item.objects.filter(discount='30')
 
 
 class ShowItem(DetailView):
@@ -56,10 +57,28 @@ class ShowItem(DetailView):
     slug_url_kwarg = 'item_slug'
     context_object_name = 'item_view'
 
+    def get(self, request, *args, **kwargs):
+        recently_viewed = None
+        if 'recently_viewed' in request.session:
+            if self.kwargs in request.session['recently_viewed']:
+                request.session['recently_viewed'].remove(self.kwargs['item_slug'])
+            recently_viewed = Item.objects.filter(slug__in=request.session['recently_viewed'])
+            request.session['recently_viewed'].insert(0, self.kwargs['item_slug'])
+            if len(self.request.session['recently_viewed']) > 5:
+                request.session['recently_viewed'].pop()
+        else:
+            self.request.session['recently_viewed'] = [self.kwargs['item_slug']]
+        request.session.modified = True
+
+        return render(request, 'store/product.html', {"favorite_lists": recently_viewed})
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = context['item_view']
+
+
         return context
+
 
 
 class CategoryTracker(ListView):
@@ -248,12 +267,13 @@ def remove_from_cart(request, slug):
         messages.info(request, "У вас не має активних замовлень")
         return redirect("cart")
 
+
 @login_required(login_url='/login/')
 def add_to_favorite(request, item_slug):
     item = get_object_or_404(Item, slug=item_slug)
     item_favorite, created = Favorite.objects.get_or_create(
-            item_favorite=item,
-            user=request.user,
+        item_favorite=item,
+        user=request.user,
     )
     item_favorite.save()
     messages.info(request, "Товар добавлено в улюблене")
@@ -270,3 +290,23 @@ def remove_from_favorite(request, item_slug):
     item_favorite.delete()
     messages.info(request, "Товар було видалено з улюблених")
     return redirect("index")
+
+
+# def blog_list(request, slug):
+#     recently_viewed = None
+#     product = Item.objects.get(slug=slug)
+#     if 'recently_viewed' in request.session:
+#         if slug in request.session['recently_viewed']:
+#             request.session['recently_viewed'].remove(slug)
+#         recently_viewed = Item.objects.filter(slug__in=request.session['recently_viewed'])
+#         request.session['recently_viewed'].insert(0, slug)
+#         if len(request.session['recently_viewed']) > 5:
+#             request.session['recently_viewed'].pop()
+#     else:
+#         request.session['recently_viewed'] = [slug]
+#     request.session.modified = True
+#     context = {
+#         "blog_posts": product,
+#         "favorite_lists": recently_viewed,
+#     }
+#     return render(request, 'store/index.html', context=context)
