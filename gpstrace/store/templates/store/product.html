@@ -52,6 +52,7 @@
     {% endif %}
     </div>
 			{% include "store/navbar.html" %}
+
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
@@ -61,6 +62,7 @@
 					<!-- Product main img -->
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
+
 								{% for image in object.images.all %}
 							<div class="product-preview">
 								<img src="{{image.image.url}}" alt="">
@@ -68,12 +70,6 @@
                               {% endfor %}
 						</div>
 					</div>
-<p>{{request.session.keys}}</p>
-										<p>{{request.user}}</p>
-										<p>{{request.session.recently_viewed}}</p>
-					{% for item in favorite_lists %}
-										{{item.title}}
-					{% endfor %}
 					<!-- /Product main img -->
 					<!-- Product thumb imgs -->
 					<div class="col-md-2  col-md-pull-5">

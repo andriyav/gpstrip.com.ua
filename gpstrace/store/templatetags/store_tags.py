@@ -78,7 +78,7 @@ def favorite_item_count(user):
 
 
 @register.inclusion_tag('store/list_viewed.html')
-def get_viewed(n):
+def get_viewed(slug):
 
-    item_viewed = Item.objects.filter(slug__in=n)
-    return {'item_viewed': item_viewed }
+    item_viewed = Item.objects.filter(slug__in=slug)
+    return {'item_viewed': item_viewed}

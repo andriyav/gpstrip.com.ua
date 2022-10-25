@@ -58,23 +58,20 @@ class ShowItem(DetailView):
     context_object_name = 'item_view'
 
     def get(self, request, *args, **kwargs):
-        recently_viewed = None
         if 'recently_viewed' in request.session:
-            if self.kwargs in request.session['recently_viewed']:
-                request.session['recently_viewed'].remove(self.kwargs['item_slug'])
-            recently_viewed = Item.objects.filter(slug__in=request.session['recently_viewed'])
+            # if self.kwargs in request.session['recently_viewed']:
+            #     request.session['recently_viewed'].remove(self.kwargs['item_slug'])
             request.session['recently_viewed'].insert(0, self.kwargs['item_slug'])
-            if len(self.request.session['recently_viewed']) > 5:
-                request.session['recently_viewed'].pop()
         else:
             self.request.session['recently_viewed'] = [self.kwargs['item_slug']]
         request.session.modified = True
 
-        return render(request, 'store/product.html', {"favorite_lists": recently_viewed})
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = context['item_view']
+        context['item_view'] = context['item_view']
 
 
         return context

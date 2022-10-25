@@ -19,6 +19,5 @@ urlpatterns = [
     path('remove-from-cart/<slug>/', remove_from_cart, name='remove-from-cart'),
     path('add-to-favorite/<slug:item_slug>/', add_to_favorite, name='add-to-favorite'),
     path('remove-from-favorite/<slug:item_slug>/', remove_from_favorite, name='remove-from-favorite'),
-    # path('sessions/<slug>', blog_list, name='blog_list'),
 
     ]
