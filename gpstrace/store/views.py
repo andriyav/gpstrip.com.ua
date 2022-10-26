@@ -203,40 +203,89 @@ def logout_user(request):
     return redirect('home')
 
 
-@login_required(login_url='/login/')
+
 def add_to_cart(request, item_slug):
-    try:
-        order_qty = request.GET["order-qty"]
-    except:
-        order_qty = 1
-    item = get_object_or_404(Item, slug=item_slug)
-    order_item, created = OrderItem.objects.get_or_create(
-        item=item,
-        user=request.user,
-        ordered=False
-    )
-    order_qs = Order.objects.filter(user=request.user, ordered=False)
-    if order_qs.exists():
-        order = order_qs[0]
-        if order.items.filter(item__slug=item.slug).exists():
-            order_item.quantity += int(order_qty)
-            order_item.save()
-            messages.info(request, "Кількість товару в корзині збільшена")
-            return redirect("index")
+    if request.user.is_anonymous:
+        try:
+            order_qty = request.GET["order-qty"]
+        except:
+            order_qty = 1
+        messages.info(request, "Залогуйтесь, будь-ласка.")
+        if 'cart' in request.session:
+            request.session['cart'].insert(0, item_slug)
+            request.session['cart'].insert(0, order_qty)
         else:
+            request.session['cart'] = [item_slug]
+        request.session.modified = True
+
+        return redirect("index")
+    else:
+        try:
+            order_qty = request.GET["order-qty"]
+        except:
+            order_qty = 1
+        item = get_object_or_404(Item, slug=item_slug)
+        order_item, created = OrderItem.objects.get_or_create(
+            item=item,
+            user=request.user,
+            ordered=False
+        )
+        order_qs = Order.objects.filter(user=request.user, ordered=False)
+        if order_qs.exists():
+            order = order_qs[0]
+            if order.items.filter(item__slug=item.slug).exists():
+                order_item.quantity += int(order_qty)
+                order_item.save()
+                messages.info(request, "Кількість товару в корзині збільшена")
+                return redirect("index")
+            else:
+                order.items.add(order_item)
+                order_item.quantity = int(order_qty)
+                order_item.save()
+                messages.info(request, "Товар добавлено до корзини")
+                return redirect("index")
+        else:
+            ordered_date = timezone.now()
+            order = Order.objects.create(
+                user=request.user, ordered_date=ordered_date)
             order.items.add(order_item)
-            order_item.quantity = int(order_qty)
-            order_item.save()
             messages.info(request, "Товар добавлено до корзини")
             return redirect("index")
-    else:
-        ordered_date = timezone.now()
-        order = Order.objects.create(
-            user=request.user, ordered_date=ordered_date)
-        order.items.add(order_item)
-        messages.info(request, "Товар добавлено до корзини")
-        return redirect("index")
 
+
+# @login_required(login_url='/login/')
+# def add_to_cart(request, item_slug):
+#     try:
+#         order_qty = request.GET["order-qty"]
+#     except:
+#         order_qty = 1
+#     item = get_object_or_404(Item, slug=item_slug)
+#     order_item, created = OrderItem.objects.get_or_create(
+#         item=item,
+#         user=request.user,
+#         ordered=False
+#     )
+#     order_qs = Order.objects.filter(user=request.user, ordered=False)
+#     if order_qs.exists():
+#         order = order_qs[0]
+#         if order.items.filter(item__slug=item.slug).exists():
+#             order_item.quantity += int(order_qty)
+#             order_item.save()
+#             messages.info(request, "Кількість товару в корзині збільшена")
+#             return redirect("index")
+#         else:
+#             order.items.add(order_item)
+#             order_item.quantity = int(order_qty)
+#             order_item.save()
+#             messages.info(request, "Товар добавлено до корзини")
+#             return redirect("index")
+#     else:
+#         ordered_date = timezone.now()
+#         order = Order.objects.create(
+#             user=request.user, ordered_date=ordered_date)
+#         order.items.add(order_item)
+#         messages.info(request, "Товар добавлено до корзини")
+#         return redirect("index")
 
 @login_required(login_url='/login/')
 def remove_from_cart(request, slug):
@@ -275,6 +324,7 @@ def add_to_favorite(request, item_slug):
     item_favorite.save()
     messages.info(request, "Товар добавлено в улюблене")
     return redirect("index")
+
 
 
 @login_required(login_url='/login/')

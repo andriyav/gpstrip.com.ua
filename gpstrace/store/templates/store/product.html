@@ -105,7 +105,7 @@
 										{% endif %}
 								<span class="product-available">In Stock</span>
 							</div>
-							<p>{{item_view.description}}</p>
+							<p>{{item_view.short_description|linebreaks}}</p>
 							<form method="get" action="{{ item_view.get_add_to_cart_url }}">
 								{% csrf_token %}
 							<div class="add-to-cart">
@@ -155,7 +155,7 @@
 								<div id="tab1" class="tab-pane fade in active">
 									<div class="row">
 										<div class="col-md-12">
-											<p>{{item_view.description}}</p>
+											<p>{{item_view.description|linebreaks}}</p>
 										</div>
 									</div>
 								</div>
