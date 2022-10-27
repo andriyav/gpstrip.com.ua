@@ -33,6 +33,7 @@ class Item(models.Model):
     discount = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True, verbose_name='Знижка у %')
     short_description = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Короткий опис')
     description = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Опис')
+    details = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Деталі')
     label = models.CharField(choices=LABEL_CHOICES, max_length=20, null=True, blank=True, verbose_name='Акційна мітка')
     battery = models.CharField(choices=BATTERY_CHOICES, max_length=20, null=True, blank=True,
                                verbose_name='Ємність акумуляторної батареї')
