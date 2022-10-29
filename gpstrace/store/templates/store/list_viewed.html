@@ -37,12 +37,16 @@
 
 										<!-- product -->
 										{% for item in item_viewed %}
-										{% if item.label == "Новинка" %}
+
 										<div class="product">
+											 <a href="{{item.get_absolute_url}}">
 											<div class="product-img">
+
 												<img src="{{ item.photo.url }}" alt="">
 												<div class="product-label">
-													<span class="sale">-30%</span>
+													{% if item.discount %}
+                                                <span class="sale">Знижка {{item.discount | floatformat:0}}%</span>
+                                                {% endif %}
 													{% if item.label %}
                                                         <span class="new">{{item.label}}</span>
                                                         {% endif %}
@@ -50,7 +54,7 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">{{item.cat}}</p>
-												<h3 class="product-name"><a href="#">product name goes here</a></h3>
+												<h3 class="product-name"><a href="{{item.get_absolute_url}}">{{item.title}}</a></h3>
 												{% if item.discount %}
                                                     <h4 class="product-price">{{item.discount_price_calculation | floatformat:2}} грн
                                                         <del class="product-old-price">{{item.price}} грн</del>
@@ -90,7 +94,7 @@
 
 											</div>
 										</div>
-										{% endif %}
+
 										{% endfor %}
 										<!-- /product --></div>
 									<div id="slick-nav-1" class="products-slick-nav"></div>
