@@ -1,7 +1,9 @@
     {% for c in cats %}
-	<div class="input-checkbox">
-		<lp><a href="{{c.get_absolute_url}}">{{c.name}}</a></lp>
-		<small>(120)</small>
+
+	<div class="active">
+		<p class="active"><a href="{{c.get_absolute_url}}">{{c.name}}</a></p>
+<!--		<small>(120)</small>-->
+
 		</label>
 	</div>
     {% endfor %}
