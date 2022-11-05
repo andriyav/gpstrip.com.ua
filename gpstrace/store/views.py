@@ -235,6 +235,7 @@ def add_to_cart(request, item_slug):
             order = order_qs[0]
             if order.items.filter(item__slug=item.slug).exists():
                 order_item.quantity += int(order_qty)
+                request.session['cart'].insert(0, order_item.order_qty)
                 order_item.save()
                 messages.info(request, "Кількість товару в корзині збільшена")
                 return redirect("index")
