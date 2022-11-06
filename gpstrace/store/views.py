@@ -205,53 +205,29 @@ def logout_user(request):
 
 
 def add_to_cart(request, item_slug):
-    if request.user.is_anonymous:
-        try:
-            order_qty = request.GET["order-qty"]
-        except:
-            order_qty = 1
-        messages.info(request, "Залогуйтесь, будь-ласка.")
-        if 'cart' in request.session:
-            request.session['cart'].insert(0, item_slug)
-            request.session['cart'].insert(0, order_qty)
-        else:
-            request.session['cart'] = [item_slug]
-        request.session.modified = True
+    try:
+        order_qty = int(request.GET["order-qty"])
+    except:
+        order_qty = 1
 
-        return redirect("index")
-    else:
-        try:
-            order_qty = request.GET["order-qty"]
-        except:
-            order_qty = 1
+    item = get_object_or_404(Item, slug=item_slug)
+    if 'cart' not in request.session:
+        request.session['cart'] = {}
         item = get_object_or_404(Item, slug=item_slug)
-        order_item, created = OrderItem.objects.get_or_create(
-            item=item,
-            user=request.user,
-            ordered=False
-        )
-        order_qs = Order.objects.filter(user=request.user, ordered=False)
-        if order_qs.exists():
-            order = order_qs[0]
-            if order.items.filter(item__slug=item.slug).exists():
-                order_item.quantity += int(order_qty)
-                request.session['cart'].insert(0, order_item.order_qty)
-                order_item.save()
-                messages.info(request, "Кількість товару в корзині збільшена")
-                return redirect("index")
-            else:
-                order.items.add(order_item)
-                order_item.quantity = int(order_qty)
-                order_item.save()
-                messages.info(request, "Товар добавлено до корзини")
-                return redirect("index")
+        request.session['cart'][item_slug] = {'price': str(item.price), 'qty': order_qty}
+        messages.info(request, "Товар добвалено до корзини")
+    else:
+
+        if item_slug in request.session['cart']:
+            order_qty += int(request.session['cart'][item_slug]['qty'])
+            request.session['cart'][item_slug] = {'price': str(item.price), 'qty': order_qty}
         else:
-            ordered_date = timezone.now()
-            order = Order.objects.create(
-                user=request.user, ordered_date=ordered_date)
-            order.items.add(order_item)
-            messages.info(request, "Товар добавлено до корзини")
-            return redirect("index")
+            request.session['cart'][item_slug] = {'price': str(item.price), 'qty': order_qty}
+            messages.info(request, "Товар добвалено до корзини")
+
+    request.session.modified = True
+    return redirect("index")
+
 
 
 # @login_required(login_url='/login/')
