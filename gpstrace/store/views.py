@@ -210,19 +210,17 @@ def add_to_cart(request, item_slug):
     except:
         order_qty = 1
 
-    item = get_object_or_404(Item, slug=item_slug)
     if 'cart' not in request.session:
         request.session['cart'] = {}
-        item = get_object_or_404(Item, slug=item_slug)
-        request.session['cart'][item_slug] = {'price': str(item.price), 'qty': order_qty}
+        request.session['cart'][item_slug] = order_qty
         messages.info(request, "Товар добвалено до корзини")
     else:
 
         if item_slug in request.session['cart']:
-            order_qty += int(request.session['cart'][item_slug]['qty'])
-            request.session['cart'][item_slug] = {'price': str(item.price), 'qty': order_qty}
+            order_qty += int(request.session['cart'][item_slug])
+            request.session['cart'][item_slug] = order_qty
         else:
-            request.session['cart'][item_slug] = {'price': str(item.price), 'qty': order_qty}
+            request.session['cart'][item_slug] = order_qty
             messages.info(request, "Товар добвалено до корзини")
 
     request.session.modified = True

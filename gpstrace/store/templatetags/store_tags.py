@@ -44,6 +44,11 @@ def get_cart_navbar(user):
             return cart_item
 
 @register.filter
+def get_cart_navbar2(order_item):
+    cart_item = Item.objects.filter(slug__in=order_item)
+    return cart_item
+
+@register.filter
 def get_favorite(user):
     if user.is_authenticated:
         favorite_item = Favorite.objects.filter(user=user)
