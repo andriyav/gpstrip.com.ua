@@ -203,28 +203,28 @@ def logout_user(request):
     return redirect('home')
 
 
-
-def add_to_cart(request, item_slug):
-    try:
-        order_qty = int(request.GET["order-qty"])
-    except:
-        order_qty = 1
-
-    if 'cart' not in request.session:
-        request.session['cart'] = {}
-        request.session['cart'][item_slug] = order_qty
-        messages.info(request, "Товар добвалено до корзини")
-    else:
-
-        if item_slug in request.session['cart']:
-            order_qty += int(request.session['cart'][item_slug])
-            request.session['cart'][item_slug] = order_qty
-        else:
-            request.session['cart'][item_slug] = order_qty
-            messages.info(request, "Товар добвалено до корзини")
-
-    request.session.modified = True
-    return redirect("index")
+#
+# def add_to_cart(request, item_slug):
+#     try:
+#         order_qty = int(request.GET["order-qty"])
+#     except:
+#         order_qty = 1
+#
+#     if 'cart' not in request.session:
+#         request.session['cart'] = {}
+#         request.session['cart'][item_slug] = order_qty
+#         messages.info(request, "Товар добвалено до корзини")
+#     else:
+#
+#         if item_slug in request.session['cart']:
+#             order_qty += int(request.session['cart'][item_slug])
+#             request.session['cart'][item_slug] = order_qty
+#         else:
+#             request.session['cart'][item_slug] = order_qty
+#             messages.info(request, "Товар добвалено до корзини")
+#
+#     request.session.modified = True
+#     return redirect("index")
 
 
 

@@ -37,6 +37,7 @@
 
     </head>
 	<div class="mt-5 pt-4">
+
     {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
@@ -48,6 +49,7 @@
         </div>
         {% endfor %}
     {% endif %}
+
     </div>
 {% include "store/navbar.html" %}
 		<!-- BREADCRUMB -->
@@ -76,6 +78,7 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
+					<p>{{cart.cart}} {{request.session.recently_viewed}}</p>
                        {% if object.items.all %}
 					<!-- Order Details -->
 					<div class="col-md-6 order-details">
@@ -89,6 +92,8 @@
 							<div class="col-sm-3"><strong>Ціна зі знижкою</strong></div>
 							<div class="col-sm-3"><strong>Знижка</strong></div>
 							</div>
+
+
 							{% for order_item in object.items.all %}
 
 							<div class="row">
@@ -108,6 +113,7 @@
 							</div>
 							{% endfor %}
 							<br>
+
 							<div class="order-col">
 								<div class="order-total"><strong>Разом</strong></div>
 								<div><strong class="order-total">{{object.get_total|floatformat:1}} грн</strong></div>
