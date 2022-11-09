@@ -125,6 +125,7 @@
 {% for k, f in request.session.cart.items%}
                     {{k}}- -{{f}}
                     {% endfor%}
+                    {{request.session.cart.values}}
 
 
 

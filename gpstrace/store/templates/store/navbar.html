@@ -133,33 +133,29 @@
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
-                                    {% if request.session.cart %}
-
-                                    {% for order_item in request.session.cart|get_cart_navbar2 %}
-                                    {{request.session.cart.order_item}}
-
-
+                                    {% if user.is_authenticated %}
+                                    {% if request.user|get_cart_navbar %}
+                                    {% for order_item in request.user|get_cart_navbar %}
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="{{ order_item.photo.url }}" alt="">
+                                            <img src="{{ order_item.item.photo.url }}" alt="">
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="{% url 'itemv' order_item.slug %}">{{order_item.title}}</a>
+                                            <h3 class="product-name"><a href="{% url 'itemv' order_item.item.slug %}">{{order_item.item.title}}</a>
                                             </h3>
-                                            {% if order_item.discount %}
-                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x1</span>{{order_item.discount_price_calculation | floatformat:2}}
+                                            {% if order_item.item.discount %}
+                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.discount_price_calculation | floatformat:2}}
                                                 грн.</h4>
                                             {% else %}
-                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.price | floatformat:2}}
+                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.price | floatformat:2}}
                                                 грн.</h4>
                                             {% endif %}
                                         </div>
-                                        <a class="delete" href="{% url 'remove-from-cart' order_item.slug %}"><i
+                                        <a class="delete" href="{% url 'remove-from-cart' order_item.item.slug %}"><i
                                                 class="fa fa-close"></i></a>
                                     </div>
                                     {% endfor %}
-                                    {% endif %}
- {%comment%}                               </div>
+                                </div>
                                 <div class="cart-summary">
                                     <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
                                     <h5>Разом: {{ request.user|get_cart_total_price|floatformat:2 }} грн.</h5>
@@ -168,7 +164,8 @@
                                     <a href="{% url 'cart' %}">Корзина</a>
                                     <a href="{% url 'checkout' %}">Замовлення<i
                                             class="fa fa-arrow-circle-right"></i></a>
-
+                                </div>
+                                {% else %}
                             </div>
                             <div class="cart-summary">
                                 <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
@@ -179,8 +176,8 @@
                                 <a href="{% url 'checkout' %}">Замовлення<i
                                         class="fa fa-arrow-circle-right"></i></a>
                             </div>
-
-
+                            {% endif %}
+                            {% else %}
                         </div>
                         <div class="cart-summary">
                             Увійдіть під своїм логіном та паролем або зареєструйтесь.
@@ -190,6 +187,7 @@
                             <a href="{% url 'register' %}">Реєстрація</a>
                         </div>
                     </div>
+                    {% endif %}
                     <!-- Menu Toogle -->
                     <div class="menu-toggle">
                         <a href="#">
@@ -197,7 +195,6 @@
                             <span>Menu</span>
                         </a>
                     </div>
-                         {%endcomment%}
                     <!-- Cart -->
                     <!-- /Menu Toogle -->
                 </div>
@@ -244,3 +241,4 @@
 <script src="{% static '/js/jquery.min.js' %}"></script>
 <script src="{% static '/js/bootstrap.min.js' %}"></script>    <!-- /container -->
 </nav>
+<!-- /NAVIGATION --
