@@ -125,6 +125,10 @@
 {% for k, f in request.session.skey.items%}
                     {{k}}- -{{f}}
                     {% endfor%}
+                    {% with total_qty=cart|length %}
+                    {{total_qty}}
+                    {% endwith %}
+                    {{cart.get_total_price}}
 
 
 

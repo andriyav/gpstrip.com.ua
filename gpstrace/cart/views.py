@@ -8,7 +8,8 @@ from store.models import Item
 
 
 def cart_summary(request):
-    return render(request, 'cart/cart.html')
+    cart = Cart(request)
+    return render(request, 'cart/cart.html', {'cart': cart})
 
 # Create your views here.
 def add_to_cart(request, item_slug):
