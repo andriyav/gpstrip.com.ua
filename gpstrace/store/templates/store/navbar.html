@@ -135,12 +135,12 @@
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
-                                    {{cart.get_total_price}}
+<!--                                    {{cart.get_total_price}}-->
                                     {% for order_item in cart %}
 
 
-                                    {% with item=cart.order_item.title %}
-                                    {{item.title}}
+                                    {% with item=order_item.item %}
+
 
 
 
@@ -148,7 +148,7 @@
 
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="{{ order_item.item.photo.url }}" alt="">
+                                            <img src="{{ item.photo.url }}" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">{{order_item.qty}}</a>

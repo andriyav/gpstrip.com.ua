@@ -22,7 +22,7 @@ class Cart():
 
     def __iter__(self):
         item_slugs = self.cart.keys()
-        items = Item.objects.filter(slug=item_slugs)
+        items = Item.objects.filter(slug__in=item_slugs)
         cart = self.cart.copy()
         for item_s in items:
             cart[item_s.slug]['item'] = item_s
