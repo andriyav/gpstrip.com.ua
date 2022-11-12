@@ -138,24 +138,34 @@
                                     {{cart.get_total_price}}
                                     {% for order_item in cart %}
 
+
+                                    {% with item=cart.order_item.title %}
+                                    {{item.title}}
+
+
+
+
+
                                     <div class="product-widget">
                                         <div class="product-img">
                                             <img src="{{ order_item.item.photo.url }}" alt="">
                                         </div>
                                         <div class="product-body">
                                             <h3 class="product-name"><a href="#">{{order_item.qty}}</a>
+                                                 {{ item.item.title }}
                                             </h3>
                                             {% if order_item.item.discount %}
-                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.discount_price_calculation | floatformat:2}}
+                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.cart.discount_price_calculation | floatformat:2}}
                                                 грн.</h4>
                                             {% else %}
                                             <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.price | floatformat:2}}
                                                 грн.</h4>
                                             {% endif %}
                                         </div>
-                                        <a class="delete" href="#"><i
+                                        <a class="delete" href="{% url 'remove-from-cart' 'TK905' %}"><i
                                                 class="fa fa-close"></i></a>
                                     </div>
+                                     {% endwith %}
                                     {% endfor %}
                                 </div>
                                 <div class="cart-summary">

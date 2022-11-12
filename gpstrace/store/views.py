@@ -263,31 +263,31 @@ def logout_user(request):
 #         messages.info(request, "Товар добавлено до корзини")
 #         return redirect("index")
 
-@login_required(login_url='/login/')
-def remove_from_cart(request, slug):
-    item = get_object_or_404(Item, slug=slug)
-    order_qs = Order.objects.filter(
-        user=request.user,
-        ordered=False
-    )
-    if order_qs.exists():
-        order = order_qs[0]
-        if order.items.filter(item__slug=item.slug).exists():
-            order_item = OrderItem.objects.filter(
-                item=item,
-                user=request.user,
-                ordered=False
-            )[0]
-            order.items.remove(order_item)
-            order_item.delete()
-            messages.info(request, "Товар було видалено з корзини")
-            return redirect("cart")
-        else:
-            messages.info(request, "Товар відсутній в корзині")
-            return redirect("cart")
-    else:
-        messages.info(request, "У вас не має активних замовлень")
-        return redirect("cart")
+# @login_required(login_url='/login/')
+# def remove_from_cart(request, slug):
+#     item = get_object_or_404(Item, slug=slug)
+#     order_qs = Order.objects.filter(
+#         user=request.user,
+#         ordered=False
+#     )
+#     if order_qs.exists():
+#         order = order_qs[0]
+#         if order.items.filter(item__slug=item.slug).exists():
+#             order_item = OrderItem.objects.filter(
+#                 item=item,
+#                 user=request.user,
+#                 ordered=False
+#             )[0]
+#             order.items.remove(order_item)
+#             order_item.delete()
+#             messages.info(request, "Товар було видалено з корзини")
+#             return redirect("cart")
+#         else:
+#             messages.info(request, "Товар відсутній в корзині")
+#             return redirect("cart")
+#     else:
+#         messages.info(request, "У вас не має активних замовлень")
+#         return redirect("cart")
 
 
 @login_required(login_url='/login/')

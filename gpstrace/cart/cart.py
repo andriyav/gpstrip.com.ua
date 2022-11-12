@@ -14,7 +14,9 @@ class Cart():
 
     def add(self, item, qty):
         item_slug = item.slug
-        if item_slug not in self.cart:
+        if item_slug in self.cart:
+            self.cart[item_slug]['qty'] = qty
+        else:
             self.cart[item_slug] = {'price': int(item.price), 'qty': int(qty)}
         self.session.modified = True
 
@@ -36,3 +38,11 @@ class Cart():
 
     def get_total_price(self):
         return sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+
+    def delete(self, item):
+        item_slug = item.slug
+        if item_slug in self.cart:
+            del self.cart[item_slug]
+            self.session.modified = True
+
+

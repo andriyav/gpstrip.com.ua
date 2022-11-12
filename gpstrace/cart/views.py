@@ -22,6 +22,12 @@ def add_to_cart(request, item_slug):
     cart.add(item=item, qty=order_qty)
     return redirect("index")
 
+def remove_from_cart(request, item_slug):
+    cart = Cart(request)
+    item = get_object_or_404(Item, slug=item_slug)
+    cart.delete(item=item)
+    return redirect("index")
+
     # if 'cart' not in request.session:
     #     request.session['cart'] = {}
     #     request.session['cart'][item_slug] = order_qty

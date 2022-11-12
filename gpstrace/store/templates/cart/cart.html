@@ -78,7 +78,13 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-					<p>{{cart.cart}} {{request.session.recently_viewed}}</p>
+					{% for item_k in cart %}
+
+					{{item_k.keys}}
+
+					{%endfor%}
+
+<!--					<p>{{cart.cart}}</p>-->
                        {% if object.items.all %}
 					<!-- Order Details -->
 					<div class="col-md-6 order-details">
