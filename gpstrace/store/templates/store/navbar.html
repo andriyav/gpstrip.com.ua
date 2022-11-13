@@ -123,49 +123,37 @@
                             </div>
                         </div>
                         <!-- /Wishlist -->
-
                         <!-- Cart -->
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Корзина</span>
-                                      {% with total_qty=cart|length %}
+                                {% with total_qty=cart|length %}
                                 <div class="qty">{{total_qty}}</div>
                                 {% endwith %}
                             </a>
                             <div class="cart-dropdown">
                                 <div class="cart-list">
-<!--                                    {{cart.get_total_price}}-->
                                     {% for order_item in cart %}
-
-
-                                    {% with item=order_item.item %}
-
-
-
-
-
-
                                     <div class="product-widget">
                                         <div class="product-img">
-                                            <img src="{{ item.photo.url }}" alt="">
+                                            <img src="{{ order_item.photo }}" alt="">
                                         </div>
                                         <div class="product-body">
-                                            <h3 class="product-name"><a href="#">{{order_item.qty}}</a>
-                                                 {{ item.item.title }}
+                                            <h3 class="product-name"><a href="{% url 'itemv' order_item.slug %}">{{order_item.title}}</a>
                                             </h3>
-                                            {% if order_item.item.discount %}
-                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.cart.discount_price_calculation | floatformat:2}}
+                                            {% if order_item.discount %}
+                                            <h4 class="product-price"><span class="qty">{{order_item.price}}    </span>{{order_item.discount_price_calculation}}
                                                 грн.</h4>
                                             {% else %}
-                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.item.price | floatformat:2}}
+                                            <h4 class="product-price"><span class="qty">{{order_item.quantity}}x</span>{{order_item.price
+                                                | floatformat:2}}
                                                 грн.</h4>
                                             {% endif %}
                                         </div>
-                                        <a class="delete" href="{% url 'remove-from-cart' 'TK905' %}"><i
+                                        <a class="delete" href="{% url 'remove-from-cart' order_item.slug %}"><i
                                                 class="fa fa-close"></i></a>
                                     </div>
-                                     {% endwith %}
                                     {% endfor %}
                                 </div>
                                 <div class="cart-summary">
@@ -177,25 +165,24 @@
                                     <a href="{% url 'checkout' %}">Замовлення<i
                                             class="fa fa-arrow-circle-right"></i></a>
                                 </div>
-
-                    <!-- Menu Toogle -->
-                    <div class="menu-toggle">
-                        <a href="#">
-                            <i class="fa fa-bars"></i>
-                            <span>Menu</span>
-                        </a>
+                                <!-- Menu Toogle -->
+                                <div class="menu-toggle">
+                                    <a href="#">
+                                        <i class="fa fa-bars"></i>
+                                        <span>Menu</span>
+                                    </a>
+                                </div>
+                                <!-- Cart -->
+                                <!-- /Menu Toogle -->
+                            </div>
+                        </div>
+                        <!-- /ACCOUNT -->
                     </div>
-                    <!-- Cart -->
-                    <!-- /Menu Toogle -->
+                    <!-- row -->
                 </div>
+                <!-- container -->
             </div>
-            <!-- /ACCOUNT -->
-        </div>
-        <!-- row -->
-    </div>
-    <!-- container -->
-    </div>
-    <!-- /MAIN HEADER -->
+            <!-- /MAIN HEADER -->
 </header>
 <!-- /HEADER -->
 <!-- NAVIGATION -->
@@ -208,10 +195,10 @@
             <ul class="main-nav nav navbar-nav">
 
                 <p id="demo"></p>
-<!--                <script>-->
-<!--                    document.getElementById("demo").innerHTML =-->
-<!--                        "The full URL of this page is:<br>" + window.location.href;-->
-<!--                </script>-->
+                <!--                <script>-->
+                <!--                    document.getElementById("demo").innerHTML =-->
+                <!--                        "The full URL of this page is:<br>" + window.location.href;-->
+                <!--                </script>-->
 
 
                 <li class="active"><a href="{% url 'home' %}">Вітрина</a></li>
@@ -228,7 +215,7 @@
     </div>
     <!-- /responsive-nav -->
     </div>
-<script src="{% static '/js/jquery.min.js' %}"></script>
-<script src="{% static '/js/bootstrap.min.js' %}"></script>    <!-- /container -->
+    <script src="{% static '/js/jquery.min.js' %}"></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>    <!-- /container -->
 </nav>
 <!-- /NAVIGATION --

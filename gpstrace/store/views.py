@@ -1,3 +1,6 @@
+import json
+from json import JSONEncoder
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -10,6 +13,7 @@ from .models import Item, Category, OrderItem, Order, ShippingAddress, Favorite
 from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 import requests
 
@@ -51,22 +55,30 @@ class HomeView(ListView):
         return Item.objects.filter(discount='30')
 
 
-class ShowItem(DetailView):
+class ShowItem(DetailView, JSONEncoder):
     model = Item
     template_name = 'store/product.html'
     slug_url_kwarg = 'item_slug'
     context_object_name = 'item_view'
 
+
     def get(self, request, *args, **kwargs):
-        if 'recently_viewed' in request.session:
-            # if self.kwargs in request.session['recently_viewed']:
-            #     request.session['recently_viewed'].remove(self.kwargs['item_slug'])
-            request.session['recently_viewed'].insert(0, self.kwargs['item_slug'])
-        else:
+
+        try:
+            request.session['recently_viewed']
+        except:
             self.request.session['recently_viewed'] = [self.kwargs['item_slug']]
+        else:
+            if self.kwargs['item_slug'] not in request.session['recently_viewed']:
+                request.session['recently_viewed'].insert(0, self.kwargs['item_slug'])
         request.session.modified = True
 
+
         return super().get(request, *args, **kwargs)
+
+
+
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

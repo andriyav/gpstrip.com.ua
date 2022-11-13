@@ -1,5 +1,7 @@
 from decimal import Decimal
-
+import json
+import jsonpickle
+from json import JSONEncoder
 from store.models import Item
 
 
@@ -25,11 +27,16 @@ class Cart():
         items = Item.objects.filter(slug__in=item_slugs)
         cart = self.cart.copy()
         for item_s in items:
-            cart[item_s.slug]['item'] = item_s
+            cart[item_s.slug]['title'] = str(item_s.title)
+            cart[item_s.slug]['photo'] = 'static/' + str(item_s.photo)
+            cart[item_s.slug]['discount'] = str(item_s.discount)
+            cart[item_s.slug]['slug'] = str(item_s.slug)
         for item in cart.values():
-
             item['total_price'] = int(item['price']) * int(item['qty'])
+
             yield item
+
+
 
 
     def __len__(self):

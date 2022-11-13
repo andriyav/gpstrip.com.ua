@@ -133,10 +133,12 @@
                                 <!-- product -->
                                 {% for item in index_items %}
 
+
                                 {% if item.label == "Новинка" %}
                                 <div class="product">
                                     <div class="product-img">
                                         <img src="{{ item.photo.url }}" alt="">
+
                                         <div class="product-label">
                                             {% if item.discount %}
                                                 <span class="sale">Знижка {{item.discount | floatformat:0}}%</span>
@@ -175,6 +177,7 @@
                                         </form>
                                     </div>
                                 </div>
+
                                 <div class="add-to-cart">
                                     <form method="get" action="{{ item.get_add_to_cart_url }}">
                                         <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Купити
