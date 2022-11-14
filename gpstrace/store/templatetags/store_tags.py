@@ -89,3 +89,16 @@ def get_viewed(slug):
 
     item_viewed = Item.objects.filter(slug__in=slug)
     return {'item_viewed': item_viewed}
+
+@register.simple_tag
+def viewed(request):
+    try:
+        request.session['recently_viewed']
+    except:
+        request.session['recently_viewed'] = ['slug']
+    else:
+        if 'slug' not in request.session['recently_viewed']:
+            request.session['recently_viewed'].insert(0, 'slug')
+    request.session.modified = True
+
+    return request.session['recently_viewed']

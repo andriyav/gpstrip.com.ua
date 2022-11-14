@@ -39,6 +39,8 @@
     </head>
 	<body>
 	<div class="mt-5 pt-4">
+		{{ viewed | request }}
+		{{request.session.recently_viewed}}
     {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">

@@ -62,19 +62,19 @@ class ShowItem(DetailView, JSONEncoder):
     context_object_name = 'item_view'
 
 
-    def get(self, request, *args, **kwargs):
-
-        try:
-            request.session['recently_viewed']
-        except:
-            self.request.session['recently_viewed'] = [self.kwargs['item_slug']]
-        else:
-            if self.kwargs['item_slug'] not in request.session['recently_viewed']:
-                request.session['recently_viewed'].insert(0, self.kwargs['item_slug'])
-        request.session.modified = True
-
-
-        return super().get(request, *args, **kwargs)
+        # def get(self, request, *args, **kwargs):
+        #
+        #     try:
+        #         request.session['recently_viewed']
+        #     except:
+        #         self.request.session['recently_viewed'] = [self.kwargs['item_slug']]
+        #     else:
+        #         if self.kwargs['item_slug'] not in request.session['recently_viewed']:
+        #             request.session['recently_viewed'].insert(0, self.kwargs['item_slug'])
+        #     request.session.modified = True
+        #
+        #
+        #     return super().get(request, *args, **kwargs)
 
 
 
