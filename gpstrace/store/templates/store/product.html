@@ -39,7 +39,7 @@
     </head>
 	<body>
 	<div class="mt-5 pt-4">
-		{{ viewed | request }}
+		{% viewed request.session item_view.slug %}
 		{{request.session.recently_viewed}}
     {% if messages %}
         {% for message in messages %}

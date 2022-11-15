@@ -27,10 +27,10 @@ class Cart():
         items = Item.objects.filter(slug__in=item_slugs)
         cart = self.cart.copy()
         for item_s in items:
-            cart[item_s.slug]['item'] = item_s
-            # cart[item_s.slug]['photo'] = 'static/' + str(item_s.photo)
-            # cart[item_s.slug]['discount'] = str(item_s.discount)
-            # cart[item_s.slug]['slug'] = str(item_s.slug)
+            cart[item_s.slug]['title'] = str(item_s.title)
+            cart[item_s.slug]['photo'] = 'static/' + str(item_s.photo)
+            cart[item_s.slug]['discount'] = item_s.discount
+            cart[item_s.slug]['slug'] = str(item_s.slug)
         for item in cart.values():
             item['total_price'] = int(item['price']) * int(item['qty'])
 
@@ -44,7 +44,15 @@ class Cart():
 
 
     def get_total_price(self):
-        return sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+        return sum(Decimal(item['price']) - (Decimal(item['price']) * ((Decimal(item['discount'])/ 100)))
+                   * item['qty'] for item in self.cart.values() if item['discount'])
+
+    def discount_price_calculation(self):
+        for item in self.cart.values():
+            if item['discount']:
+                self.discount_price = Decimal(item['price']) - (Decimal(item['price']) * ((Decimal(item['discount'])/ 100)))
+
+        return self.discount_price
 
     def delete(self, item):
         item_slug = item.slug

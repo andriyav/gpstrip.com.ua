@@ -4,18 +4,22 @@ import requests
 
 register = template.Library()
 
+
 @register.simple_tag()
 def get_labeled(filter='Популярне'):
     if not filter:
         return Item.objects.all()
     else:
         return Item.objects.filter(label=filter)
+
+
 #
 
 @register.inclusion_tag('store/list_discount.html')
 def get_discount_30():
     item_discount = Item.objects.filter(discount='30')
     return {'item_discount': item_discount}
+
 
 @register.inclusion_tag('store/list_categories.html')
 def get_categories():
@@ -25,7 +29,7 @@ def get_categories():
 
 @register.inclusion_tag('store/list_related.html')
 def get_items():
-    related = Item.objects.filter(id__lte = 4)
+    related = Item.objects.filter(id__lte=4)
     return {'related': related}
 
 
@@ -37,12 +41,14 @@ def cart_item_count(user):
             return qs[0].items.count()
     return 0
 
+
 @register.filter
 def get_cart_navbar(user):
     if user.is_authenticated:
         cart_item = OrderItem.objects.filter(user=user, ordered=False)
         if cart_item.exists():
             return cart_item
+
 
 @register.filter
 def get_cart_navbar2(order_item):
@@ -57,6 +63,7 @@ def get_favorite(user):
         if favorite_item.exists():
             return favorite_item
 
+
 @register.filter
 def get_cart_total_price(user):
     total = 0
@@ -67,13 +74,16 @@ def get_cart_total_price(user):
         if qs_order_item.exists():
             for prices in qs_order_item:
                 if prices.item.discount:
-                    total_item = prices.quantity * prices.item.price - (prices.item.price * (prices.item.discount/100))
+                    total_item = prices.quantity * prices.item.price - (
+                                prices.item.price * (prices.item.discount / 100))
                     total += total_item
                 else:
                     total_item = prices.quantity * prices.item.price
                     total += total_item
 
         return total
+
+
 # self.quantity * self.item.price - (self.item.price * (self.item.discount / 100))
 @register.filter
 def favorite_item_count(user):
@@ -86,19 +96,18 @@ def favorite_item_count(user):
 
 @register.inclusion_tag('store/list_viewed.html')
 def get_viewed(slug):
-
     item_viewed = Item.objects.filter(slug__in=slug)
     return {'item_viewed': item_viewed}
 
-@register.simple_tag
-def viewed(request):
-    try:
-        request.session['recently_viewed']
-    except:
-        request.session['recently_viewed'] = ['slug']
-    else:
-        if 'slug' not in request.session['recently_viewed']:
-            request.session['recently_viewed'].insert(0, 'slug')
-    request.session.modified = True
 
-    return request.session['recently_viewed']
+@register.simple_tag
+def viewed(a, slug):
+    try:
+        a['recently_viewed']
+    except:
+        a['recently_viewed'] = [slug]
+    else:
+        if slug not in a['recently_viewed']:
+            a['recently_viewed'].insert(0, slug)
+    a.modified = True
+    return a['recently_viewed'], slug
