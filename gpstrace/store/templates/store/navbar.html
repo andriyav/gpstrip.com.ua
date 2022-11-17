@@ -76,7 +76,6 @@
                     </div>
                 </div>
                 <!-- /SEARCH BAR -->
-
                 <!-- ACCOUNT -->
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
@@ -107,11 +106,8 @@
                                                 class="fa fa-close"></i> </a>
                                     </div>
                                     {% endfor %}
-
                                     {% endif %}
-
                                     {% endif %}
-
                                 </div>
                                 <div class="cart-summary">
                                     <small>{{ request.user|favorite_item_count }} Товар(ів) відмічено</small>
@@ -145,9 +141,7 @@
                                             {% if order_item.discount %}
                                             <h4 class="product-price"><span class="qty">
                                                 {{order_item.qty}}x <del class="product-old-price"> {{order_item.price}} грн.</del>
-
-                                            </span>{{cart.discount_price_calculation}}грн.</h4>
-
+                                            </span>{{order_item.discount_price}}грн.</h4>
                                             {% else %}
                                             <h4 class="product-price"><span class="qty">{{order_item.qty}}x</span>{{order_item.price}}грн.
                                             </h4>
@@ -156,7 +150,6 @@
                                         <a class="delete" href="{% url 'remove-from-cart' order_item.slug %}"><i
                                                 class="fa fa-close"></i></a>
                                     </div>
-
                                     {% endfor %}
                                 </div>
                                 <div class="cart-summary">
