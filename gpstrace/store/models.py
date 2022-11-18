@@ -115,8 +115,8 @@ class Order(models.Model):
     ordered_date = models.DateTimeField(blank=True)
     shipping_address = models.ForeignKey('ShippingAddress', on_delete=models.SET_NULL, blank=True, null=True)
 
-    def __str__(self):
-        return self.user.username
+    # def __str__(self):
+    #     return self.user.username
 
     def get_total(self):
         total = 0

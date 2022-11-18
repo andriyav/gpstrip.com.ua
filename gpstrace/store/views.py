@@ -9,6 +9,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
+
+from cart.cart import Cart
 from .models import Item, Category, OrderItem, Order, ShippingAddress, Favorite
 from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
@@ -115,7 +117,12 @@ class CartView(LoginRequiredMixin, ListView):
     login_url = '/login/'
     redirect_field_name = 'cart'
 
-    def get(self, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        cart = Cart(request)
+        for item in cart:
+            it = Item.objects.get(slug=item['slug'])
+            OrderItem.objects.create(user=request.user, quantity=item['qty'], item=it)
+
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             context = {
@@ -124,6 +131,7 @@ class CartView(LoginRequiredMixin, ListView):
             return render(self.request, 'store/cart.html', context)
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
+
             return redirect("/")
 
 
@@ -205,6 +213,10 @@ class LoginUser(LoginView):
     template_name = 'store/login.html'
     success_url = reverse_lazy('home')
 
+
+
+
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
@@ -215,28 +227,7 @@ def logout_user(request):
     return redirect('home')
 
 
-#
-# def add_to_cart(request, item_slug):
-#     try:
-#         order_qty = int(request.GET["order-qty"])
-#     except:
-#         order_qty = 1
-#
-#     if 'cart' not in request.session:
-#         request.session['cart'] = {}
-#         request.session['cart'][item_slug] = order_qty
-#         messages.info(request, "Товар добвалено до корзини")
-#     else:
-#
-#         if item_slug in request.session['cart']:
-#             order_qty += int(request.session['cart'][item_slug])
-#             request.session['cart'][item_slug] = order_qty
-#         else:
-#             request.session['cart'][item_slug] = order_qty
-#             messages.info(request, "Товар добвалено до корзини")
-#
-#     request.session.modified = True
-#     return redirect("index")
+
 
 
 
