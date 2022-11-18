@@ -36,7 +36,7 @@ class Cart():
             if item['discount']:
                 item['discount_price'] = int(item['price']) - (int(item['price']) * (item['discount']/ 100))
             else:
-                item['discount_price'] = int(item['price']) - (int(item['price']) * (item['discount'] / 100))
+                item['discount_price'] = int(item['price'])
 
             yield item
 
@@ -48,8 +48,20 @@ class Cart():
 
 
     def get_total_price(self):
-        return sum(((Decimal(item['price']) - (Decimal(item['price']) * ((Decimal(item['discount'])/ 100))))
-                   * item['qty']) for item in self.cart.values() if item['discount'])
+        sum_total = 0
+        for item in self.cart.values():
+            if item['discount']:
+                self.total_price = (Decimal(item['price']) - (Decimal(item['price']) * (Decimal(item['discount'])/ 100))) * item['qty']
+            else:
+                self.total_price = Decimal(item['price']) * item['qty']
+            sum_total += self.total_price
+
+        return sum_total
+
+
+
+
+
 
 
 
