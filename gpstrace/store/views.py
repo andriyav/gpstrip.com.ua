@@ -113,16 +113,55 @@ class ShowCategory(ListView):
     context_object_name = 'cats'
 
 
+# class CartView(LoginRequiredMixin, ListView):
+#
+#     template_name = 'store/cart.html'
+
+
+    # def get(self,    *args, **kwargs):
+    #     cart = Cart(request)
+    #     for item in cart:
+    #         it = Item.objects.get(slug=item['slug'])
+    #         OrderItem.objects.create(user=request.user, quantity=item['qty'], item=it)
+    #
+    #         try:
+    #             order_item = OrderItem.objects.get(user=self.request.user, ordered=False)
+    #             print(order_item.item)
+    #             for item_s in order_item:
+    #                 cart[item_s.item.slug]['title'] = str(item_s.item.title)
+    #                 cart[item_s.item.slug]['photo'] = 'static/' + str(item_s.item.photo)
+    #                 cart[item_s.item.slug]['discount'] = item_s.item.discount
+    #                 cart[item_s.item.slug]['slug'] = str(item_s.item.slug)
+    #                 print(item_s.item.quantity, "hello")
+    #
+    #         except:
+    #             pass
+    #
+    #     try:
+    #         order = Order.objects.get(user=self.request.user, ordered=False)
+    #         context = {
+    #             'object': order
+    #         }
+    #         return render(self.request, 'store/cart.html', context)
+    #     except ObjectDoesNotExist:
+    #         messages.warning(self.request, "You do not have an active order")
+    #
+    #         return redirect("/")
+
+
 class CartView(LoginRequiredMixin, ListView):
     login_url = '/login/'
     redirect_field_name = 'cart'
-
     def get(self, request, *args, **kwargs):
         cart = Cart(request)
         for item in cart:
             it = Item.objects.get(slug=item['slug'])
             OrderItem.objects.create(user=request.user, quantity=item['qty'], item=it)
-
+        order_item = OrderItem.objects.filter(user=request.user)
+        order_qs = Order.objects.filter(user=request.user, ordered=False)
+        order = order_qs[0]
+        order.items.add(order_item.slug)
+        order_item.save()
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             context = {
@@ -131,7 +170,6 @@ class CartView(LoginRequiredMixin, ListView):
             return render(self.request, 'store/cart.html', context)
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
-
             return redirect("/")
 
 
