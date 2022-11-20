@@ -11,7 +11,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
 
 from cart.cart import Cart
-from .models import Item, Category, OrderItem, Order, ShippingAddress, Favorite
+from .models import Item, Category, OrderItem, Order, Favorite
 from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy

@@ -16,15 +16,15 @@ BATTERY_CHOICES = (
 
 )
 
-
-class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    name = models.CharField(max_length=200, null=True, blank=True)
-    email = models.CharField(max_length=200, null=True, blank=True)
-    device = models.CharField(max_length=200, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
+#
+# class Customer(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+#     name = models.CharField(max_length=200, null=True, blank=True)
+#     email = models.CharField(max_length=200, null=True, blank=True)
+#     device = models.CharField(max_length=200, null=True, blank=True)
+#
+#     def __str__(self):
+#         return self.name
 
 class Item(models.Model):
     title = models.CharField(max_length=100, null=True, verbose_name='Назва товару')
@@ -113,7 +113,7 @@ class Order(models.Model):
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
     ordered_date = models.DateTimeField(blank=True)
-    shipping_address = models.ForeignKey('ShippingAddress', on_delete=models.SET_NULL, blank=True, null=True)
+    # shipping_address = models.ForeignKey('ShippingAddress', on_delete=models.SET_NULL, blank=True, null=True)
 
     # def __str__(self):
     #     return self.user.username
@@ -124,19 +124,19 @@ class Order(models.Model):
             total += order_item.get_final_price()
         return total
 
-
-class ShippingAddress(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    first_name = models.CharField(max_length=200, null=True)
-    last_name = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
-    street_address = models.CharField(max_length=200, null=True)
-    city = models.CharField(max_length=200, null=True)
-    index = models.CharField(max_length=200, null=True)
-    phone = models.CharField(max_length=200, null=True)
-
-    def __str__(self):
-        return self.user.username
+#
+# class ShippingAddress(models.Model):
+#     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+#     first_name = models.CharField(max_length=200, null=True)
+#     last_name = models.CharField(max_length=200, null=True)
+#     email = models.CharField(max_length=200, null=True)
+#     street_address = models.CharField(max_length=200, null=True)
+#     city = models.CharField(max_length=200, null=True)
+#     index = models.CharField(max_length=200, null=True)
+#     phone = models.CharField(max_length=200, null=True)
+#
+#     def __str__(self):
+#         return self.user.username
 
 
 class Favorite(models.Model):

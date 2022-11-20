@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'store.apps.StoreConfig',
     'ckeditor',
     'cart.apps.CartConfig',
+    'account',
 
 ]
 
@@ -131,6 +132,8 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
+AUTH_USER_MODEL = 'account.UserBase'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL = 'cart'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
 
