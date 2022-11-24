@@ -1,0 +1,8 @@
+{% autoescape off %}
+Hi {{user.user_name}},
+
+Ваш аккаунт успішно активовано. Будь ласка, перейдіть за посиланням для активації Вашого г облікового запису.
+
+http://{{ domain }}{% url 'account:activate' uidb64=uid token-token %}
+
+{% endautoescape %}

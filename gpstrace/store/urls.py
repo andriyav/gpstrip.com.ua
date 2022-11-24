@@ -2,7 +2,7 @@ from django.urls import path
 
 from . views import *
 
-# app_name = 'store'
+
 
 
 urlpatterns = [
@@ -12,7 +12,7 @@ urlpatterns = [
     path('checkout', CheckOutView.as_view(), name='checkout'),
     path('index', HomeView.as_view(), name='index'),
     path('cart', CartView.as_view(), name='cart'),
-    path('register', RegisterUser.as_view(), name='register'),
+    # path('register', RegisterUser.as_view(), name='register'),
     path('logout/', logout_user, name='logout'),
     path('login/', LoginUser.as_view(), name='login'),
     # path('add-to-cart/<slug:item_slug>/', add_to_cart, name='add-to-cart'),
