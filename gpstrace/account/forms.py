@@ -17,6 +17,26 @@ class RegistrationForm(forms.Form):
         label='Repeat password', widget=forms.PasswordInput)
 
 
-class Meta:
-    model = UserBase
-    fields = ('user_name', 'email',)
+    class Meta:
+        model = UserBase
+        fields = ('user_name', 'email',)
+
+    def clean_username(self):
+        user_name = self.cleaned_data['user_name'].lower()
+        r = UserBase.objects.filter(user_name=user_name)
+        if r.count():
+            raise forms.ValidationError("Користувач з даним іменем вже існує")
+        return user_name
+
+    def clean_password(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Паролі не однакові')
+        return cd['password2']
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        if UserBase.objects.filter(email=email).exists():
+            raise forms.ValidationError("Користувач з такою електронною адресою вже зареєстрований")
+        return email
+
