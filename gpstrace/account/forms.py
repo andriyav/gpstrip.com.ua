@@ -6,7 +6,7 @@ from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
 
 
 
-class RegistrationForm(forms.Form):
+class RegistrationForm(forms.ModelForm):
 
     user_name = forms.CharField(
         label='Enter Username', min_length=4, max_length=50, help_text='Required')
@@ -28,11 +28,17 @@ class RegistrationForm(forms.Form):
             raise forms.ValidationError("Користувач з даним іменем вже існує")
         return user_name
 
-    def clean_password(self):
+    # def clean_password(self):
+    #     cd = self.cleaned_data
+    #     if cd['password'] != cd['password2']:
+    #         raise forms.ValidationError('Паролі не однакові')
+    #     return cd['password2']
+    def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
-            raise forms.ValidationError('Паролі не однакові')
+            raise forms.ValidationError('Passwords do not match.')
         return cd['password2']
+
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()
