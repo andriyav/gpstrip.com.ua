@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from .forms import RegistrationForm
+from .forms import RegistrationForm, UserEditForm
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
 from .tokens import account_activation_token
@@ -15,10 +15,25 @@ def dashboard(request):
     return render(request,
                   'account/user/dashboard.html')
 
+@login_required
+def edit_details(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+
+        if user_form.is_valid():
+            user_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+
+    return render(request,
+                  'account/user/edit_details.html', {'user_form': user_form})
+
+
+
 def account_register(request):
-    #
-    # if request.user.is_authenticated:
-    #     return redirect('account:dashboard')
+
+    if request.user.is_authenticated:
+        return redirect('account:dashboard')
 
     if request.method == 'POST':
         registerForm = RegistrationForm(request.POST)
