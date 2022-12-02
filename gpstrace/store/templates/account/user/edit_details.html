@@ -4,6 +4,7 @@
  		<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
 
 
+
 <style>
     .account-form input {
         border: 2px solid #ccc;
@@ -50,13 +51,11 @@
                     <label class="small font-weight-bold">{{ user_form.first_name.label}}</label>
                     {{ user_form.first_name }}
 
-
-
                     <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw-bold w-100" type="submit"
                         value="Save changes">Save Changes</button>
                     <hr class="mb-3">
                 </form>
-                     <form class="account-form px-4" action="#" method="post">
+                     <form class="account-form px-4" action="{% url "account:delete_user" %}" method="post">
                         {% csrf_token %}
                         <p class=" h3 pt-4 font-weight-bold">Delete Account</p>
                         <p>Are you sure you want to delete your account?</p>
