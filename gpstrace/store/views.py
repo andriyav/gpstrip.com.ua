@@ -159,18 +159,30 @@ class CartView(LoginRequiredMixin, ListView):
             OrderItem.objects.create(user=request.user, quantity=item['qty'], item=it)
         order_item = OrderItem.objects.filter(user=request.user)
         order_qs = Order.objects.filter(user=request.user, ordered=False)
-        order = order_qs[0]
-        order.items.add(order_item.slug)
-        order_item.save()
-        try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            context = {
-                'object': order
-            }
-            return render(self.request, 'store/cart.html', context)
-        except ObjectDoesNotExist:
-            messages.warning(self.request, "You do not have an active order")
-            return redirect("/")
+        request.session['skey'] = {}
+        request.session.modified = True
+        print(request.session['skey'])
+
+
+        if order_qs.exists():
+            order = order_qs[0]
+            if order.items.filter(item__slug=item.slug, user=request.user).exists():
+                order.items.add(order_item.slug)
+                order_item.save()
+                messages.info(request, "Кількість товару в корзині збільшена")
+                return redirect("index")
+            else:
+                order.items.add(order_item)
+                order_item.save()
+                messages.info(request, "Товар добавлено до корзини")
+                return redirect("index")
+        else:
+            ordered_date = timezone.now()
+            order = Order.objects.create(
+                user=request.user, ordered_date=ordered_date)
+            order.items.add(order_item)
+            messages.info(request, "Товар добавлено до корзини")
+            return redirect("index")
 
 
 class CheckOutView(LoginRequiredMixin, ListView):

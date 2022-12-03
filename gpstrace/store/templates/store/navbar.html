@@ -34,7 +34,7 @@
             <ul class="header-links pull-right">
                 <li><a href="#"><i class="fa fa-dollar"></i>грн.</a></li>
                 {% if request.user.is_authenticated %}
-                <li><a href="#"><i class="fa fa-user-o"></i>{{ user.username }}</a>}|
+                <li><a href="#"><i class="fa fa-user-o"></i>{{ user.user_name }}</a>}|
                     <a href="{% url 'logout'  %}"><i class="fa fa-user-o"></i>Вийти</li>
                 {% else %}
                 <li><a href="{% url 'login'  %}"><i class="fa fa-user-o"></i>Обліковий запис</a></li>
