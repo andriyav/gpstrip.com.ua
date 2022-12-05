@@ -9,23 +9,51 @@ from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from .models import UserBase
 from django.contrib.auth.decorators import login_required
+from store.models import Item,  OrderItem, Order
+from cart.cart import Cart
+from django.utils import timezone
+from django.contrib import messages
 
 @login_required
 def dashboard(request):
-    return render(request,
-                  'account/user/dashboard.html')
+    cart = Cart(request)
+    for item_cart in cart:
+        item = Item.objects.get(slug=item_cart['slug'])
+        order_item, created = OrderItem.objects.get_or_create(user=request.user,  item=item)
+        order_qs = Order.objects.filter(user=request.user, ordered=False)
+        print(order_item.quantity,'order_qty')
+        if order_qs.exists():
+            order = order_qs[0]
+            if order.items.filter(item__slug=item.slug).exists():
+                order_item.quantity = item_cart['qty']
+                order_item.save()
+                messages.info(request, "Кількість товару в корзині збільшена1")
+                # return redirect("index")
+            else:
+                order.items.add(order_item)
+                order_item.quantity = item_cart['qty']
+                order_item.save()
+                messages.info(request, "Товар добавлено до корзини1")
+                # return redirect("index")
+        else:
+            ordered_date = timezone.now()
+            order = Order.objects.create(
+                user=request.user, ordered_date=ordered_date)
+            order.items.add(order_item)
+            messages.info(request, "Товар добавлено до корзини2")
+    request.session['skey'] = {}
+    request.session.modified = True
+    print(request.session['skey'])
+    return redirect("index")
 
 @login_required
 def edit_details(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user, data=request.POST)
-
         if user_form.is_valid():
             user_form.save()
     else:
         user_form = UserEditForm(instance=request.user)
-
-
     return render(request,
                   'account/user/edit_details.html', {'user_form': user_form})
 
@@ -39,10 +67,8 @@ def delete_user(request):
 
 
 def account_register(request):
-
     if request.user.is_authenticated:
         return redirect('account:dashboard')
-
     if request.method == 'POST':
         registerForm = RegistrationForm(request.POST)
         if registerForm.is_valid():
