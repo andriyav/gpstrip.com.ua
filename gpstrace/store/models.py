@@ -112,11 +112,17 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
-    ordered_date = models.DateTimeField(blank=True)
-    # shipping_address = models.ForeignKey('ShippingAddress', on_delete=models.SET_NULL, blank=True, null=True)
+    ordered_date = models.DateTimeField(null=True)
+    first_name = models.CharField(max_length=200, null=True)
+    last_name = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    street_address = models.CharField(max_length=200, null=True)
+    city = models.CharField(max_length=200, null=True)
+    index = models.CharField(max_length=200, null=True)
+    phone = models.CharField(max_length=200, null=True)
 
-    # def __str__(self):
-    #     return self.user.username
+    def __str__(self):
+        return self.user.user_name
 
     def get_total(self):
         total = 0
@@ -124,9 +130,10 @@ class Order(models.Model):
             total += order_item.get_final_price()
         return total
 
-#
+
 # class ShippingAddress(models.Model):
-#     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL,
+#                              on_delete=models.CASCADE, null=True, blank=True)
 #     first_name = models.CharField(max_length=200, null=True)
 #     last_name = models.CharField(max_length=200, null=True)
 #     email = models.CharField(max_length=200, null=True)
@@ -136,7 +143,7 @@ class Order(models.Model):
 #     phone = models.CharField(max_length=200, null=True)
 #
 #     def __str__(self):
-#         return self.user.username
+#         return self.user.user_name
 
 
 class Favorite(models.Model):

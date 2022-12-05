@@ -1,5 +1,6 @@
 from django import forms
 from .models import UserBase
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
                                        SetPasswordForm)
 
@@ -8,7 +9,7 @@ from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(
         attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'login-username'}))
-    password = forms.CharField(widget=forms.PasswordInput(
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(
         attrs={
             'class': 'form-control',
             'placeholder':'Password',
@@ -22,12 +23,12 @@ class UserLoginForm(AuthenticationForm):
 class RegistrationForm(forms.ModelForm):
 
     user_name = forms.CharField(
-        label='Enter Username', min_length=4, max_length=50, help_text='Required')
-    email = forms.EmailField(max_length=100, help_text='Required', error_messages={
-        'required': 'Sorry, you will need an email'})
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+        label="Введіть ім'я користувача", min_length=4, max_length=50, help_text='Вимагається')
+    email = forms.EmailField(label='Електронна адреса', max_length=100, help_text='Required', error_messages={
+        'required': 'Введіть, будь ласка, пароль'})
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
     password2 = forms.CharField(
-        label='Repeat password', widget=forms.PasswordInput)
+        label='Повторить пароль', widget=forms.PasswordInput)
 
 
     class Meta:
@@ -44,7 +45,7 @@ class RegistrationForm(forms.ModelForm):
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password'] != cd['password2']:
-            raise forms.ValidationError('Passwords do not match.')
+            raise forms.ValidationError('Паролі не відповідають.')
         return cd['password2']
 
 
@@ -57,13 +58,13 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['user_name'].widget.attrs.update(
-            {'class': 'form-control mb-3', 'placeholder': 'Username'})
+            {'class': 'form-control mb-3', 'placeholder': "ім'я користувача"})
         self.fields['email'].widget.attrs.update(
-            {'class': 'form-control mb-3', 'placeholder': 'E-mail', 'name': 'email', 'id': 'id_email'})
+            {'class': 'form-control mb-3', 'placeholder': 'Електронна адреса', 'name': 'email', 'id': 'id_email'})
         self.fields['password'].widget.attrs.update(
-            {'class': 'form-control mb-3', 'placeholder': 'Password'})
+            {'class': 'form-control mb-3', 'placeholder': 'Пароль'})
         self.fields['password2'].widget.attrs.update(
-            {'class': 'form-control', 'placeholder': 'Repeat Password'})
+            {'class': 'form-control', 'placeholder': 'Повторить пароль'})
 
 
 class UserEditForm(forms.ModelForm):

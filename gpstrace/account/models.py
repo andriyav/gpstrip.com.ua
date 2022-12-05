@@ -38,7 +38,7 @@ class CustomAccountManager(BaseUserManager):
 
 class UserBase(AbstractBaseUser, PermissionsMixin):
 
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('Електронна адреса'), unique=True)
     user_name = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150, blank=True)
     about = models.TextField(_(
@@ -61,9 +61,9 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['user_name']
 
-    class Meta:
-        verbose_name = "Accounts"
-        verbose_name_plural = "Accounts"
+    # class Meta:
+    #     verbose_name = "Accounts"
+    #     verbose_name_plural = "Accounts"
 
     def email_user(self, subject, message):
         send_mail(

@@ -12,7 +12,7 @@ from django.contrib.auth import logout, login
 
 from cart.cart import Cart
 from .models import Item, Category, OrderItem, Order, Favorite
-from .forms import RegisterUserForm, LoginUserForm, CheckoutForms
+from .forms import  CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
 from django.http import HttpResponse
@@ -64,32 +64,12 @@ class ShowItem(DetailView, JSONEncoder):
     context_object_name = 'item_view'
 
 
-        # def get(self, request, *args, **kwargs):
-        #
-        #     try:
-        #         request.session['recently_viewed']
-        #     except:
-        #         self.request.session['recently_viewed'] = [self.kwargs['item_slug']]
-        #     else:
-        #         if self.kwargs['item_slug'] not in request.session['recently_viewed']:
-        #             request.session['recently_viewed'].insert(0, self.kwargs['item_slug'])
-        #     request.session.modified = True
-        #
-        #
-        #     return super().get(request, *args, **kwargs)
-
-
-
-
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = context['item_view']
         context['item_view'] = context['item_view']
 
-
         return context
-
 
 
 class CategoryTracker(ListView):
@@ -113,76 +93,20 @@ class ShowCategory(ListView):
     context_object_name = 'cats'
 
 
-# class CartView(LoginRequiredMixin, ListView):
-#
-#     template_name = 'store/cart.html'
-
-
-    # def get(self,    *args, **kwargs):
-    #     cart = Cart(request)
-    #     for item in cart:
-    #         it = Item.objects.get(slug=item['slug'])
-    #         OrderItem.objects.create(user=request.user, quantity=item['qty'], item=it)
-    #
-    #         try:
-    #             order_item = OrderItem.objects.get(user=self.request.user, ordered=False)
-    #             print(order_item.item)
-    #             for item_s in order_item:
-    #                 cart[item_s.item.slug]['title'] = str(item_s.item.title)
-    #                 cart[item_s.item.slug]['photo'] = 'static/' + str(item_s.item.photo)
-    #                 cart[item_s.item.slug]['discount'] = item_s.item.discount
-    #                 cart[item_s.item.slug]['slug'] = str(item_s.item.slug)
-    #                 print(item_s.item.quantity, "hello")
-    #
-    #         except:
-    #             pass
-    #
-    #     try:
-    #         order = Order.objects.get(user=self.request.user, ordered=False)
-    #         context = {
-    #             'object': order
-    #         }
-    #         return render(self.request, 'store/cart.html', context)
-    #     except ObjectDoesNotExist:
-    #         messages.warning(self.request, "You do not have an active order")
-    #
-    #         return redirect("/")
-
-
 class CartView(LoginRequiredMixin, ListView):
-    login_url = '/login/'
+    login_url = '/account/login/'
     redirect_field_name = 'cart'
-    def get(self, request, *args, **kwargs):
-        cart = Cart(request)
-        for item in cart:
-            it = Item.objects.get(slug=item['slug'])
-            OrderItem.objects.create(user=request.user, quantity=item['qty'], item=it)
-        order_item = OrderItem.objects.filter(user=request.user)
-        order_qs = Order.objects.filter(user=request.user, ordered=False)
-        request.session['skey'] = {}
-        request.session.modified = True
-        print(request.session['skey'])
 
-
-        if order_qs.exists():
-            order = order_qs[0]
-            if order.items.filter(item__slug=item.slug, user=request.user).exists():
-                order.items.add(order_item.slug)
-                order_item.save()
-                messages.info(request, "Кількість товару в корзині збільшена")
-                return redirect("index")
-            else:
-                order.items.add(order_item)
-                order_item.save()
-                messages.info(request, "Товар добавлено до корзини")
-                return redirect("index")
-        else:
-            ordered_date = timezone.now()
-            order = Order.objects.create(
-                user=request.user, ordered_date=ordered_date)
-            order.items.add(order_item)
-            messages.info(request, "Товар добавлено до корзини")
-            return redirect("index")
+    def get(self, *args, **kwargs):
+        try:
+            order = Order.objects.get(user=self.request.user, ordered=False)
+            context = {
+                'object': order
+            }
+            return render(self.request, 'store/cart.html', context)
+        except ObjectDoesNotExist:
+            messages.warning(self.request, "You do not have an active order")
+            return redirect("/")
 
 
 class CheckOutView(LoginRequiredMixin, ListView):
@@ -204,25 +128,15 @@ class CheckOutView(LoginRequiredMixin, ListView):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
             if form.is_valid():
-                first_name = form.cleaned_data.get('first_name')
-                last_name = form.cleaned_data.get('last_name')
-                street_address = form.cleaned_data.get('street_address')
-                city = form.cleaned_data.get('city')
-                email = form.cleaned_data.get('email')
-                index = form.cleaned_data.get('index')
-                phone = form.cleaned_data.get('phone')
-                shipping_address = ShippingAddress(
-                    user=self.request.user,
-                    first_name=first_name,
-                    last_name=last_name,
-                    street_address=street_address,
-                    city=city,
-                    email=email,
-                    index=index,
-                    phone=phone,
-                )
-                shipping_address.save()
-                order.shipping_address = shipping_address
+                order.first_name = form.cleaned_data.get('first_name')
+                order.last_name = form.cleaned_data.get('last_name')
+                order.street_address = form.cleaned_data.get('street_address')
+                order.city = form.cleaned_data.get('city')
+                order.email = form.cleaned_data.get('email')
+                order.index = form.cleaned_data.get('index')
+                order.phone = form.cleaned_data.get('phone')
+                order.ordered_date = timezone.now()
+                order.save()
                 order.ordered = True
                 order.save()
                 order_items = order.items.all()
@@ -242,105 +156,9 @@ class IndexView(ListView):
     template_name = "store/index.html"
     context_object_name = 'index_items'
 
-
-class RegisterUser(CreateView):
-    form_class = RegisterUserForm
-    template_name = 'store/register.html'
-    success_url = reverse_lazy('login')
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return redirect('home')
-
-
-class LoginUser(LoginView):
-    forms_class = LoginUserForm
-    template_name = 'store/login.html'
-    success_url = reverse_lazy('home')
-
-
-
-
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-
 def logout_user(request):
     logout(request)
     return redirect('home')
-
-
-
-
-
-
-
-# @login_required(login_url='/login/')
-# def add_to_cart(request, item_slug):
-#     try:
-#         order_qty = request.GET["order-qty"]
-#     except:
-#         order_qty = 1
-#     item = get_object_or_404(Item, slug=item_slug)
-#     order_item, created = OrderItem.objects.get_or_create(
-#         item=item,
-#         user=request.user,
-#         ordered=False
-#     )
-#     order_qs = Order.objects.filter(user=request.user, ordered=False)
-#     if order_qs.exists():
-#         order = order_qs[0]
-#         if order.items.filter(item__slug=item.slug).exists():
-#             order_item.quantity += int(order_qty)
-#             order_item.save()
-#             messages.info(request, "Кількість товару в корзині збільшена")
-#             return redirect("index")
-#         else:
-#             order.items.add(order_item)
-#             order_item.quantity = int(order_qty)
-#             order_item.save()
-#             messages.info(request, "Товар добавлено до корзини")
-#             return redirect("index")
-#     else:
-#         ordered_date = timezone.now()
-#         order = Order.objects.create(
-#             user=request.user, ordered_date=ordered_date)
-#         order.items.add(order_item)
-#         messages.info(request, "Товар добавлено до корзини")
-#         return redirect("index")
-
-# @login_required(login_url='/login/')
-# def remove_from_cart(request, slug):
-#     item = get_object_or_404(Item, slug=slug)
-#     order_qs = Order.objects.filter(
-#         user=request.user,
-#         ordered=False
-#     )
-#     if order_qs.exists():
-#         order = order_qs[0]
-#         if order.items.filter(item__slug=item.slug).exists():
-#             order_item = OrderItem.objects.filter(
-#                 item=item,
-#                 user=request.user,
-#                 ordered=False
-#             )[0]
-#             order.items.remove(order_item)
-#             order_item.delete()
-#             messages.info(request, "Товар було видалено з корзини")
-#             return redirect("cart")
-#         else:
-#             messages.info(request, "Товар відсутній в корзині")
-#             return redirect("cart")
-#     else:
-#         messages.info(request, "У вас не має активних замовлень")
-#         return redirect("cart")
 
 
 @login_required(login_url='/login/')
@@ -355,7 +173,6 @@ def add_to_favorite(request, item_slug):
     return redirect("index")
 
 
-
 @login_required(login_url='/login/')
 def remove_from_favorite(request, item_slug):
     item = get_object_or_404(Item, slug=item_slug)
@@ -366,23 +183,3 @@ def remove_from_favorite(request, item_slug):
     item_favorite.delete()
     messages.info(request, "Товар було видалено з улюблених")
     return redirect("index")
-
-
-# def blog_list(request, slug):
-#     recently_viewed = None
-#     product = Item.objects.get(slug=slug)
-#     if 'recently_viewed' in request.session:
-#         if slug in request.session['recently_viewed']:
-#             request.session['recently_viewed'].remove(slug)
-#         recently_viewed = Item.objects.filter(slug__in=request.session['recently_viewed'])
-#         request.session['recently_viewed'].insert(0, slug)
-#         if len(request.session['recently_viewed']) > 5:
-#             request.session['recently_viewed'].pop()
-#     else:
-#         request.session['recently_viewed'] = [slug]
-#     request.session.modified = True
-#     context = {
-#         "blog_posts": product,
-#         "favorite_lists": recently_viewed,
-#     }
-#     return render(request, 'store/index.html', context=context)

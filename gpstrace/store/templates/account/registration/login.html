@@ -1,8 +1,46 @@
-{% block title %}Log-in{% endblock %}
+
 {% load static %}
 {% block content %}
-	<!-- Bootstrap -->
+{% include "store/navbar.html" %}
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		<title>Electro - HTML Ecommerce Template</title>
+
+ 		<!-- Google font -->
+ 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+ 		<!-- Bootstrap -->
  		<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+
+ 		<!-- Slick -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'css/slick.css' %}"/>
+ 		<link type="text/css" rel="stylesheet" href="{% static 'css/slick-theme.css' %}"/>
+
+ 		<!-- nouislider -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css' %}"/>
+
+ 		<!-- Font Awesome Icon -->
+ 		<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+
+ 		<!-- Custom stlylesheet -->
+ 		<link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    </head>
+
+<body>
+
 
 <style>
     .container-fluid {
@@ -20,7 +58,7 @@
     }
 </style>
 
-
+<br>
 <div class="container-fluid">
     <div class="row no-gutter">
         <div class="col-md-12">
@@ -31,11 +69,11 @@
                             <form class="account-form p-4 rounded" action="{% url 'account:login' %}" method="post">
 
                                 {% csrf_token %}
-                                <h3 class="mb-4">Sign In</h3>
+                                <h3 class="mb-4">Увійти</h3>
 
                                 {% if form.errors %}
                                 <div class="alert alert-primary" role="alert">
-                                    Error: Username or Password not correct!
+                                    Помилка: Логін або пароль не вірні!
                                 </div>
                                 {% endif %}
 
@@ -46,18 +84,18 @@
                                 {{ form.password}}
                                 <div class="d-grid gap-2">
                                     <input type="hidden" name="next" value="{{ next }}">
-                                    <button class="btn btn-primary py-2 mb-4 mt-5 fw-bold" type="submit" value="Log-in">Sign in
+                                    <button class="btn btn-danger py-2 mb-4 mt-5 fw-bold" type="submit" value="Log-in">Увійти
                                     </button>
                                 </div>
                                 <p class="text-center pb-3">
-                                    <a href="{% url "account:register" %}">Create an account</a>
+                                    <a href="{% url "account:register" %}">Реєстрація</a>
                                 </p>
                             </form>
                             <p class="small text-center pt-4">
-                                {% comment %} <a href="{% url "password_reset" %}">Forgotten Password?</a> {% endcomment %}
+                                <a href="{% url "account:pwdreset" %}">Забули пароль?</a>
                             </p>
                             <p class="small text-center">
-                                {% comment %} <a href="{% url "accounts:register" %}">Help Center?</a> {% endcomment %}
+                                {% comment %} <a href="#">Help Center?</a> {% endcomment %}
                             </p>
                      
                         </div>
@@ -68,3 +106,4 @@
     </div>
 </div>
 {% endblock %}
+{% include "store/footer.html" %}

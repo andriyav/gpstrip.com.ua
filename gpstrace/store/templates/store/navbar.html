@@ -37,7 +37,7 @@
                 <li><a href="#"><i class="fa fa-user-o"></i>{{ user.user_name }}</a>}|
                     <a href="{% url 'logout'  %}"><i class="fa fa-user-o"></i>Вийти</li>
                 {% else %}
-                <li><a href="{% url 'login'  %}"><i class="fa fa-user-o"></i>Обліковий запис</a></li>
+                <li><a href="{% url "account:login" %}"><i class="fa fa-user-o"></i>Обліковий запис</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -165,11 +165,6 @@
                             <div class="cart-summary">
                                 <small>{{ request.user|cart_item_count }} Товар(ів) додано до корзини</small>
                                 <h5>Ваша корзина пуста</h5>
-                            </div>
-                            <div class="cart-btns">
-                                <a href="{% url 'home' %}">Корзина</a>
-                                <a href="{% url 'checkout' %}">Замовлення<i
-                                        class="fa fa-arrow-circle-right"></i></a>
                             </div>
                             {% endif %}
                             {% else %}
