@@ -43,8 +43,8 @@ def dashboard(request):
             messages.info(request, "Товар добавлено до корзини2")
     request.session['skey'] = {}
     request.session.modified = True
-    print(request.session['skey'])
-    return redirect("index")
+    orders = Order.objects.filter(user=request.user).filter(ordered=True)
+    return render(request, 'account/user/dashboard.html', {'orders': orders})
 
 @login_required
 def edit_details(request):

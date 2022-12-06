@@ -70,7 +70,7 @@ class RegistrationForm(forms.ModelForm):
 class UserEditForm(forms.ModelForm):
 
     email = forms.EmailField(
-        label='Account email (can not be changed1   )', max_length=200, widget=forms.TextInput(
+        label='Електронна адреса облікового запису (не може бути змінена)', max_length=200, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'email', 'id': 'form-email', 'readonly': 'readonly'}))
 
     user_name = forms.CharField(
@@ -78,7 +78,7 @@ class UserEditForm(forms.ModelForm):
             attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'form-firstname', 'readonly': 'readonly'}))
 
     first_name = forms.CharField(
-        label='Username', min_length=4, max_length=50, widget=forms.TextInput(
+        label="Ім'я облікового запису", min_length=4, max_length=50, widget=forms.TextInput(
             attrs={'class': 'form-control mb-3', 'placeholder': 'Firstname', 'id': 'form-lastname'}))
 
     class Meta:

@@ -1,4 +1,4 @@
-<!-- TOP HEADER -->
+
 {% load static %}
 {% load store_tags %}
 <!-- Bootstrap -->
@@ -34,7 +34,7 @@
             <ul class="header-links pull-right">
                 <li><a href="#"><i class="fa fa-dollar"></i>грн.</a></li>
                 {% if request.user.is_authenticated %}
-                <li><a href="#"><i class="fa fa-user-o"></i>{{ user.user_name }}</a>}|
+                <li><a href="{% url "account:dashboard" %}"><i class="fa fa-user-o"></i>{{ user.user_name }}</a>}|
                     <a href="{% url 'logout'  %}"><i class="fa fa-user-o"></i>Вийти</li>
                 {% else %}
                 <li><a href="{% url "account:login" %}"><i class="fa fa-user-o"></i>Обліковий запис</a></li>
@@ -247,11 +247,7 @@
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
 
-                <p id="demo"></p>
-                <!--                <script>-->
-                <!--                    document.getElementById("demo").innerHTML =-->
-                <!--                        "The full URL of this page is:<br>" + window.location.href;-->
-                <!--                </script>-->
+
 
 
                 <li class="active"><a href="{% url 'home' %}">Вітрина</a></li>
