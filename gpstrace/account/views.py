@@ -19,7 +19,7 @@ def dashboard(request):
     cart = Cart(request)
     for item_cart in cart:
         item = Item.objects.get(slug=item_cart['slug'])
-        order_item, created = OrderItem.objects.get_or_create(user=request.user,  item=item)
+        order_item, created = OrderItem.objects.get_or_create(user=request.user,  item=item, ordered=False)
         order_qs = Order.objects.filter(user=request.user, ordered=False)
         print(order_item.quantity,'order_qty')
         if order_qs.exists():
