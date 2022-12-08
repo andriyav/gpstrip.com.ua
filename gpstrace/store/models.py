@@ -1,8 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import User
 from django.conf import settings
-
 
 LABEL_CHOICES = (
     ('Новинка', 'Новинка'),
@@ -16,21 +14,12 @@ BATTERY_CHOICES = (
 
 )
 
-#
-# class Customer(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-#     name = models.CharField(max_length=200, null=True, blank=True)
-#     email = models.CharField(max_length=200, null=True, blank=True)
-#     device = models.CharField(max_length=200, null=True, blank=True)
-#
-#     def __str__(self):
-#         return self.name
 
 class Item(models.Model):
     title = models.CharField(max_length=100, null=True, verbose_name='Назва товару')
     slug = models.SlugField(max_length=100, unique=True, db_index=True, null=True)
     photo = models.ImageField(upload_to='img', null=True)
-    price = models.FloatField( blank=True, null=True, verbose_name='Ціна товару')
+    price = models.FloatField(blank=True, null=True, verbose_name='Ціна товару')
     discount = models.IntegerField(blank=True, null=True, verbose_name='Знижка у %')
     short_description = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Короткий опис')
     description = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Опис')
@@ -46,7 +35,6 @@ class Item(models.Model):
 
     def get_absolute_url(self):
         return reverse('itemv', kwargs={'item_slug': self.slug})
-
 
     def discount_price_calculation(self):
         self.discount_price = self.price - (self.price * (self.discount / 100))
@@ -86,7 +74,6 @@ class OrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
-
     def __str__(self):
         return f'{self.quantity} of {self.item.title}'
 
@@ -102,7 +89,6 @@ class OrderItem(models.Model):
     def get_final_price(self):
 
         return self.get_total_item_price()
-
 
 
 class Order(models.Model):
@@ -131,26 +117,10 @@ class Order(models.Model):
         return total
 
 
-# class ShippingAddress(models.Model):
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-#                              on_delete=models.CASCADE, null=True, blank=True)
-#     first_name = models.CharField(max_length=200, null=True)
-#     last_name = models.CharField(max_length=200, null=True)
-#     email = models.CharField(max_length=200, null=True)
-#     street_address = models.CharField(max_length=200, null=True)
-#     city = models.CharField(max_length=200, null=True)
-#     index = models.CharField(max_length=200, null=True)
-#     phone = models.CharField(max_length=200, null=True)
-#
-#     def __str__(self):
-#         return self.user.user_name
-
-
 class Favorite(models.Model):
     item_favorite = models.ForeignKey(Item, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
-
 
     def __str__(self):
         return self.user.username

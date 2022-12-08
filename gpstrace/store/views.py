@@ -160,6 +160,20 @@ def logout_user(request):
     logout(request)
     return redirect('home')
 
+class Search(ListView):
+    model = Item
+    template_name = 'store/search.html'
+    context_object_name = 'news'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Item.objects.filter(description__icontains=self.request.GET.get('q', ''))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q')
+        return context
+
 
 @login_required(login_url='/login/')
 def add_to_favorite(request, item_slug):

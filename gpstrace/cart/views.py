@@ -1,17 +1,14 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
-from django.utils import timezone
 from cart.cart import Cart
-from store.models import Item, Category, OrderItem, Order, Favorite
-
-
+from store.models import Item, OrderItem, Order
 
 
 def cart_summary(request):
     cart = Cart(request)
     return render(request, 'cart/cart.html', {'cart': cart})
+
 
 # Create your views here.
 def add_to_cart(request, item_slug):
@@ -58,6 +55,7 @@ def add_to_cart(request, item_slug):
         cart.add(item=item, qty=order_qty)
         return redirect("index")
 
+
 def remove_from_cart(request, item_slug):
     if request.user.is_authenticated:
         item = get_object_or_404(Item, slug=item_slug)
@@ -88,4 +86,3 @@ def remove_from_cart(request, item_slug):
         item = get_object_or_404(Item, slug=item_slug)
         cart.delete(item=item)
         return redirect("index")
-
