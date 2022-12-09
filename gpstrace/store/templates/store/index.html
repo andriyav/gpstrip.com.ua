@@ -56,7 +56,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>Автономні<br>GPS теркера</h3>
-                        <a href="{% url 'category' 'avtonom' %}" class="cta-btn">Shop now <i
+                        <a href="{% url 'category' 'avtonom' %}" class="cta-btn"> Купити зараз <i
                                 class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>Автомобільні<br>GPS теркера</h3>
-                        <a href="{% url 'category' 'avtomotive' %}" class="cta-btn">Shop now <i
+                        <a href="{% url 'category' 'avtomotive' %}" class="cta-btn"> Купити зараз <i
                                 class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="shop-body">
                         <h3>GPS теркера<br>для домашніх улюбленців</h3>
-                        <a href="{% url 'category' 'personal' %}" class="cta-btn">Shop now <i
+                        <a href="{% url 'category' 'personal' %}" class="cta-btn"> Купити зараз <i
                                 class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -128,17 +128,12 @@
                         <!-- tab -->
                         <div id="tab1" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
-
-
                                 <!-- product -->
                                 {% for item in index_items %}
-
-
                                 {% if item.label == "Новинка" %}
                                 <div class="product">
                                     <div class="product-img">
                                         <img src="{{ item.photo.url }}" alt="">
-
                                         <div class="product-label">
                                             {% if item.discount %}
                                                 <span class="sale">Знижка {{item.discount | floatformat:0}}%</span>

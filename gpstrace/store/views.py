@@ -156,6 +156,11 @@ class IndexView(ListView):
     template_name = "store/index.html"
     context_object_name = 'index_items'
 
+class About(ListView):
+    model = Item
+    template_name = "store/about.html"
+
+
 def logout_user(request):
     logout(request)
     return redirect('home')
@@ -164,7 +169,7 @@ class Search(ListView):
     model = Item
     template_name = 'store/search.html'
     context_object_name = 'news'
-    paginate_by = 5
+    paginate_by = 3
 
     def get_queryset(self):
         return Item.objects.filter(description__icontains=self.request.GET.get('q', ''))
@@ -197,3 +202,12 @@ def remove_from_favorite(request, item_slug):
     item_favorite.delete()
     messages.info(request, "Товар було видалено з улюблених")
     return redirect("index")
+
+def delivery(request):
+    return render(request, "store/delivery.html")
+
+def payment(request):
+    return render(request, "store/payment.html")
+
+def return_terms(request):
+    return render(request, "store/return_terms.html")

@@ -72,11 +72,11 @@
                         <div class="footer">
                             <h3 class="footer-title">Інформація</h3>
                             <ul class="footer-links">
-                                <li><a href="#">Про нас</a></li>
+                                <li><a href="{% url 'about' %}">Про нас</a></li>
                                 <li><a href="#">Контакти</a></li>
-                                <li><a href="#">Доставка</a></li>
-                                <li><a href="#">Оплата</a></li>
-                                <li><a href="#">Умови повернення</a></li>
+                                <li><a href="{% url 'delivery' %}">Доставка</a></li>
+                                <li><a href="{% url 'payment' %}">Оплата</a></li>
+                                <li><a href="{% url 'return_terms' %}">Умови повернення</a></li>
                             </ul>
                         </div>
                     </div>
@@ -84,8 +84,8 @@
                         <div class="footer">
                             <h3 class="footer-title">Сервіси</h3>
                             <ul class="footer-links">
-                                <li><a href="#">Обліковий запис</a></li>
-                                <li><a href="#">Корзина</a></li>
+                                <li><a href="{% url "account:login" %}">Обліковий запис</a></li>
+                                <li><a href="{% url 'cart' %}">Корзина</a></li>
 <!--                                <li><a href="#">Відмічене</a></li>-->
 <!--                                <li><a href="#">Track My Order</a></li>-->
 <!--                                <li><a href="#">Help</a></li>-->

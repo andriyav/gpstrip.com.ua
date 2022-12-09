@@ -20,5 +20,9 @@ urlpatterns = [
     path('add-to-favorite/<slug:item_slug>/', add_to_favorite, name='add-to-favorite'),
     path('remove-from-favorite/<slug:item_slug>/', remove_from_favorite, name='remove-from-favorite'),
     path('search', Search.as_view(), name='search'),
+    path('about/', About.as_view(), name='about'),
+    path('delivery/', delivery, name='delivery'),
+    path('payment/', payment, name='payment'),
+    path('return_terms/', return_terms, name='return_terms'),
 
     ]
