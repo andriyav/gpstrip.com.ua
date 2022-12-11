@@ -62,9 +62,13 @@
             <div class="col-md-4">
                 {% for item in order.items.all %}
                 <div class="row">
-                    <div class="col-md-6"> {{item}}</div>
+                    <div class="col-md-6"> <a href='{{item.item.get_absolute_url}}'>{{item}}</a></div>
+                    <a href="{{item.item.get_absolute_url}}">
+                                        <div class="product-img">
                     <div class="col-md-6"><img class="img-fluid" style="width:90px" src="{{item.item.photo.url}}"/>
                     </div>
+                </div>
+                    </a>
                 </div>
                 {% endfor %}
             </div>

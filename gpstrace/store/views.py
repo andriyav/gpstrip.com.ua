@@ -180,7 +180,7 @@ class Search(ListView):
         return context
 
 
-@login_required(login_url='/login/')
+@login_required
 def add_to_favorite(request, item_slug):
     item = get_object_or_404(Item, slug=item_slug)
     item_favorite, created = Favorite.objects.get_or_create(
@@ -192,7 +192,7 @@ def add_to_favorite(request, item_slug):
     return redirect("index")
 
 
-@login_required(login_url='/login/')
+@login_required
 def remove_from_favorite(request, item_slug):
     item = get_object_or_404(Item, slug=item_slug)
     item_favorite = Favorite.objects.filter(
@@ -211,3 +211,6 @@ def payment(request):
 
 def return_terms(request):
     return render(request, "store/return_terms.html")
+
+def contacts(request):
+    return render(request, "store/contacts.html")

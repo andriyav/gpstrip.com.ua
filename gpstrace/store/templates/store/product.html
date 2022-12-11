@@ -126,9 +126,22 @@
 							</div>
 							</form>
 							<ul class="product-btns">
-								<li><a href="#"><i class="fa fa-heart-o"></i> добавите у вибране</a></li>
-<!--								<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>-->
+								{% if user.is_authenticated %}
+								{% if item_view.slug in request.user|get_favorite_list %}
+								<li><a href="{% url 'add-to-favorite' item_view.slug %}">
+									<i class="fa fa-heart"></i> добавити у вибране</a></li>
+								{% else %}
+								<li><a href="{% url 'add-to-favorite' item_view.slug %}">
+									<i class="fa fa-heart-o"></i> добавити у вибране</a></li>
+								{% endif %}
+								{% else %}
+								<li><a href="{% url 'add-to-favorite' item_view.slug %}">
+									<i class="fa fa-heart-o"></i> добавити у вибране</a></li>
+								{% endif %}
+
 							</ul>
+
+
 							<ul class="product-links">
 								<li>Категорія:</li>
 								<li><a href="{{item_view.cat.get_absolute_url}}">{{item_view.cat}}</a></li>

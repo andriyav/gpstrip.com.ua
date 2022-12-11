@@ -91,7 +91,7 @@
                                 <div class="cart-list">
                                     {% if user.is_authenticated %}
                                     {% if request.user|get_favorite %}
-                                    {% for favorite_item in request.user|get_favorite %}
+                                        {% for favorite_item in request.user|get_favorite %}
                                     <div class="product-widget">
                                         <div class="product-img">
                                             <img src="{{ favorite_item.item_favorite.photo.url }}" alt="">

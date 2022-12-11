@@ -123,4 +123,4 @@ class Favorite(models.Model):
                              on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return self.item_favorite.slug

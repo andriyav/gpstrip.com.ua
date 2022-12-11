@@ -24,5 +24,6 @@ urlpatterns = [
     path('delivery/', delivery, name='delivery'),
     path('payment/', payment, name='payment'),
     path('return_terms/', return_terms, name='return_terms'),
+    path('contacts/', contacts, name='contacts'),
 
     ]
