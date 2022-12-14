@@ -11,8 +11,8 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
 
 from cart.cart import Cart
-from .models import Item, Category, OrderItem, Order, Favorite
-from .forms import  CheckoutForms
+from .models import Item, Category, City, Order, Favorite
+from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
 from django.http import HttpResponse
@@ -117,9 +117,11 @@ class CheckOutView(LoginRequiredMixin, ListView):
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an active order")
             return redirect("/")
+        city = City.objects.all()
         context = {
             'form': form,
-            'ob_item': order
+            'ob_item': order,
+            'city': city
         }
         return render(self.request, "store/checkout.html", context)
 

@@ -116,6 +116,21 @@ class Order(models.Model):
             total += order_item.get_final_price()
         return total
 
+class City(models.Model):
+    ref = models.CharField(max_length=100)
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return (str(self.name) + '  '+ str(self.ref))
+
+class Adrress(models.Model):
+    ref = models.ForeignKey(City, on_delete=models.CASCADE)
+    address = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.address)
+
+
 
 class Favorite(models.Model):
     item_favorite = models.ForeignKey(Item, on_delete=models.CASCADE)
