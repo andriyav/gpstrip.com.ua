@@ -25,5 +25,6 @@ urlpatterns = [
     path('payment/', payment, name='payment'),
     path('return_terms/', return_terms, name='return_terms'),
     path('contacts/', contacts, name='contacts'),
+    path('city-json/', get_json_car_data, name='city-json')
 
     ]

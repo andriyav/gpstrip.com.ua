@@ -18,6 +18,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 import requests
+from django.http import JsonResponse
 
 
 class HomeView(ListView):
@@ -204,6 +205,10 @@ def remove_from_favorite(request, item_slug):
     item_favorite.delete()
     messages.info(request, "Товар було видалено з улюблених")
     return redirect("index")
+
+def get_json_car_data(request):
+    qs_val = list(City.objects.values())
+    return JsonResponse({'data':qs_val})
 
 def delivery(request):
     return render(request, "store/delivery.html")

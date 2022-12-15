@@ -1,3 +1,19 @@
+
+// city-json
+
+    console.log('hello world')
+
+    $.ajax({
+        type: 'GET',
+        url: '/city-json/',
+        success: function (response){
+            console.log(response.data)
+        },
+        error: function(error){
+            console.log(error)
+        }
+})
+
 (function ($) {
     "use strict"
 
@@ -11,6 +27,7 @@
     $('.cart-dropdown').on('click', function (e) {
         e.stopPropagation();
     });
+
 
     /////////////////////////////////////////
 
@@ -192,4 +209,9 @@
     }
 
 
+
 })(jQuery);
+
+
+
+
