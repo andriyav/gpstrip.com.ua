@@ -11,7 +11,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
 
 from cart.cart import Cart
-from .models import Item, Category, City, Order, Favorite
+from .models import Item, Category, City, Order, Favorite, Address
 from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
@@ -209,6 +209,16 @@ def remove_from_favorite(request, item_slug):
 def get_json_car_data(request):
     qs_val = list(City.objects.values())
     return JsonResponse({'data':qs_val})
+def get_json_address_data(request, *args, **kwargs):
+    selected_city = kwargs.get('city')
+    print(selected_city)
+    obj_address = Address.objects.filter(city__name=selected_city)
+    obj_address_list = []
+    for i in obj_address:
+        obj_address_list.append(i.address)
+
+    print(obj_address_list)
+    return JsonResponse({'data':obj_address_list})
 
 def delivery(request):
     return render(request, "store/delivery.html")

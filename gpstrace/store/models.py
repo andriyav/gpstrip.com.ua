@@ -121,10 +121,10 @@ class City(models.Model):
     name = models.CharField(max_length=20)
 
     def __str__(self):
-        return (str(self.name) + '  '+ str(self.ref))
+        return (str(self.name))
 
-class Adrress(models.Model):
-    ref = models.ForeignKey(City, on_delete=models.CASCADE)
+class Address(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
     address = models.CharField(max_length=100)
 
     def __str__(self):

@@ -21,7 +21,19 @@
 })
 
     cityInput.addEventListener('change', e=>{
-        console.log('changed')
+        console.log(e.target.value)
+        const selectedCity = e.target.value
+
+        $.ajax({
+            type: "GET",
+            url: '/address-json/${selectedCity}/',
+            success: function (response){
+                console.log(response)
+            },
+            error: function(error){
+                console.log(error)
+            }
+        })
     })
 
 
