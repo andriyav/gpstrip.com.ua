@@ -1,5 +1,6 @@
 import json
 from json import JSONEncoder
+import requests
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,17 +8,13 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
-from django.contrib.auth.views import LoginView
+
 from django.contrib.auth import logout, login
 
-from cart.cart import Cart
-from .models import Item, Category, City, Order, Favorite, Address
+from .models import Item, Category, City, Order, Favorite
 from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse_lazy
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-import requests
+
 from django.http import JsonResponse
 
 
@@ -63,7 +60,6 @@ class ShowItem(DetailView, JSONEncoder):
     template_name = 'store/product.html'
     slug_url_kwarg = 'item_slug'
     context_object_name = 'item_view'
-
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -159,6 +155,7 @@ class IndexView(ListView):
     template_name = "store/index.html"
     context_object_name = 'index_items'
 
+
 class About(ListView):
     model = Item
     template_name = "store/about.html"
@@ -167,6 +164,7 @@ class About(ListView):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
 
 class Search(ListView):
     model = Item
@@ -206,28 +204,56 @@ def remove_from_favorite(request, item_slug):
     messages.info(request, "Товар було видалено з улюблених")
     return redirect("index")
 
+
 def get_json_car_data(request):
     qs_val = list(City.objects.values())
-    return JsonResponse({'data':qs_val})
+    return JsonResponse({'data': qs_val})
+
+
 def get_json_address_data(request, *args, **kwargs):
     selected_city = kwargs.get('city')
-    print(selected_city)
-    obj_address = Address.objects.filter(city__name=selected_city)
     obj_address_list = []
-    for i in obj_address:
-        obj_address_list.append(i.address)
+    ref = City.objects.get(name=selected_city).ref
+    param = {
+        "apiKey": "0139a34f622b2f7ac7cd63936a5f4150",
+        "modelName": "Address",
+        "calledMethod": "getWarehouses",
+        "methodProperties": {
+            "CityRef": ref
+        }}
+    url = 'https://api.novaposhta.ua/v2.0/json/'
+    np = requests.post(url, json.dumps(param))
+    for city in np.json()['data']:
+        obj_address_list.append(city['Description'])
+    return JsonResponse({'data': obj_address_list})
 
-    print(obj_address_list)
-    return JsonResponse({'data':obj_address_list})
+def np_api(request):
+    params = '''{
+    	"apiKey": "0139a34f622b2f7ac7cd63936a5f4150",
+    	"modelName": "Address",
+    	"calledMethod": "getCities",
+    	"methodProperties": {
+    		"FindByString": ""
+    	}
+    }'''
+    url = 'https://api.novaposhta.ua/v2.0/json/'
+    np = requests.post(url, params)
+    for city in np.json()['data']:
+        print(city['Description'])
+        order_item, created = City.objects.get_or_create(name=city['Description'], ref=city['Ref'])
+    return redirect("index")
 
 def delivery(request):
     return render(request, "store/delivery.html")
 
+
 def payment(request):
     return render(request, "store/payment.html")
 
+
 def return_terms(request):
     return render(request, "store/return_terms.html")
+
 
 def contacts(request):
     return render(request, "store/contacts.html")

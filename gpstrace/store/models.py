@@ -123,12 +123,7 @@ class City(models.Model):
     def __str__(self):
         return (str(self.name))
 
-class Address(models.Model):
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
-    address = models.CharField(max_length=100)
 
-    def __str__(self):
-        return str(self.address)
 
 
 

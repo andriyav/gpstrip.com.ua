@@ -1,6 +1,11 @@
 
     const cityDataBox = document.getElementById('city-select')
     const cityInput = document.getElementById('city-select')
+
+    const addressDataBox = document.getElementById('address-select')
+    const addressInput = document.getElementById('address-select')
+    const addressText = document.getElementById('address-text')
+
     $.ajax({
         type: 'GET',
         url: '/city-json/',
@@ -24,11 +29,24 @@
         console.log(e.target.value)
         const selectedCity = e.target.value
 
+        addressDataBox.innerHTML = ''
+        addressText.textContent = 'Виберіть відділення'
+
+
+
         $.ajax({
             type: "GET",
-            url: '/address-json/${selectedCity}/',
+            url: 'address-json/'+selectedCity,
             success: function (response){
-                console.log(response)
+                console.log(response.data)
+                const addressData = response.data
+                addressData.map(item=> {
+                    const option = document.createElement('option')
+                    option.textContent = item
+                    option.setAttribute('class', 'item')
+                    option.setAttribute('data', item)
+                    addressDataBox.appendChild(option)
+                })
             },
             error: function(error){
                 console.log(error)

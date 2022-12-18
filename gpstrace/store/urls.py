@@ -26,6 +26,7 @@ urlpatterns = [
     path('return_terms/', return_terms, name='return_terms'),
     path('contacts/', contacts, name='contacts'),
     path('city-json/', get_json_car_data, name='city-json'),
-    path('address-json/<str:city>/', get_json_address_data, name='address-json')
+    path('address-json/<str:city>/', get_json_address_data, name='address-json'),
+    path('np_api/', np_api, name='np_api'),
 
     ]
