@@ -99,7 +99,7 @@ class Order(models.Model):
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
     ordered_date = models.DateTimeField(null=True)
-    first_name = models.CharField(max_length=200, null=True)
+    first_name = models.CharField(max_length=200,  blank=True, null=True)
     last_name = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200, null=True)
     street_address = models.CharField(max_length=200, null=True)

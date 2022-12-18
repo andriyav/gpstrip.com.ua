@@ -1,42 +1,30 @@
 from django import forms
+from .models import Order
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-# class RegisterUserForm(UserCreationForm):
-#     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-#     email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'class': 'form-input'}))
-#     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-#     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-#
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email', 'password1', 'password2')
-#
-#
-# class LoginUserForm(AuthenticationForm):
-#     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-#     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-
 
 class CheckoutForms(forms.Form):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={
+    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': "Ім'я", 'class': "input"
     }))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={
+    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Прізвище', 'class': "input"
     }))
-    street_address = forms.CharField(widget=forms.TextInput(attrs={
+    street_address = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Вулиця', 'class': "input"
     }))
-    city = forms.CharField(widget=forms.TextInput(attrs={
+    city = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Місто', 'class': "input"
     }))
-    email = forms.CharField(widget=forms.TextInput(attrs={
+    email = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Електронна адреса', 'class': "input"
     }))
-    index = forms.CharField(widget=forms.TextInput(attrs={
+    index = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': ' Індекс', 'class': "input"
     }))
-    phone = forms.CharField(widget=forms.TextInput(attrs={
+    phone = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Телефон', 'class': "input"
     }))
+
+
