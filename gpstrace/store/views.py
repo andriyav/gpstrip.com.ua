@@ -122,7 +122,8 @@ class CheckOutView(LoginRequiredMixin, ListView):
         }
         return render(self.request, "store/checkout.html", context)
 
-    def post(self, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
+        print(request.POST.get('address-np'))
         form = CheckoutForms(self.request.POST or None)
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -134,6 +135,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order.email = form.cleaned_data.get('email')
                 order.index = form.cleaned_data.get('index')
                 order.phone = form.cleaned_data.get('phone')
+                order.city_np = request.POST.get('city-np')
                 order.ordered_date = timezone.now()
                 order.save()
                 order.ordered = True

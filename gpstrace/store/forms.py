@@ -26,5 +26,8 @@ class CheckoutForms(forms.Form):
     phone = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Телефон', 'class': "input"
     }))
+    city_np = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'placeholder': 'Телефон', 'class': "input"
+    }))
 
 

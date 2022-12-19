@@ -106,6 +106,9 @@ class Order(models.Model):
     city = models.CharField(max_length=200, null=True)
     index = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
+    city_np = models.CharField(max_length=200, null=True)
+    address_np = models.CharField(max_length=200, null=True)
+    phone_np = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return self.user.user_name

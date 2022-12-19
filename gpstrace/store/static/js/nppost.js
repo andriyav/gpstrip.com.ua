@@ -5,7 +5,7 @@
     const addressDataBox = document.getElementById('address-select')
     const addressInput = document.getElementById('address-select')
     const addressText = document.getElementById('address-text')
-    const btnBox = documet.getElementById('btn-box')
+    const btnBox = document.getElementById('btn-box')
     const cityForm = document.getElementById('card-body')
 
     $.ajax({
@@ -33,7 +33,7 @@
 
         addressDataBox.innerHTML = ''
         addressText.textContent = 'Виберіть відділення'
-        addressText.classList.add('default')
+        // addressText.classList.add('default')
 
 
 
@@ -57,10 +57,12 @@
             }
         })
 
-    })
+        })
 
 
-cityForm.addEventListener('submit', e=>{
+
+
+cityForm.addEventListener('card-body', e=>{
     e.preventDefault()
     console.log('submited')
 })

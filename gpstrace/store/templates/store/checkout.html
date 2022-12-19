@@ -60,7 +60,7 @@
     <!-- /container -->
 </div>
 <!-- /BREADCRUMB -->
-<form method="POST" class="card-body">
+    <form method="POST" class="card-body">
     {% csrf_token %}
     <!-- SECTION -->
     <div class="section">
@@ -120,12 +120,13 @@
                                     Доставка Новою Поштою
                                 </label>
                                 <div class="caption">
-                                    <select class="input-select" id="city-select">
+                                    <select class="input-select" id="city-select" name="city-np">
+
                                         <option selected>Виберіть місто доставки</option>
                                     </select>
                                     <br>
                                     <br>
-                                    <select class="input-select" id="address-select">
+                                    <select class="input-select" id="address-select" name="address-np">
                                         <option id="address-text" selected>Виберіть відділення</option>
                                     </select>
                                 </div>
