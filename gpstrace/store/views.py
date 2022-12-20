@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
-
+from django.core.mail import send_mail
 from django.contrib.auth import logout, login
 
 from .models import Item, Category, City, Order, Favorite
@@ -123,7 +123,6 @@ class CheckOutView(LoginRequiredMixin, ListView):
         return render(self.request, "store/checkout.html", context)
 
     def post(self, request, *args, **kwargs):
-        print(request.POST.get('address-np'))
         form = CheckoutForms(self.request.POST or None)
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -135,7 +134,11 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order.email = form.cleaned_data.get('email')
                 order.index = form.cleaned_data.get('index')
                 order.phone = form.cleaned_data.get('phone')
+                order.first_name_np = form.cleaned_data.get('first_name_np')
+                order.last_name_np = form.cleaned_data.get('last_name_np')
+                order.phone_np = form.cleaned_data.get('phone_np')
                 order.city_np = request.POST.get('city-np')
+                order.address_np = request.POST.get('address-np')
                 order.ordered_date = timezone.now()
                 order.save()
                 order.ordered = True
@@ -144,6 +147,13 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order_items.update(ordered=True)
                 for item in order_items:
                     item.save()
+                send_mail(
+                    'Замовлення',
+                    f'Ви отримали замовлення від {order.first_name_np}/n {order.city_np}',
+                    'andriyav@hotmail.com',
+                    ['andriyav@hotmail.com'],
+                    fail_silently=False,
+                )
                 return redirect('checkout')
             messages.warning(self.request, 'Помилка форми')
             return redirect('checkout')

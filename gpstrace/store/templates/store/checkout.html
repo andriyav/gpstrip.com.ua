@@ -60,7 +60,7 @@
     <!-- /container -->
 </div>
 <!-- /BREADCRUMB -->
-    <form method="POST" class="card-body">
+<form method="POST" class="card-body">
     {% csrf_token %}
     <!-- SECTION -->
     <div class="section">
@@ -119,16 +119,23 @@
                                     <span></span>
                                     Доставка Новою Поштою
                                 </label>
-                                <div class="caption">
-                                    <select class="input-select" id="city-select" name="city-np">
 
+                                <div class="caption">
+                                    <div class="form-group"> {{ form.first_name_np }}</div>
+                                    <div class="form-group"> {{ form.last_name_np }}</div>
+                                    <div class="form-group"> {{ form.phone_np }}</div>
+                                    <select class="input-select" id="city-select" name="city-np">
                                         <option selected>Виберіть місто доставки</option>
                                     </select>
+
                                     <br>
                                     <br>
                                     <select class="input-select" id="address-select" name="address-np">
                                         <option id="address-text" selected>Виберіть відділення</option>
                                     </select>
+                                    <br>
+                                    <br>
+
                                 </div>
                             </div>
                         </div>
@@ -173,8 +180,8 @@
                     </div>
 
                     <div id="btn-box">
-                    <button class="primary-btn order-submit" type="submit">Надіслати замовлення</button>
-                        </div>
+                        <button class="primary-btn order-submit" type="submit">Надіслати замовлення</button>
+                    </div>
                 </div>
                 <!-- /Order Details -->
             </div>

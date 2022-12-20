@@ -139,6 +139,11 @@ LOGIN_REDIRECT_URL = '/account/dashboard'
 LOGIN_URL = '/account/login/'
 # PASSWORD_RESET_TIMEOUT_DAYS = 2
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'andriyav@hotmail.com'
+EMAIL_HOST_PASSWORD = 'dreamcast1'
+EMAIL_USE_TLS = True
 
 

@@ -80,9 +80,17 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        {% if order.first_name %}
                         <li><a href="#">{{order.first_name}} {{order.last_name}}</a></li>
                         <li><a href="#">{{order.street_address}} </a></li>
                         <li><a href="#">{{order.city}}</a></li>
+                        <li><a href="#">{{order.phone}}</a></li>
+                        {% else %}
+                        <li><a href="#">{{order.first_name_np}} {{order.last_name_np}}</a></li>
+                        <li><a href="#">{{order.city_np}}</a></li>
+                        <li><a href="#">{{order.address_np}}</a></li>
+                        <li><a href="#">{{order.phone_np}}</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

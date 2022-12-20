@@ -29,5 +29,17 @@ class CheckoutForms(forms.Form):
     city_np = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Телефон', 'class': "input"
     }))
+    first_name_np = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'placeholder': "Ім'я", 'class': "input"
+    }))
+    last_name_np = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'placeholder': 'Прізвище', 'class': "input"
+    }))
+    address_np = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'placeholder': 'Вулиця', 'class': "input"
+    }))
+    phone_np = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'placeholder': 'Телефон', 'class': "input"
+    }))
 
 
