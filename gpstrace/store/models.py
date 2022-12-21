@@ -111,6 +111,8 @@ class Order(models.Model):
     phone_np = models.CharField(max_length=200, null=True)
     city_np = models.CharField(max_length=200, null=True)
     address_np = models.CharField(max_length=200, null=True)
+    order_notes = models.TextField(max_length=5000, null=True, blank=True)
+
 
     def __str__(self):
         return self.user.user_name

@@ -1,7 +1,6 @@
 import json
 from json import JSONEncoder
 import requests
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -10,11 +9,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.core.mail import send_mail
 from django.contrib.auth import logout, login
-
 from .models import Item, Category, City, Order, Favorite
 from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
-
 from django.http import JsonResponse
 
 
@@ -32,7 +29,6 @@ class HomeView(ListView):
             return Item.objects.filter(battery='10000 мАгод')
         elif '20000' in self.request.GET:
             return Item.objects.filter(battery='20000 мАгод')
-
         else:
             if 'pricerange' in self.request.GET:
                 price_range = self.request.GET['pricerange']
@@ -65,7 +61,6 @@ class ShowItem(DetailView, JSONEncoder):
         context = super().get_context_data(**kwargs)
         context['title'] = context['item_view']
         context['item_view'] = context['item_view']
-
         return context
 
 
@@ -139,6 +134,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order.phone_np = form.cleaned_data.get('phone_np')
                 order.city_np = request.POST.get('city-np')
                 order.address_np = request.POST.get('address-np')
+                order.order_notes = form.cleaned_data.get('order_notes')
                 order.ordered_date = timezone.now()
                 order.save()
                 order.ordered = True
@@ -239,6 +235,7 @@ def get_json_address_data(request, *args, **kwargs):
         obj_address_list.append(city['Description'])
     return JsonResponse({'data': obj_address_list})
 
+
 def np_api(request):
     params = '''{
     	"apiKey": "0139a34f622b2f7ac7cd63936a5f4150",
@@ -254,6 +251,7 @@ def np_api(request):
         print(city['Description'])
         order_item, created = City.objects.get_or_create(name=city['Description'], ref=city['Ref'])
     return redirect("index")
+
 
 def delivery(request):
     return render(request, "store/delivery.html")

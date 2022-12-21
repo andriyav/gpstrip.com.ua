@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from cart.cart import Cart
 from store.models import Item, OrderItem, Order
+from django.utils import timezone
 
 
 def cart_summary(request):
@@ -38,10 +39,12 @@ def add_to_cart(request, item_slug):
                 messages.info(request, "Товар добавлено до корзини")
                 return redirect("index")
         else:
-            # ordered_date = timezone.now()
+            ordered_date = timezone.now()
             order = Order.objects.create(
-                user=request.user)
+                user=request.user, ordered_date=ordered_date)
             order.items.add(order_item)
+            order_item.quantity = int(order_qty)
+            order_item.save()
             messages.info(request, "Товар добавлено до корзини")
             return redirect("index")
 

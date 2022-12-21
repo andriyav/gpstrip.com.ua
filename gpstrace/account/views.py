@@ -40,6 +40,8 @@ def dashboard(request):
             order = Order.objects.create(
                 user=request.user, ordered_date=ordered_date)
             order.items.add(order_item)
+            order_item.quantity = item_cart['qty']
+            order_item.save()
             messages.info(request, "Товар добавлено до корзини2")
     request.session['skey'] = {}
     request.session.modified = True

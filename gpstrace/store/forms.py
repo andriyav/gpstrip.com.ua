@@ -41,5 +41,8 @@ class CheckoutForms(forms.Form):
     phone_np = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Телефон', 'class': "input"
     }))
+    order_notes = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'placeholder': 'Нотатки до замовлення', 'class': "input"
+    }))
 
 
