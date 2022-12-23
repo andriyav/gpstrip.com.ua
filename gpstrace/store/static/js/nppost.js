@@ -8,6 +8,7 @@
     const btnBox = document.getElementById('btn-box')
     const cityForm = document.getElementById('card-body')
 
+
     $.ajax({
         type: 'GET',
         url: '/city-json/',
@@ -66,3 +67,4 @@ cityForm.addEventListener('card-body', e=>{
     e.preventDefault()
     console.log('submited')
 })
+

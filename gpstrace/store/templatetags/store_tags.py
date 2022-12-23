@@ -1,6 +1,5 @@
 from django import template
-from ..models import Category, Item, Order, OrderItem, Favorite
-import requests
+from ..models import Category, Item, Order, OrderItem, Favorite, ONE_HUNDRED, FIVE_HUNDRED, TEN_HUNDRED, TWENTY_HUNDRED
 
 register = template.Library()
 
@@ -109,6 +108,11 @@ def get_viewed(slug):
     item_viewed = Item.objects.filter(slug__in=slug)
     return {'item_viewed': item_viewed}
 
+
+@register.inclusion_tag('store/battery_viewed.html')
+def battery_viewed():
+    battery_viewed = [ONE_HUNDRED, FIVE_HUNDRED, TEN_HUNDRED, TWENTY_HUNDRED]
+    return {'battery_viewed': battery_viewed}
 
 @register.simple_tag
 def viewed(a, slug):

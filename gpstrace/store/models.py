@@ -6,11 +6,20 @@ LABEL_CHOICES = (
     ('Новинка', 'Новинка'),
     ('Популярне', 'Популярне'),
 )
+
+ONE_HUNDRED = '1000 мАгод'
+FIVE_HUNDRED = '5000 мАгод'
+TEN_HUNDRED = '10000 мАгод'
+TWENTY_HUNDRED = '20000 мАгод'
+
+
+
+
 BATTERY_CHOICES = (
-    ('1000 мАгод', '1000 мАгод'),
-    ('5000 мАгод', '5000 мАгод'),
-    ('10000 мАгод', '10000 мАгод'),
-    ('20000 мАгод', '20000 мАгод'),
+    (ONE_HUNDRED, '1000 мАгод'),
+    (FIVE_HUNDRED, '5000 мАгод'),
+    (TEN_HUNDRED, '10000 мАгод'),
+    (TWENTY_HUNDRED, '20000 мАгод'),
 
 )
 
@@ -65,6 +74,16 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
+
+class Battery(models.Model):
+    but = models.CharField(max_length=100, db_index=True, verbose_name='Батарея')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL', null=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('but', kwargs={'but_slug': self.slug})
 
 
 class OrderItem(models.Model):

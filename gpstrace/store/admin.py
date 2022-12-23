@@ -7,6 +7,7 @@ admin.site.register(Category)
 admin.site.register(Order)
 admin.site.register(Favorite)
 admin.site.register(City)
+admin.site.register(Battery)
 
 class GalleryInline(admin.TabularInline):
 
