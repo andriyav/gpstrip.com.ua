@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.core.mail import send_mail
 from django.contrib.auth import logout, login
-from .models import Item, Category, City, Order, Favorite
+from .models import Item, Category, City, Order, Favorite, ONE_HUNDRED
 from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -20,15 +20,33 @@ class HomeView(ListView):
     template_name = "store/items.html"
     context_object_name = 'items'
 
+
     def get_queryset(self):
-        if '1000' in self.request.GET:
-            return Item.objects.filter(battery='1000 мАгод')
-        elif '5000' in self.request.GET:
-            return Item.objects.filter(battery='5000 мАгод')
-        elif '10000' in self.request.GET:
-            return Item.objects.filter(battery='10000 мАгод')
-        elif '20000' in self.request.GET:
-            return Item.objects.filter(battery='20000 мАгод')
+        if '1000' or '5000' or '10000' or '20000' in self.request.GET:
+            print(self.request.GET)
+            battery_range = []
+            for i in self.request.GET:
+                battery_range.append(int(i))
+                print(i)
+
+            if battery_range == []:
+                return Item.objects.all()
+            else:
+                battery_min = min(battery_range)
+                battery_max = max(battery_range)
+                print(battery_range)
+                print(battery_max, battery_min)
+                return Item.objects.filter(battery__lte=battery_max, battery__gte=battery_min)
+
+
+        # if '1000' in self.request.GET:
+        #     return Item.objects.filter(battery=1000)
+        # elif '5000' in self.request.GET:
+        #     return Item.objects.filter(battery=5000)
+        # elif '10000' in self.request.GET:
+        #     return Item.objects.filter(battery=10000)
+        # elif '20000' in self.request.GET:
+        #     return Item.objects.filter(battery=20000)
         else:
             if 'pricerange' in self.request.GET:
                 price_range = self.request.GET['pricerange']

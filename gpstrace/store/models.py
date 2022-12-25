@@ -7,22 +7,19 @@ LABEL_CHOICES = (
     ('Популярне', 'Популярне'),
 )
 
-ONE_HUNDRED = '1000 мАгод'
-FIVE_HUNDRED = '5000 мАгод'
-TEN_HUNDRED = '10000 мАгод'
-TWENTY_HUNDRED = '20000 мАгод'
-
-
+ONE_HUNDRED = 1000
+FIVE_HUNDRED = 5000
+TEN_HUNDRED = 10000
+TWENTY_HUNDRED = 20000
 
 
 BATTERY_CHOICES = (
-    (ONE_HUNDRED, '1000 мАгод'),
-    (FIVE_HUNDRED, '5000 мАгод'),
-    (TEN_HUNDRED, '10000 мАгод'),
-    (TWENTY_HUNDRED, '20000 мАгод'),
+    (ONE_HUNDRED, 1000),
+    (FIVE_HUNDRED, 5000),
+    (TEN_HUNDRED, 10000),
+    (TWENTY_HUNDRED, 20000),
 
 )
-
 
 class Item(models.Model):
     title = models.CharField(max_length=100, null=True, verbose_name='Назва товару')
@@ -34,7 +31,7 @@ class Item(models.Model):
     description = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Опис')
     details = models.TextField(max_length=5000, null=True, blank=True, verbose_name='Деталі')
     label = models.CharField(choices=LABEL_CHOICES, max_length=20, null=True, blank=True, verbose_name='Акційна мітка')
-    battery = models.CharField(choices=BATTERY_CHOICES, max_length=20, null=True, blank=True,
+    battery = models.IntegerField(choices=BATTERY_CHOICES, null=True, blank=True,
                                verbose_name='Ємність акумуляторної батареї')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
     quantity = models.IntegerField(default=1)

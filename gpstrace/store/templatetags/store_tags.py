@@ -110,9 +110,10 @@ def get_viewed(slug):
 
 
 @register.inclusion_tag('store/battery_viewed.html')
-def battery_viewed():
-    battery_viewed = [ONE_HUNDRED, FIVE_HUNDRED, TEN_HUNDRED, TWENTY_HUNDRED]
-    return {'battery_viewed': battery_viewed}
+def battery_viewed(request):
+    battery_viewed = [str(ONE_HUNDRED), str(FIVE_HUNDRED), str(TEN_HUNDRED), str(TWENTY_HUNDRED)]
+    bat_name = request.GET
+    return {'battery_viewed': battery_viewed, 'bat_name': bat_name.keys}
 
 @register.simple_tag
 def viewed(a, slug):
