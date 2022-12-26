@@ -6,13 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView
 from django.core.mail import send_mail
-from django.contrib.auth import logout, login
-from .models import Item, Category, City, Order, Favorite, ONE_HUNDRED
+from django.contrib.auth import logout
+from .models import Item, Category, City, Order, Favorite
 from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
+from django.db.models import Q
 
 
 class HomeView(ListView):
@@ -20,50 +21,42 @@ class HomeView(ListView):
     template_name = "store/items.html"
     context_object_name = 'items'
 
-
     def get_queryset(self):
-        if '1000' or '5000' or '10000' or '20000' in self.request.GET:
-            print(self.request.GET)
-            battery_range = []
-            for i in self.request.GET:
-                battery_range.append(int(i))
-                print(i)
-
-            if battery_range == []:
-                return Item.objects.all()
-            else:
-                battery_min = min(battery_range)
-                battery_max = max(battery_range)
-                print(battery_range)
-                print(battery_max, battery_min)
-                return Item.objects.filter(battery__lte=battery_max, battery__gte=battery_min)
-
-
-        # if '1000' in self.request.GET:
-        #     return Item.objects.filter(battery=1000)
-        # elif '5000' in self.request.GET:
-        #     return Item.objects.filter(battery=5000)
-        # elif '10000' in self.request.GET:
-        #     return Item.objects.filter(battery=10000)
-        # elif '20000' in self.request.GET:
-        #     return Item.objects.filter(battery=20000)
-        else:
-            if 'pricerange' in self.request.GET:
-                price_range = self.request.GET['pricerange']
-                f = price_range.split(',')
-                price_min = float(f[0])
-                price_max = float(f[1])
-                return Item.objects.filter(price__lte=price_max, price__gte=price_min)
+        if 'pricerange' in self.request.GET:
+            price_range = self.request.GET['pricerange']
+            f = price_range.split(',')
+            price_min = float(f[0])
+            price_max = float(f[1])
+            return Item.objects.filter(price__lte=price_max, price__gte=price_min)
         if 'dropdown' in self.request.GET:
             filter = self.request.GET['dropdown']
-        else:
+            if filter == 'popular':
+                return Item.objects.order_by('-label')
+            if filter == 'price':
+                return Item.objects.order_by('price')
+            if filter == 'discount':
+                return Item.objects.order_by('-discount')
+
+        battery_range = []
+        for i in self.request.GET:
+            battery_range.append(int(i))
+        if battery_range == []:
             return Item.objects.all()
-        if filter == 'popular':
-            return Item.objects.order_by('-label')
-        elif filter == 'price':
-            return Item.objects.order_by('price')
-        elif filter == 'discount':
-            return Item.objects.order_by('-discount')
+        else:
+            if len(battery_range) == 1:
+                print(battery_range[0])
+                return Item.objects.filter(battery=battery_range[0])
+            if len(battery_range) == 2:
+                print(battery_range[1])
+                return Item.objects.filter(Q(battery=battery_range[0]) | Q(battery=battery_range[1]))
+            if len(battery_range) == 3:
+                return Item.objects.filter(
+                    Q(battery=battery_range[0]) | Q(battery=battery_range[1]) | Q(battery=battery_range[2]))
+            if len(battery_range) == 4:
+                return Item.objects.filter(
+                    Q(battery=battery_range[0]) | Q(battery=battery_range[1]) | Q(battery=battery_range[2]) | Q(
+                        battery=battery_range[3]))
+
 
     def show_discount_30(self):
         return Item.objects.filter(discount='30')

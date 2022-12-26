@@ -1,10 +1,12 @@
+from audioop import reverse
+
 from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from cart.cart import Cart
 from store.models import Item, OrderItem, Order
 from django.utils import timezone
-
+from django.http import HttpResponseRedirect
 
 def cart_summary(request):
     cart = Cart(request)
@@ -56,7 +58,9 @@ def add_to_cart(request, item_slug):
             order_qty = 1
         item = get_object_or_404(Item, slug=item_slug)
         cart.add(item=item, qty=order_qty)
-        return redirect("index")
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)
+        # return redirect("index")
 
 
 def remove_from_cart(request, item_slug):

@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="add-to-cart">
                                     <form method="get" action="{{ item.get_add_to_cart_url }}">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Купити
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart" name="next" value="{{ request.path }}></i>Купити
                                         </button>
                                         {% csrf_token %}
                                         <div class="add-to-cart">
