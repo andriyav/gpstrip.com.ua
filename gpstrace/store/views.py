@@ -14,6 +14,8 @@ from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.db.models import Q
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 
 class HomeView(ListView):
@@ -154,13 +156,13 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order_items.update(ordered=True)
                 for item in order_items:
                     item.save()
-                send_mail(
-                    'Замовлення',
-                    f'Ви отримали замовлення від {order.first_name_np}/n {order.city_np}',
-                    'andriyav@hotmail.com',
-                    ['andriyav@hotmail.com'],
-                    fail_silently=False,
-                )
+
+                subject, from_email, to = 'Замовлення GPSTrace', 'andriyav@hotmail.com', 'andriyav@hotmail.com'
+                text_content = 'This is an important message.'
+                html_content = render_to_string('store/order_letter.html', {'ob_item': order})
+                msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
                 return redirect('checkout')
             messages.warning(self.request, 'Помилка форми')
             return redirect('checkout')
