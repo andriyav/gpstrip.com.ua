@@ -33,13 +33,13 @@ def add_to_cart(request, item_slug):
                 order_item.quantity += int(order_qty)
                 order_item.save()
                 messages.info(request, "Кількість товару в корзині збільшена")
-                return redirect("index")
+                return redirect(request.META.get('HTTP_REFERER'))
             else:
                 order.items.add(order_item)
                 order_item.quantity = int(order_qty)
                 order_item.save()
                 messages.info(request, "Товар добавлено до корзини")
-                return redirect("index")
+                return redirect(request.META.get('HTTP_REFERER'))
         else:
             ordered_date = timezone.now()
             order = Order.objects.create(
@@ -48,7 +48,7 @@ def add_to_cart(request, item_slug):
             order_item.quantity = int(order_qty)
             order_item.save()
             messages.info(request, "Товар добавлено до корзини")
-            return redirect("index")
+            return redirect(request.META.get('HTTP_REFERER'))
 
     else:
         cart = Cart(request)
@@ -58,9 +58,7 @@ def add_to_cart(request, item_slug):
             order_qty = 1
         item = get_object_or_404(Item, slug=item_slug)
         cart.add(item=item, qty=order_qty)
-        next = request.POST.get('next','/')
-        return HttpResponseRedirect(next)
-        # return redirect("index")
+        return redirect(request.META.get('HTTP_REFERER'))
 
 
 def remove_from_cart(request, item_slug):
@@ -81,15 +79,15 @@ def remove_from_cart(request, item_slug):
                 order.items.remove(order_item)
                 order_item.delete()
                 messages.info(request, "Товар було видалено з корзини")
-                return redirect("cart")
+                return redirect(request.META.get('HTTP_REFERER'))
             else:
                 messages.info(request, "Товар відсутній в корзині")
-                return redirect("cart")
+                return redirect(request.META.get('HTTP_REFERER'))
         else:
             messages.info(request, "У вас не має активних замовлень")
-            return redirect("cart")
+            return redirect(request.META.get('HTTP_REFERER'))
     else:
         cart = Cart(request)
         item = get_object_or_404(Item, slug=item_slug)
         cart.delete(item=item)
-        return redirect("index")
+        return redirect(request.META.get('HTTP_REFERER'))

@@ -209,7 +209,7 @@ def add_to_favorite(request, item_slug):
     )
     item_favorite.save()
     messages.info(request, "Товар добавлено в улюблене")
-    return redirect("index")
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
@@ -221,7 +221,7 @@ def remove_from_favorite(request, item_slug):
     )
     item_favorite.delete()
     messages.info(request, "Товар було видалено з улюблених")
-    return redirect("index")
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 def get_json_car_data(request):

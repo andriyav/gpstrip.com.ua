@@ -121,101 +121,101 @@
             <!-- /section title -->
             <!-- Products tab & slick -->
             {%comment%}
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="products-tabs">
-                        <!-- tab -->
-                        <div id="tab1" class="tab-pane active">
-                            <div class="products-slick" data-nav="#slick-nav-1">
-                                <!-- product -->
-                                {% for item in index_items %}
-                                {% if item.label == "Новинка" %}
-                                <div class="product">
-                                    <div class="product-img">
-                                        <img src="{{ item.photo.url }}" alt="">
-                                        <div class="product-label">
-                                            {% if item.discount %}
-                                                <span class="sale">Знижка {{item.discount | floatformat:0}}%</span>
-                                                {% endif %}
-                                            {% if item.label %}
-                                            <span class="new">{{item.label}}</span>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="product-body">
-                                        <p class="product-category">{{item.cat}}</p>
-                                        <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                        {% if item.discount %}
-                                        <h4 class="product-price">{{item.discount_price_calculation | floatformat:2}}
-                                            грн
-                                            <del class="product-old-price">{{item.price}} грн</del>
-                                        </h4>
-                                        {% else %}
-                                        <h4 class="product-price">{{item.price}} грн </h4>
-                                        {% endif %}
-                                        <form method="get" action='{{item.get_add_to_favorite_url}}'>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                    {% if user.is_authenticated %}
-                                                    {% if item.slug in request.user|get_favorite_list %}
+<!--            <div class="col-md-12">-->
+<!--                <div class="row">-->
+<!--                    <div class="products-tabs">-->
+<!--                        &lt;!&ndash; tab &ndash;&gt;-->
+<!--                        <div id="tab1" class="tab-pane active">-->
+<!--                            <div class="products-slick" data-nav="#slick-nav-1">-->
+<!--                                &lt;!&ndash; product &ndash;&gt;-->
+<!--                                {% for item in index_items %}-->
+<!--                                {% if item.label == "Новинка" %}-->
+<!--                                <div class="product">-->
+<!--                                    <div class="product-img">-->
+<!--                                        <img src="{{ item.photo.url }}" alt="">-->
+<!--                                        <div class="product-label">-->
+<!--                                            {% if item.discount %}-->
+<!--                                                <span class="sale">Знижка {{item.discount | floatformat:0}}%</span>-->
+<!--                                                {% endif %}-->
+<!--                                            {% if item.label %}-->
+<!--                                            <span class="new">{{item.label}}</span>-->
+<!--                                            {% endif %}-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="product-body">-->
+<!--                                        <p class="product-category">{{item.cat}}</p>-->
+<!--                                        <h3 class="product-name"><a href="#">product name goes here</a></h3>-->
+<!--                                        {% if item.discount %}-->
+<!--                                        <h4 class="product-price">{{item.discount_price_calculation | floatformat:2}}-->
+<!--                                            грн-->
+<!--                                            <del class="product-old-price">{{item.price}} грн</del>-->
+<!--                                        </h4>-->
+<!--                                        {% else %}-->
+<!--                                        <h4 class="product-price">{{item.price}} грн </h4>-->
+<!--                                        {% endif %}-->
+<!--                                        <form method="get" action='{{item.get_add_to_favorite_url}}'>-->
+<!--                                            <div class="product-rating">-->
+<!--                                                <i class="fa fa-star"></i>-->
+<!--                                                <i class="fa fa-star"></i>-->
+<!--                                                <i class="fa fa-star"></i>-->
+<!--                                                <i class="fa fa-star"></i>-->
+<!--                                                <i class="fa fa-star"></i>-->
+<!--                                            </div>-->
+<!--                                            <div class="product-btns">-->
+<!--                                                    {% if user.is_authenticated %}-->
+<!--                                                    {% if item.slug in request.user|get_favorite_list %}-->
 
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart"></i><span
-                                                            class="tooltipp">add to wishlist</span></button>
-                                                    {% else %}
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                            class="tooltipp">add to wishlist</span></button>
-                                                    {% endif %}
-                                                    {% else %}
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                            class="tooltipp">add to wishlist</span></button>
-                                                    {% endif %}
-                                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                                            class="tooltipp">add to compare</span></button>
-                                                    <button class="quick-view"><i class="fa fa-eye"></i><span
-                                                            class="tooltipp">quick view</span></button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="add-to-cart">
-                                    <form method="get" action="{{ item.get_add_to_cart_url }}">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart" name="next" value="{{ request.path }}></i>Купити
-                                        </button>
-                                        {% csrf_token %}
-                                        <div class="add-to-cart">
-                                            <div class="qty-label">
-                                                <div class="input-number">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            {% endif %}
-                            {% endfor %}
-                            <!-- /product --></div>
-                        <div id="slick-nav-1" class="products-slick-nav"></div>
-                    </div>
-                    <!-- /tab -->
-                </div>
-            </div>
-        </div>
-        <!-- Products tab & slick -->
-    </div>
-    <!-- /row -->
+<!--                                                    <button class="add-to-wishlist"><i class="fa fa-heart"></i><span-->
+<!--                                                            class="tooltipp">add to wishlist</span></button>-->
+<!--                                                    {% else %}-->
+<!--                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span-->
+<!--                                                            class="tooltipp">add to wishlist</span></button>-->
+<!--                                                    {% endif %}-->
+<!--                                                    {% else %}-->
+<!--                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span-->
+<!--                                                            class="tooltipp">add to wishlist</span></button>-->
+<!--                                                    {% endif %}-->
+<!--                                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span-->
+<!--                                                            class="tooltipp">add to compare</span></button>-->
+<!--                                                    <button class="quick-view"><i class="fa fa-eye"></i><span-->
+<!--                                                            class="tooltipp">quick view</span></button>-->
+<!--                                        </form>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="add-to-cart">-->
+<!--                                    <form method="get" name="next" value="{{ request.GET.next }} action="{{ item.get_add_to_cart_url }}">-->
+<!--                                        <button class="add-to-cart-btn" "><i class="fa fa-shopping-cart" ></i>Купити1-->
+<!--                                        </button>-->
+<!--                                        {% csrf_token %}-->
+<!--                                        <div class="add-to-cart">-->
+<!--                                            <div class="qty-label">-->
+<!--                                                <div class="input-number">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </form>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            {% endif %}-->
+<!--                            {% endfor %}-->
+<!--                            &lt;!&ndash; /product &ndash;&gt;</div>-->
+<!--                        <div id="slick-nav-1" class="products-slick-nav"></div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; /tab &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; Products tab & slick &ndash;&gt;-->
+<!--    </div>-->
+<!--    &lt;!&ndash; /row &ndash;&gt;-->
 
-</div>
-<!-- /container -->
+<!--</div>-->
+<!--&lt;!&ndash; /container &ndash;&gt;-->
 
-</div>
+<!--</div>-->
 
-</div>
-<!-- /SECTION -->
+<!--</div>-->
+<!--&lt;!&ndash; /SECTION &ndash;&gt;-->
 {%endcomment%}
 <!-- HOT DEAL SECTION -->
 <div id="hot-deal" class="section">

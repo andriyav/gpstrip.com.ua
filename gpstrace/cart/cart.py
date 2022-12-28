@@ -34,14 +34,11 @@ class Cart():
         for item in cart.values():
             item['total_price'] = int(item['price']) * int(item['qty'])
             if item['discount']:
-                item['discount_price'] = int(item['price']) - (int(item['price']) * (item['discount']/ 100))
+                item['discount_price'] = int(item['price']) - (int(item['price']) * (item['discount'] / 100))
             else:
                 item['discount_price'] = int(item['price'])
 
             yield item
-
-
-
 
     def __len__(self):
         c = 0
@@ -49,29 +46,20 @@ class Cart():
             c += 1
         return c
 
-
     def get_total_price(self):
         sum_total = 0
         for item in self.cart.values():
             if item['discount']:
-                self.total_price = (Decimal(item['price']) - (Decimal(item['price']) * (Decimal(item['discount'])/ 100))) * item['qty']
+                self.total_price = (Decimal(item['price']) - (
+                        Decimal(item['price']) * (Decimal(item['discount']) / 100))) * item['qty']
             else:
                 self.total_price = Decimal(item['price']) * item['qty']
             sum_total += self.total_price
 
         return sum_total
 
-
-
-
-
-
-
-
     def delete(self, item):
         item_slug = item.slug
         if item_slug in self.cart:
             del self.cart[item_slug]
             self.session.modified = True
-
-

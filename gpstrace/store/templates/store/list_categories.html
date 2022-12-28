@@ -1,19 +1,11 @@
 {% load static %}
 
 <ul class="main-nav nav-pills nav-stacked">
-	  {% for c in cats %}
+    {% for c in cats %}
     <div><br></div>
     <li><a href="{{c.get_absolute_url}}">{{c.name}}</a></li>
-{% endfor %}
+    {% endfor %}
 
 </ul>
 
-<!--<ul class="main-nav nav navbar-nav">-->
-<!--                <li><a href="{% url 'home' %}">Вітрина</a></li>-->
-<!--                <li><a href="{% url 'index' %}">Крамниця</a></li>-->
-<!--                <li><a href="{% url 'about' %}">Про нас</a></li>-->
-<!--                <li><a href="{% url 'delivery' %}">Доставка</a></li>-->
-<!--                <li><a href="{% url 'payment' %}">Оплата</a></li>-->
-<!--                <li><a href="{% url 'return_terms' %}">Умови повернення</a></li>-->
-<!--            </ul>-->
 
