@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.core.mail import send_mail
 from django.contrib.auth import logout
-from .models import Item, Category, City, Order, Favorite
+from .models import Item, Category, City, Order, Favorite, OrderItem
 from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -149,20 +149,19 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order.address_np = request.POST.get('address-np')
                 order.order_notes = form.cleaned_data.get('order_notes')
                 order.ordered_date = timezone.now()
-                order.save()
-                order.ordered = True
-                order.save()
-                order_items = order.items.all()
-                order_items.update(ordered=True)
-                for item in order_items:
-                    item.save()
-
+                order.total = order.get_total()
                 subject, from_email, to = 'Замовлення GPSTrace', 'andriyav@hotmail.com', 'andriyav@hotmail.com'
                 text_content = 'This is an important message.'
                 html_content = render_to_string('store/order_letter.html', {'ob_item': order})
                 msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
+                order_items = order.items.all()
+                order_items.update(ordered=True)
+                for item in order_items:
+                    item.save()
+                order.ordered = True
+                order.save()
                 return redirect('checkout')
             messages.warning(self.request, 'Помилка форми')
             return redirect('checkout')

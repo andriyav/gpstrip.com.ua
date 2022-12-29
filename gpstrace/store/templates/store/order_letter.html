@@ -10,13 +10,17 @@
     <title>Electro - HTML Ecommerce Template</title>
 
     <!-- Google font -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
 
 
 </head>
 <meta charset="UTF-8">
 <title>Замовлення GPSTrace</title>
+
 Доброго дня, {{ ob_item.user.first_name }}.
 Від Вас поступило замовлення на наступні типи трекерів:
 <div class="col-md-5 order-details">
@@ -31,11 +35,9 @@
         <div class="order-products">
             <div class="order-col">
                 <br>
-                {% if items_checkout.item.discount %}
-                <div>{{items_checkout.quantity}}шт. x <strong>{{items_checkout.item.title}}</strong> на суму <strong>{{items_checkout.item.discount_price_calculation | floatformat:2}} грн</strong></div>
-                {% else %}
-                <div>{{items_checkout.quantity}}шт. x {{items_checkout.item.title}} на суму {{items_checkout.item.price}} грн.</div>
-                {% endif %}
+                <div>{{items_checkout.quantity}}шт. x {{items_checkout.item.title}} на суму
+                   <strong> {{ items_checkout.get_final_price }} грн.</strong>
+                </div>
             </div>
         </div>
         {% endfor %}
@@ -45,28 +47,33 @@
         </div>
         <div class="order-col">
             <br>
-            <div><strong>РАЗОМ</strong></div>
-            <div><strong class="order-total">{{ ob_item.user|get_cart_total_price }} грн.</strong></div>
-           <hr>
+            <div><strong class="order-total">РАЗОМ {{ ob_item.user|get_cart_total_price }} грн.</strong></div>
+            <hr>
 
         </div>
-                <div class="order-col">
+        <div class="order-col">
             <div><strong>Перевірте, будь-ласка, адресу доставки. </strong></div>
-                    <div>{{ ob_item.first_name }} {{ ob_item.last_name }}</div>
-                    <div>{{ ob_item.street_address}}</div>
-                     <div>{{ ob_item.city }}</div>
-                    <div>{{ ob_item.index}}</div>
-                    <div>{{ ob_item.phone}}</div>
-
-                У разі помилки, зробіть замовлення повторно.
-
-
+            {% if ob_item.first_name %}
+            <div>{{ ob_item.first_name }} {{ ob_item.last_name }}</div>
+            <div>{{ ob_item.street_address}}</div>
+            <div>{{ ob_item.city }}</div>
+            <div>{{ ob_item.index}}</div>
+            <div>{{ ob_item.phone}}</div>
+            {% else %}
+            <div>{{ ob_item.first_name_np }} {{ ob_item.last_name_np }}</div>
+            <div>{{ ob_item.street_address}}</div>
+            <div>{{ ob_item.city_np }}</div>
+            <div>{{ ob_item.address_np}}</div>
+            <div>{{ ob_item.phone_np}}</div>
+            <div>{{ ob_item.phone_np}}</div>
+            <div>У разі помилки, зробіть замовлення повторно.</div>
+            {% endif %}
+            <hr>
+            <div><strong>Нотатки до замовлення </strong></div>
+            <div>{{ ob_item.order_notes}}</div>
         </div>
     </div>
-
 </div>
-
-<body>
 
 </body>
 </html>
