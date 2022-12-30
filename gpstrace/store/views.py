@@ -193,7 +193,7 @@ class Search(ListView):
     paginate_by = 3
 
     def get_queryset(self):
-        return Item.objects.filter(description__icontains=self.request.GET.get('q', ''))
+        return Item.objects.filter(description__icontains=self.request.GET.get('drop', ''))
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

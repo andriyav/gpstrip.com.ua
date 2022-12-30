@@ -79,18 +79,15 @@ def get_cart_total_price(user):
 
     if user.is_authenticated:
         qs_order_item = OrderItem.objects.filter(user=user, ordered=False)
+        for prices in qs_order_item:
+            if prices.item.discount:
+                total_item = prices.quantity * (prices.item.price - (
+                            prices.item.price * (prices.item.discount / 100)))
+            else:
+                total_item = prices.quantity * prices.item.price
+            total += total_item
 
-        if qs_order_item.exists():
-            for prices in qs_order_item:
-                if prices.item.discount:
-                    total_item = prices.quantity * prices.item.price - (
-                                prices.item.price * (prices.item.discount / 100))
-                    total += total_item
-                else:
-                    total_item = prices.quantity * prices.item.price
-                    total += total_item
-
-        return total
+    return total
 
 
 # self.quantity * self.item.price - (self.item.price * (self.item.discount / 100))
