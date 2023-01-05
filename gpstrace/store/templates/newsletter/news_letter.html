@@ -1,0 +1,15 @@
+м
+
+<div class="caption">
+    <form method="POST" class="form-group">
+        {%csrf_token%}
+        <div class="form-group">
+            {{ form.title }}
+            {{form.message}}
+
+            <div id="btn-box">
+                <button class="primary-btn order-submit" type="submit">Надіслати замовлення</button>
+            </div>
+        </div>
+    </form>
+</div>

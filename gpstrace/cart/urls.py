@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 
 from cart import views
 from cart.views import add_to_cart, remove_from_cart

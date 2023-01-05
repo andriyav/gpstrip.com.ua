@@ -262,7 +262,6 @@ def np_api(request):
     url = 'https://api.novaposhta.ua/v2.0/json/'
     np = requests.post(url, params)
     for city in np.json()['data']:
-        print(city['Description'])
         order_item, created = City.objects.get_or_create(name=city['Description'], ref=city['Ref'])
     return redirect("index")
 
