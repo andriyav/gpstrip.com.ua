@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'account',
     'orders',
-    'newsletter'
+    'newsletter',
+    'debug_toolbar',
 
 ]
 
@@ -58,6 +59,11 @@ MIDDLEWARE = [
 
 ]
 
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 ROOT_URLCONF = 'gpstrace.urls'
 
 TEMPLATES = [

@@ -210,7 +210,7 @@ def add_to_favorite(request, item_slug):
         user=request.user,
     )
     item_favorite.save()
-    messages.info(request, "Товар добавлено в улюблене")
+    messages.success(request, "Товар добавлено в улюблене")
     return redirect(request.META.get('HTTP_REFERER'))
 
 
