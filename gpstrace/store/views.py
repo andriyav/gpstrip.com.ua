@@ -7,9 +7,8 @@ from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
-from django.core.mail import send_mail
 from django.contrib.auth import logout
-from .models import Item, Category, City, Order, Favorite, OrderItem
+from .models import Item, Category, City, Order, Favorite
 from .forms import CheckoutForms
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
@@ -110,7 +109,7 @@ class CartView(LoginRequiredMixin, ListView):
             }
             return render(self.request, 'store/cart.html', context)
         except ObjectDoesNotExist:
-            messages.warning(self.request, "You do not have an active order")
+            messages.warning(self.request, "У Вас не має активних замовлень")
             return redirect("/")
 
 
@@ -150,10 +149,10 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order.order_notes = form.cleaned_data.get('order_notes')
                 order.ordered_date = timezone.now()
                 order.total = order.get_total()
-                subject, from_email, to = 'Замовлення GPSTrace', 'andriyav@hotmail.com', 'andriyav@hotmail.com'
+                subject, from_email, to, cc = 'Замовлення GPSTrace', 'andriyav@hotmail.com', request.user.email, 'andriyav@hotmail.com'
                 text_content = 'This is an important message.'
                 html_content = render_to_string('store/order_letter.html', {'ob_item': order})
-                msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                msg = EmailMultiAlternatives(subject, text_content, from_email, [to], [cc])
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
                 order_items = order.items.all()
