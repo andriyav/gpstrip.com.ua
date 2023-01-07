@@ -19,7 +19,7 @@ from django.template.loader import render_to_string
 
 class HomeView(ListView):
     model = Item
-    template_name = "store/items.html"
+    template_name = "store/store.html"
     context_object_name = 'items'
 
     def get_queryset(self):
@@ -32,35 +32,35 @@ class HomeView(ListView):
         if 'dropdown' in self.request.GET:
             filter = self.request.GET['dropdown']
             if filter == 'popular':
-                return Item.objects.order_by('-label')
+                return Item.objects.order_by('-label').select_related('cat')
             if filter == 'price':
-                return Item.objects.order_by('price')
+                return Item.objects.order_by('price').select_related('cat')
             if filter == 'discount':
-                return Item.objects.order_by('-discount')
+                return Item.objects.order_by('-discount').select_related('cat')
 
         battery_range = []
         for i in self.request.GET:
             battery_range.append(int(i))
         if battery_range == []:
-            return Item.objects.all()
+            return Item.objects.all().select_related('cat')
         else:
             if len(battery_range) == 1:
                 print(battery_range[0])
-                return Item.objects.filter(battery=battery_range[0])
+                return Item.objects.filter(battery=battery_range[0]).select_related('cat')
             if len(battery_range) == 2:
                 print(battery_range[1])
-                return Item.objects.filter(Q(battery=battery_range[0]) | Q(battery=battery_range[1]))
+                return Item.objects.filter(Q(battery=battery_range[0]) | Q(battery=battery_range[1])).select_related('cat')
             if len(battery_range) == 3:
                 return Item.objects.filter(
-                    Q(battery=battery_range[0]) | Q(battery=battery_range[1]) | Q(battery=battery_range[2]))
+                    Q(battery=battery_range[0]) | Q(battery=battery_range[1]) | Q(battery=battery_range[2])).select_related('cat')
             if len(battery_range) == 4:
                 return Item.objects.filter(
                     Q(battery=battery_range[0]) | Q(battery=battery_range[1]) | Q(battery=battery_range[2]) | Q(
-                        battery=battery_range[3]))
+                        battery=battery_range[3])).select_related('cat')
 
 
     def show_discount_30(self):
-        return Item.objects.filter(discount='30')
+        return Item.objects.filter(discount='30').select_related('cat')
 
 
 class ShowItem(DetailView, JSONEncoder):
@@ -78,16 +78,17 @@ class ShowItem(DetailView, JSONEncoder):
 
 class CategoryTracker(ListView):
     model = Item
-    template_name = 'store/items.html'
+    template_name = 'store/store.html'
     context_object_name = 'items'
     allow_empty = False
 
     def get_queryset(self):
-        return Item.objects.filter(cat__slug=self.kwargs['cat_slug'])
+        return Item.objects.filter(cat__slug=self.kwargs['cat_slug']).select_related('cat')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Категорія -' + str(context['items'][0].cat)
+
         return context
 
 
@@ -127,6 +128,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
             'ob_item': order,
             'city': city
         }
+
         return render(self.request, "store/checkout.html", context)
 
     def post(self, request, *args, **kwargs):
@@ -174,6 +176,9 @@ class IndexView(ListView):
     template_name = "store/index.html"
     context_object_name = 'index_items'
 
+    def get_queryset(self):
+        return Item.objects.all().select_related('cat')
+
 
 class About(ListView):
     model = Item
@@ -211,6 +216,7 @@ def add_to_favorite(request, item_slug):
     )
     item_favorite.save()
     messages.success(request, "Товар добавлено в улюблене")
+
     return redirect(request.META.get('HTTP_REFERER'))
 
 

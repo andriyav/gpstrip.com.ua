@@ -74,6 +74,7 @@
     document.cookie = 'device=' + device + ";domain=;path=/"
 
 </script>
+<body>
 <div class="mt-5 pt-4">
     {% if messages %}
     {% for message in messages %}
@@ -272,6 +273,7 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
+</body>
 {% include "store/footer.html" %}
 
 <!-- jQuery Plugins -->
@@ -282,4 +284,5 @@
 <script src="{% static '/js/main.js' %}"></script>
 <script src="{% static '/js/checkbox.js' %}"></script>
 </div>
+
 </html>

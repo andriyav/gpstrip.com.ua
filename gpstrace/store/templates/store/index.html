@@ -67,7 +67,7 @@
     document.cookie = 'device=' + device + ";domain=;path=/"
 
 </script>
-
+<body>
     {% if messages %}
     {% for message in messages %}
     <div class="alert alert-danger alert-dismissible" role="alert">
@@ -78,9 +78,7 @@
     </div>
     {% endfor %}
     {% endif %}
-<body>
             {% include "store/navbar.html" %}
-
 <!-- SECTION -->
 <div class="section">
     <!-- container -->
@@ -572,7 +570,7 @@
                         <!--								</div>-->
                         <!--								&lt;!&ndash; product widget &ndash;&gt;-->
                     </div>
-                    <div>
+
                         <!--								&lt;!&ndash; product widget &ndash;&gt;-->
                         <!--								<div class="product-widget">-->
                         <!--									<div class="product-img">-->
@@ -856,7 +854,8 @@
 <!--			&lt;!&ndash; /bottom footer &ndash;&gt;-->
 <!--		</footer>-->
 <!--		&lt;!&ndash; /FOOTER &ndash;&gt;-->
-
+</body>
+ </html>
 <script src="{% static '/js/jquery.min.js' %}"></script>
 <script src="{% static '/js/bootstrap.min.js' %}"></script>
 <script src="{% static '/js/slick.min.js' %}"></script>

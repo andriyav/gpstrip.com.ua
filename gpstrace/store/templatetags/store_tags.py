@@ -58,7 +58,7 @@ def get_cart_navbar2(order_item):
 @register.filter
 def get_favorite(user):
     if user.is_authenticated:
-        favorite_item = Favorite.objects.filter(user=user)
+        favorite_item = Favorite.objects.filter(user=user).select_related('item_favorite')
         if favorite_item.exists():
             return favorite_item
 
@@ -66,7 +66,7 @@ def get_favorite(user):
 def get_favorite_list(user):
     item_list = []
     if user.is_authenticated:
-        favorite_item = Favorite.objects.filter(user=user)
+        favorite_item = Favorite.objects.filter(user=user).select_related('id')
         if favorite_item.exists():
             for item in favorite_item:
                 item_list.append(item.item_favorite.slug)
@@ -94,7 +94,7 @@ def get_cart_total_price(user):
 @register.filter
 def favorite_item_count(user):
     if user.is_authenticated:
-        qs = Favorite.objects.filter(user=user)
+        qs = Favorite.objects.filter(user=user).select_related("user_id")
         if qs.exists():
             return qs.count()
     return 0
@@ -102,7 +102,7 @@ def favorite_item_count(user):
 
 @register.inclusion_tag('store/list_viewed.html')
 def get_viewed(slug):
-    item_viewed = Item.objects.filter(slug__in=slug)
+    item_viewed = Item.objects.filter(slug__in=slug).select_related('cat')
     return {'item_viewed': item_viewed}
 
 
