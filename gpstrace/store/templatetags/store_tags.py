@@ -35,7 +35,7 @@ def get_items():
 @register.filter
 def cart_item_count(user):
     if user.is_authenticated:
-        qs = Order.objects.filter(user=user, ordered=False)
+        qs = Order.objects.filter(user=user, ordered=False).select_related('user')
         if qs.exists():
             return qs[0].items.count()
     return 0
@@ -44,15 +44,9 @@ def cart_item_count(user):
 @register.filter
 def get_cart_navbar(user):
     if user.is_authenticated:
-        cart_item = OrderItem.objects.filter(user=user, ordered=False)
+        cart_item = OrderItem.objects.filter(user=user, ordered=False).select_related('item')
         if cart_item.exists():
             return cart_item
-
-
-@register.filter
-def get_cart_navbar2(order_item):
-    cart_item = Item.objects.filter(slug__in=order_item)
-    return cart_item
 
 
 @register.filter
@@ -66,7 +60,7 @@ def get_favorite(user):
 def get_favorite_list(user):
     item_list = []
     if user.is_authenticated:
-        favorite_item = Favorite.objects.filter(user=user).select_related('id')
+        favorite_item = Favorite.objects.filter(user=user).select_related('item_favorite_id')
         if favorite_item.exists():
             for item in favorite_item:
                 item_list.append(item.item_favorite.slug)
@@ -78,7 +72,7 @@ def get_cart_total_price(user):
     total = 0
 
     if user.is_authenticated:
-        qs_order_item = OrderItem.objects.filter(user=user, ordered=False)
+        qs_order_item = OrderItem.objects.filter(user=user, ordered=False).select_related("item")
         for prices in qs_order_item:
             if prices.item.discount:
                 total_item = prices.quantity * (prices.item.price - (
