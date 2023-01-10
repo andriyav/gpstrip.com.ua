@@ -96,7 +96,23 @@
 							<div class="row">
 								<br>
 								<div class="col-sm-3">{{order_item.item.title}}</div>
-								<div class="col-sm-3">{{order_item.quantity}} шт.</div>
+								<div class="col-sm-3">
+									<form method="get" action="{{ order_item.item.get_add_to_cart_url }}">
+                        {% csrf_token %}
+                        <div class="add-to-cart">
+                            <div class="qty-label">
+                                Кіл-ть
+                                <div class="input-number">
+                                    <input name="order-qty" type="number" value={{order_item.quantity}} onchange="javascript:
+									if(this.value != '0') this.form.submit();">
+                                    <span class="qty-up">+</span>
+                                    <span class="qty-down">-</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+</div>
 									{% if order_item.item.discount %}
 								<div class="col-sm-3">
 									{{order_item.item.discount_price_calculation | floatformat:2}} грн</div>
