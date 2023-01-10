@@ -27,13 +27,13 @@ def dashboard(request):
             if order.items.filter(item__slug=item.slug).exists():
                 order_item.quantity = item_cart['qty']
                 order_item.save()
-                messages.info(request, "Кількість товару в корзині збільшена1")
+                messages.info(request, "Кількість товару в корзині збільшена")
                 # return redirect("index")
             else:
                 order.items.add(order_item)
                 order_item.quantity = item_cart['qty']
                 order_item.save()
-                messages.info(request, "Товар добавлено до корзини1")
+                messages.info(request, "Товар добавлено до корзини")
                 # return redirect("index")
         else:
             ordered_date = timezone.now()
@@ -42,7 +42,7 @@ def dashboard(request):
             order.items.add(order_item)
             order_item.quantity = item_cart['qty']
             order_item.save()
-            messages.info(request, "Товар добавлено до корзини2")
+            messages.info(request, "Товар добавлено до корзини")
     request.session['skey'] = {}
     request.session.modified = True
     orders = Order.objects.filter(user=request.user).filter(ordered=True).order_by('-ordered_date')

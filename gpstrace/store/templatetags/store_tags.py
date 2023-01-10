@@ -60,7 +60,7 @@ def get_favorite(user):
 def get_favorite_list(user):
     item_list = []
     if user.is_authenticated:
-        favorite_item = Favorite.objects.filter(user=user).select_related('item_favorite_id')
+        favorite_item = Favorite.objects.filter(user=user)
         if favorite_item.exists():
             for item in favorite_item:
                 item_list.append(item.item_favorite.slug)
