@@ -1,4 +1,5 @@
 {% load static %}
+{% load store_tags %}
 
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -33,15 +34,11 @@
 								<!-- tab -->
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
-
-
-										<!-- product -->
+									<!-- product -->
 										{% for item in item_viewed %}
-
 										<div class="product">
 											 <a href="{{item.get_absolute_url}}">
 											<div class="product-img">
-
 												<img src="{{ item.photo.url }}" alt="">
 												<div class="product-label">
 													{% if item.discount %}
@@ -71,7 +68,16 @@
 													<i class="fa fa-star"></i>
 												</div>
 												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart"></i><span class="tooltipp">add to wishlist</span></button>
+                    {{request.user}}2s2s
+                                                    {% if item.slug in user|get_favorite_list %}
+                                                    <button class="add-to-wishlist"><i class="fa fa-heart"></i><span
+                                                            class="tooltipp">add to wishlist</span></button>
+                                                    {% else %}
+                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                            class="tooltipp">add to wishlist</span></button>
+                                                    {% endif %}
+
+
 													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
 													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 													</form>
