@@ -154,6 +154,9 @@
                     </div>
                 </div>
             </div>
+                        {{request.user|get_favorite_list}}
+            {{request.user}}
+
             {%get_viewed request.session.recently_viewed%}
             <!-- /section title -->
             <!-- Products tab & slick -->
@@ -255,6 +258,7 @@
 <!--&lt;!&ndash; /SECTION &ndash;&gt;-->
 {%endcomment%}
 <!-- HOT DEAL SECTION -->
+
 <div id="hot-deal" class="section">
     <!-- container -->
     <div class="container">
