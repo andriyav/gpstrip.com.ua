@@ -154,9 +154,6 @@
                     </div>
                 </div>
             </div>
-                        {{request.user|get_favorite_list}}
-            {{request.user}}
-
             {%get_viewed request.session.recently_viewed%}
             <!-- /section title -->
             <!-- Products tab & slick -->
@@ -865,7 +862,7 @@
 <script src="{% static '/js/slick.min.js' %}"></script>
 <script src="{% static '/js/nouislider.min.js' %}"></script>
 <script src="{% static '/js/jquery.zoom.min.js' %}"></script>
-<script src="{% static '/js/main.js' %}"></script>
+<script src="{% static './js/main.js' %}"></script>
 
 
 {% include "store/footer.html" %}
