@@ -120,7 +120,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
         except ObjectDoesNotExist:
-            messages.success(self.request, "Ваше замовлення надіслано")
+            messages.warning(self.request, "У вас не має активних замовлень")
             return redirect("/")
         city = City.objects.all()
         context = {
@@ -167,7 +167,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
             messages.warning(self.request, 'Помилка форми')
             return redirect('checkout')
         except ObjectDoesNotExist:
-            messages.warning(self.request, "У Вас не має активних замовлень")
+            messages.warning(self.request, "Y Вас не має активних замовлень")
             return redirect('checkout')
 
 

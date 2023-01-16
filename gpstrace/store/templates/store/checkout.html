@@ -119,6 +119,7 @@
                                     <span></span>
                                     Доставка Новою Поштою
                                 </label>
+
                                 <div class="caption">
                                     <div class="form-group"> {{ form.first_name_np }}</div>
                                     <div class="form-group"> {{ form.last_name_np }}</div>
@@ -126,6 +127,7 @@
                                     <select class="input-select" id="city-select" name="city-np">
                                         <option selected>Виберіть місто доставки</option>
                                     </select>
+
                                     <br>
                                     <br>
                                     <select class="input-select" id="address-select" name="address-np">
@@ -152,17 +154,17 @@
                     <div class="order-summary">
                         <div class="order-col">
                             <div><strong>Товар</strong></div>
-                            <div><strong>Ціна за шт.</strong></div>
+                            <div><strong>Разом</strong></div>
                         </div>
                         {% for items_checkout in ob_item.items.all %}
                         <div class="order-products">
                             <div class="order-col">
                                 {% if items_checkout.item.discount %}
                                 <div>{{items_checkout.quantity}} x {{items_checkout.item.title}}</div>
-                                <div>{{items_checkout.item.discount_price_calculation | floatformat:2}} грн</div>
+                                <div>{{items_checkout.item.discount_price_calculation | floatformat:2}}</div>
                                 {% else %}
                                 <div>{{items_checkout.quantity}} x {{items_checkout.item.title}}</div>
-                                <div>{{items_checkout.item.price}} грн</div>
+                                <div>{{items_checkout.item.price}}</div>
                                 {% endif %}
                             </div>
                         </div>
@@ -172,10 +174,11 @@
                             <div><strong>Безкоштовна</strong></div>
                         </div>
                         <div class="order-col">
-                            <div><strong class="order-total">РАЗОМ</strong></div>
-                            <div><strong class="order-total">{{ request.user|get_cart_total_price }}&nbsp;грн.</strong></div>
+                            <div><strong>РАЗОМ</strong></div>
+                            <div><strong class="order-total">{{ request.user|get_cart_total_price }} грн.</strong></div>
                         </div>
                     </div>
+
                     <div id="btn-box">
                         <button class="primary-btn order-submit" type="submit">Надіслати замовлення</button>
                     </div>
@@ -191,6 +194,7 @@
 {% include "store/footer.html" %}
 <!-- jQuery Plugins -->
 </body>
+
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <script src="{% static 'js/slick.min.js' %}"></script>

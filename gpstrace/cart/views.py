@@ -91,18 +91,3 @@ def remove_from_cart(request, item_slug):
         item = get_object_or_404(Item, slug=item_slug)
         cart.delete(item=item)
         return redirect(request.META.get('HTTP_REFERER'))
-
-
-def update_cart(request, item_slug):
-    order_qty = request.GET["order-qty"]
-    item = get_object_or_404(Item, slug=item_slug)
-    order_item, created = OrderItem.objects.get_or_create(
-        item=item,
-        user=request.user,
-        ordered=False
-    )
-    order_item.quantity = int(order_qty)
-    order_item.save()
-    messages.info(request, "Кількість товару в корзині змінена")
-    redirect("cart")
-    return redirect("cart")
