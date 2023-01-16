@@ -1,5 +1,4 @@
 """gpstrace URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
 Examples:
@@ -16,8 +15,9 @@ Including another URLconf
 
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
+from django.views.static import serve as mediaserve
 
 
 urlpatterns = [
@@ -36,4 +36,12 @@ if settings.DEBUG:
         path(r'^__debug__/', include('debug_toolbar.urls')),
     ] + urlpatterns
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+else:
+    urlpatterns += [
+        re_path(f'^{settings.MEDIA_URL.lstrip("/")}(?P<path>.*)$',
+                mediaserve, {'document_root': settings.MEDIA_ROOT}),
+        re_path(f'^{settings.STATIC_URL.lstrip("/")}(?P<path>.*)$',
+                mediaserve, {'document_root': settings.STATIC_ROOT}),
+    ]
