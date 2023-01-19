@@ -151,7 +151,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order.order_notes = form.cleaned_data.get('order_notes')
                 order.ordered_date = timezone.now()
                 order.total = order.get_total()
-                subject, from_email, to, cc = 'Замовлення GPSTrace', 'andriyav@hotmail.com', request.user.email, 'andriyav@hotmail.com'
+                subject, from_email, to, cc = 'Замовлення GPSTrace', 'andriyav@gpstrip.com.ua', request.user.email, 'andriyav@hotmail.com'
                 text_content = 'This is an important message.'
                 html_content = render_to_string('store/order_letter.html', {'ob_item': order})
                 msg = EmailMultiAlternatives(subject, text_content, from_email, [to], [cc])

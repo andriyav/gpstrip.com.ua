@@ -12,8 +12,7 @@
                         <form method="POST" action="{% url 'news-letter' %}">
                             {% csrf_token %}
                             <input class="input" name="subscriber" type="email" placeholder="Email">
-                            {{form.email}}
-                            <button class="newsletter-btn"><i class="fa fa-envelope"></i> Підписатись</button>
+                       <button class="newsletter-btn"><i class="fa fa-envelope"></i> Підписатись</button>
                         </form>
                         <ul class="newsletter-follow">
 <!--                            <li>-->
