@@ -232,43 +232,47 @@ def remove_from_favorite(request, item_slug):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
-def get_json_car_data(request):
+def get_json_car_data(request):                                # Функція формування переліку
     qs_val = list(City.objects.values())
     return JsonResponse({'data': qs_val})
 
 
-def get_json_address_data(request, *args, **kwargs):
-    selected_city = kwargs.get('city')
-    obj_address_list = []
+def get_json_address_data(request, *args, **kwargs):            # Функція завантаження вулиць нової пошти заданого міста
+    selected_city = kwargs.get('city')# надання змінній назви міста з url address-json/<str:city>/
+    print(selected_city)
+    obj_address_list = []                                       # ініціалізація преліку адресів міста
     ref = City.objects.get(name=selected_city).ref
+    print(ref)# ref номеру міста із бази даних.
     param = {
         "apiKey": "0139a34f622b2f7ac7cd63936a5f4150",
         "modelName": "Address",
-        "calledMethod": "getWarehouses",
+        "calledMethod": "getWarehouses",                         # формування даних для пердачі на API нової пошти. Форма взята з сайта нової пошти
         "methodProperties": {
             "CityRef": ref
         }}
-    url = 'https://api.novaposhta.ua/v2.0/json/'
-    np = requests.post(url, json.dumps(param))
-    for city in np.json()['data']:
-        obj_address_list.append(city['Description'])
-    return JsonResponse({'data': obj_address_list})
+    url = 'https://api.novaposhta.ua/v2.0/json/'                 # url для відправки форми API
+    np = requests.post(url, json.dumps(param))                   # відправка форми API в json форматі
+    for city in np.json()['data']:                               # отримання response за ключем 'data' переліку вулиць
+        obj_address_list.append(city['Description'])             # формування листу вулиць
+    return JsonResponse({'data': obj_address_list})              # повернення переліку вулиць
 
 
-def np_api(request):
-    params = '''{
-    	"apiKey": "0139a34f622b2f7ac7cd63936a5f4150",
-    	"modelName": "Address",
+def np_api(request):                                             # форма для передачі для пердачі на API нової пошти для отримання переліку міст нвової пошти. Форма взята з сайта нової пошти
+    params = '''{                                                
+    	"apiKey": "0139a34f622b2f7ac7cd63936a5f4150",            
+    	"modelName": "Address",                                  
     	"calledMethod": "getCities",
-    	"methodProperties": {
+    	"methodProperties": { 
     		"FindByString": ""
     	}
     }'''
-    url = 'https://api.novaposhta.ua/v2.0/json/'
-    np = requests.post(url, params)
-    for city in np.json()['data']:
-        order_item, created = City.objects.get_or_create(name=city['Description'], ref=city['Ref'])
-    return redirect("index")
+    url = 'https://api.novaposhta.ua/v2.0/json/'                 # url для відправки форми API
+    np = requests.post(url, params)                              # відправка форми API в json форматі
+    for city in np.json()['data']:                               # отримання response за ключем 'data' переліку вулиць
+        order_item, created = City.objects.get_or_create(
+            name=city['Description'], ref=city['Ref']
+        )                                                        # заповнення таблиці ази даних містами
+    return redirect("index")                                     # переадресація на сторінку крамниці
 
 
 def delivery(request):

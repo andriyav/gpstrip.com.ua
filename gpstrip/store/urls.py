@@ -21,8 +21,8 @@ urlpatterns = [
     path('payment/', payment, name='payment'),
     path('return_terms/', return_terms, name='return_terms'),
     path('contacts/', contacts, name='contacts'),
-    path('city-json/', get_json_car_data, name='city-json'),
-    path('address-json/<str:city>/', get_json_address_data, name='address-json'),
-    path('np_api/', np_api, name='np_api'),
+    path('city-json/', get_json_car_data, name='city-json'), # шлях запуску функції вюшки для виводу міст у випадаючому переліку checkout.html
+    path('address-json/<str:city>/', get_json_address_data, name='address-json'), # шлях запуску функції вюшки для отримання переліку вулиць необхідного міста у випадаючому переліку checkout.html
+    path('np_api/', np_api, name='np_api'), # шлях запуску функції вюшки для отримання переліку міст нової пошти
 
     ]

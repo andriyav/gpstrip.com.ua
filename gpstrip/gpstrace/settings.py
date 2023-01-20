@@ -146,7 +146,7 @@ LOGIN_URL = '/account/login/'
 
 
 EMAIL_HOST = 'skm181.hostsila.org'
-EMAIL_PORT = 465
+EMAIL_PORT = 25
 EMAIL_HOST_USER = 'andriyav@gpstrip.com.ua'
 EMAIL_HOST_PASSWORD = 'omponents12'
 EMAIL_USE_TLS = True
