@@ -238,11 +238,10 @@ def get_json_car_data(request):                                # Функція 
 
 
 def get_json_address_data(request, *args, **kwargs):            # Функція завантаження вулиць нової пошти заданого міста
-    selected_city = kwargs.get('city')# надання змінній назви міста з url address-json/<str:city>/
-    print(selected_city)
+    selected_city = kwargs.get('city') # надання змінній назви міста з url address-json/<str:city>/
     obj_address_list = []                                       # ініціалізація преліку адресів міста
-    ref = City.objects.get(name=selected_city).ref
-    print(ref)# ref номеру міста із бази даних.
+    ref = kwargs.get('city')
+    print(ref, 'ref', kwargs.get)# ref номеру міста із бази даних.
     param = {
         "apiKey": "0139a34f622b2f7ac7cd63936a5f4150",
         "modelName": "Address",
