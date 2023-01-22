@@ -12,7 +12,10 @@
             cityData.map(item=>{                                           // ініціалізація перемінної із переліком міст
                 const option = document.createElement('option')   // ініціалізація перемінної блоку html для формування видачі переліку міст у випадаючому списку
                 option.textContent = item.name                              // формування блоку випадаючого списку із назвами міст
-                option.setAttribute('value', item.ref)     // формування блоку атрибуту HTML блоку із велииною ref номера
+
+                 option.setAttribute('class', 'item')
+                option.setAttribute('data', item.name) // формування блоку атрибуту HTML блоку із велииною ref номера
+                option.setAttribute('value', item.ref)
                 cityInput.appendChild(option)
             })
         },

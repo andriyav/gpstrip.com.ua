@@ -146,7 +146,8 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order.first_name_np = form.cleaned_data.get('first_name_np')
                 order.last_name_np = form.cleaned_data.get('last_name_np')
                 order.phone_np = form.cleaned_data.get('phone_np')
-                order.city_np = request.POST.get('city-np')
+                city_np_class = City.objects.get(ref=request.POST.get('city-np'))
+                order.city_np = city_np_class.name
                 order.address_np = request.POST.get('address-np')
                 order.order_notes = form.cleaned_data.get('order_notes')
                 order.ordered_date = timezone.now()
