@@ -2139,7 +2139,11 @@ textarea.input {
 	13 -> RESPONSIVE
 ===========================================================*/
 
-@media only screen and (max-width: 1201px) {}
+@media only screen{
+  .cart-pc {
+    display: none;
+  }
+}
 
 @media only screen and (max-width: 991px) {
   #top-header .header-links.pull-left {
@@ -2177,6 +2181,7 @@ textarea.input {
   .section-tab-nav li {
     margin-top: 10px;
   }
+
 }
 
 @media only screen and (max-width: 480px) {
@@ -2191,4 +2196,16 @@ textarea.input {
     float: none;
     margin-top: 10px;
   }
+
+  .cart-manu {
+    display: none;
+  }
+
+  .cart-pc {
+    display: inline;
+  }
+
 }
+
+
+
