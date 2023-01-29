@@ -1,5 +1,6 @@
+<!DOCTYPE html>
 {% load static %}
-{% include "store/navbar.html" %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,15 +42,32 @@
     </head>
 
 <body>
+{% include "store/navbar.html" %}
+<div class="container-fluid">
+<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-10">
 <br>
-    <div class="container" style="max-width: 1000px">
-        <div class="col-12">
+						<div> Оплата здійснюється накладним плетежем при отриманні замовлення або ж по предоплаті на рахунок Приват Банку</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+</div>
 
-<p> Оплата здійснюється накладним плетежем при отриманні замовлення або ж по предоплаті на рахунок Приват Банку</p>
 
-        </div>
-    </div>
 </body>
 {% include "store/footer.html" %}
 </body>
+
+<script src="{% static '/js/slick.min.js' %}"></script>
+<script src="{% static '/js/nouislider.min.js' %}"></script>
+<script src="{% static '/js/jquery.zoom.min.js' %}"></script>
+<script src="{% static '/js/main.js' %}"></script>
+<script src="{% static '/js/checkbox.js' %}"></script>
 </html>

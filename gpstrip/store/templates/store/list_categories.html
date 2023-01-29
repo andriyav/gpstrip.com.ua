@@ -1,6 +1,6 @@
 {% load static %}
 
-<ul class="main-nav nav-pills nav-stacked">
+<ul>
     {% for c in cats %}
     <div><br></div>
     <li><a href="{{c.get_absolute_url}}">{{c.name}}</a></li>
