@@ -57,7 +57,6 @@
                     </div>
                 </div>
                 <!-- /LOGO -->
-
                 <!-- SEARCH BAR -->
                     <div class="col-md-6">
                     <div class="header-search">
@@ -117,19 +116,12 @@
                         </div>
                         <!-- /Wishlist -->
                         <!-- Cart -->
-
                         <div class="dropdown">
                             <a class="dropdown-toggle"  data-toggle="dropdown" aria-expanded="true" >
-
                                 <i class="fa fa-shopping-cart" ></i>
-
-
                                     <span>Корзина</span>
-
-
                                 {% if user.is_authenticated %}
                                 <div class="qty">{{ request.user|cart_item_count }}</div>
-
                                 <div class="cart-dropdown" data-disabled="false">
                                 <div class="cart-list">
                                     {% if user.is_authenticated %}
@@ -245,8 +237,8 @@
 								<div>
 									<a href="/">
 										<i class="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
-										<div class="qty">2</div>
+										<span>Улюблене</span>
+										<div class="qty">{{ request.user|favorite_item_count }}</div>
 									</a>
 								</div>
 								<!-- /Wishlist -->
@@ -255,8 +247,8 @@
 								<div>
 									<a href="{% url 'cart' %}">
 										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
-										<div class="qty">3</div>
+										<span>Корзина</span>
+										<div class="qty">{{ request.user|cart_item_count }}</div>
 									</a>
 
 								</div>
