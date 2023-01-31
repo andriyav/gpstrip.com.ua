@@ -75,6 +75,15 @@ class ShowItem(DetailView, JSONEncoder):
         context['item_view'] = context['item_view']
         return context
 
+class ShowFavorite(ListView):
+    model = Favorite
+    template_name = 'store/favorite.html'
+    context_object_name = 'favorite'
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            favorite_item = Favorite.objects.filter(user=self.request.user)
+            return favorite_item
 
 class CategoryTracker(ListView):
     model = Item

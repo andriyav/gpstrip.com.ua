@@ -235,7 +235,7 @@
 							<div class="header-ctn">
 								<!-- Wishlist -->
 								<div>
-									<a href="/">
+									<a href="{% url 'favorite' %}">
 										<i class="fa fa-heart-o"></i>
 										<span>Улюблене</span>
 										<div class="qty">{{ request.user|favorite_item_count }}</div>

@@ -1,5 +1,6 @@
+<!DOCTYPE html>
 {% load static %}
-{% include "store/navbar.html" %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,11 +42,17 @@
     </head>
 
 <body>
+{% include "store/navbar.html" %}
+<div class="container-fluid">
+<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-10">
 <br>
-    <div class="container" style="max-width: 1000px">
-        <div class="col-12">
-
-			<h3> Повернення та обмін </h3>
+						<p>
+    <h3> Повернення та обмін </h3>
 
 <p>Компанія здійснює повернення та обмін товарів належної якості згідно Закону «Про захист прав споживачів».</p>
 			<h4>Строки повернення і обміну</h4>
@@ -60,9 +67,27 @@
 
 <p>Згідно із Законом  <a href="https://zakon.rada.gov.ua/laws/show/1023-12#Text">«Про захист прав споживачів»</a>, компанія може відмовити споживачеві в обміні та поверненні товарів належної якості, якщо вони відносяться до категорій, що зазначені у чинному <a href="https://zakon.rada.gov.ua/laws/show/172-94-%D0%BF#Text">«Переліку непродовольчих товарів належної якості, не підлягають поверненню та обміну.»</a></p>
 
-        </div>
-    </div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+</div>
+
+
 </body>
 {% include "store/footer.html" %}
 </body>
+
+<script src="{% static '/js/slick.min.js' %}"></script>
+<script src="{% static '/js/nouislider.min.js' %}"></script>
+<script src="{% static '/js/jquery.zoom.min.js' %}"></script>
+<script src="{% static '/js/main.js' %}"></script>
+<script src="{% static '/js/checkbox.js' %}"></script>
 </html>
+
+
+
+
+

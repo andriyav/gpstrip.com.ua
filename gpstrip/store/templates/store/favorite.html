@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 {% load static %}
+{% load store_tags %}
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Улюблене</title>
     	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,6 +44,7 @@
 
 <body>
 {% include "store/navbar.html" %}
+
 <div class="container-fluid">
 <div id="breadcrumb" class="section">
 			<!-- container -->
@@ -50,14 +52,31 @@
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-10">
-<br>
-						<p>
-    В нашому інтернет магазині представлені якісні та надійні GPS трекера, які були відібрані протягом 7 років роботи нашого магазину. На прилавку залишились тільки ті GPS трекера, які відрізняються надійністю роботи, мінімум браку в партії та відсутністю скарг з боку замовників. </p>
-
-<p> Всі трекера поставляються вже налаштовані і у Вас не виникне жодних проблем із запуском пристрою. А якщо і запитання виникнуть, дзвоніть, пишіть в будь-який, чи то робочий, чи не робочий час, і ми оперативно дамо відповідь та вирішимо проблему із роботою трекера віддаллено.</p>
-			<p> Ми надаємо по життєву технічну підтримку наших трекерів. Та не вагайтесь подзвонити нам, якщо у Вас виникнуть запитання перед покупкою.
-
-	7 річний досвід роботи з GPS трекерами зробив нас спеціалістами в даній сфері. </p>
+<div class="cart-list">
+     <br>
+    <h3 class="breadcrumb-header">Улюблене</h3>
+    <br>
+                                    {% if user.is_authenticated %}
+                                    {% if request.user|get_favorite %}
+                                        {% for favorite_item in request.user|get_favorite %}
+                                    <div class="product-widget">
+                                        <div class="product-img">
+                                            <img src="{{ favorite_item.item_favorite.photo.url }}" alt="">
+                                        </div>
+                                        <div class="product-body">
+                                            <h3 class="product-name"><a
+                                                    href="{% url 'itemv' favorite_item.item_favorite.slug %}">{{favorite_item.item_favorite.title}}</a>
+                                            </h3>
+                                            </span>{{favorite_item.item_favorite.price}} грн.</h4>
+                                        </div>
+                                        <a class="delete"
+                                           href="{% url 'remove-from-favorite' favorite_item.item_favorite.slug %}"> <i
+                                                class="fa fa-close"></i> </a>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endif %}
+                                </div>
 					</div>
 				</div>
 				<!-- /row -->
