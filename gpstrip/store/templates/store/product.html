@@ -328,6 +328,8 @@
                         										<!-- /Reviews -->
 
                         										<!-- Review Form -->
+																{% if user.is_authenticated %}
+
                         										<div class="col-md-3">
                         											<div id="review-form">
                         												<form class="review-form">
@@ -348,6 +350,8 @@
                         												</form>
                         											</div>
                         										</div>
+																{% endif %}
+
                         										<!-- /Review Form -->
                     </div>
                 </div>

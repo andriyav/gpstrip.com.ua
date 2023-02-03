@@ -133,6 +133,10 @@ class Order(models.Model):
 
     def __str__(self):
         return self.user.user_name
+    def ordered_item_list(self, slug):
+        item_order = Order.objects.filter(user=self.user)
+        if 'TK905' in 'TK905':
+            return True
 
     def get_total(self):
         total = 0
