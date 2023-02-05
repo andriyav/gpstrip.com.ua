@@ -155,18 +155,21 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 order.first_name_np = form.cleaned_data.get('first_name_np')
                 order.last_name_np = form.cleaned_data.get('last_name_np')
                 order.phone_np = form.cleaned_data.get('phone_np')
-                city_np_class = City.objects.get(ref=request.POST.get('city-np'))
-                order.city_np = city_np_class.name
+                try:
+                    city_np_class = City.objects.get(ref=request.POST.get('city-np'))
+                    order.city_np = city_np_class.name
+                except:
+                    order.city_np = 'Адреса не вказана'
                 order.address_np = request.POST.get('address-np')
                 order.order_notes = form.cleaned_data.get('order_notes')
                 order.ordered_date = timezone.now()
                 order.total = order.get_total()
-                subject, from_email, to, cc = 'Замовлення GPSTrace', 'andriyav@gpstrip.com.ua', request.user.email, 'andriyav@hotmail.com'
-                text_content = 'This is an important message.'
-                html_content = render_to_string('store/order_letter.html', {'ob_item': order})
-                msg = EmailMultiAlternatives(subject, text_content, from_email, [to], [cc])
-                msg.attach_alternative(html_content, "text/html")
-                msg.send()
+                # subject, from_email, to, cc = 'Замовлення GPSTrace', 'andriyav@gpstrip.com.ua', request.user.email, 'andriyav@hotmail.com'
+                # text_content = 'This is an important message.'
+                # html_content = render_to_string('store/order_letter.html', {'ob_item': order})
+                # msg = EmailMultiAlternatives(subject, text_content, from_email, [to], [cc])
+                # msg.attach_alternative(html_content, "text/html")
+                # msg.send()
                 order_items = order.items.all()
                 order_items.update(ordered=True)
                 for item in order_items:
