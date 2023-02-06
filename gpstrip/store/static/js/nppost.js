@@ -51,8 +51,3 @@
         })
         })
 
-
-cityForm.addEventListener('card-body', e=>{
-    e.preventDefault()
-    console.log('submited')
-})

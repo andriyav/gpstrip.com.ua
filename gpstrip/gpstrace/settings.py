@@ -145,10 +145,16 @@ LOGIN_URL = '/account/login/'
 # PASSWORD_RESET_TIMEOUT_DAYS = 2
 
 
-EMAIL_HOST = 'skm181.hostsila.org'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'andriyav@gpstrip.com.ua'
-EMAIL_HOST_PASSWORD = 'omponents12'
+# EMAIL_HOST = 'skm181.hostsila.org'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = 'andriyav@gpstrip.com.ua'
+# EMAIL_HOST_PASSWORD = 'omponents12'
+# EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'andriyav@hotmail.com'
+EMAIL_HOST_PASSWORD = 'dreamcast1'
 EMAIL_USE_TLS = True
 
 DEBUG_TOOLBAR_CONFIG = {

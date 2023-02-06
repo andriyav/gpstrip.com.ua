@@ -170,6 +170,12 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 # msg = EmailMultiAlternatives(subject, text_content, from_email, [to], [cc])
                 # msg.attach_alternative(html_content, "text/html")
                 # msg.send()
+                subject, from_email, to, cc = 'Замовлення GPSTrace', 'andriyav@hotmail.com', request.user.email, 'andriyav@hotmail.com'
+                text_content = 'This is an important message.'
+                html_content = render_to_string('store/order_letter.html', {'ob_item': order})
+                msg = EmailMultiAlternatives(subject, text_content, from_email, [to], [cc])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
                 order_items = order.items.all()
                 order_items.update(ordered=True)
                 for item in order_items:
@@ -180,7 +186,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
             messages.warning(self.request, 'Помилка форми')
             return redirect('checkout')
         except ObjectDoesNotExist:
-            messages.warning(self.request, "Y Вас не має активних замовлень")
+            messages.warning(self.request, "У Вас не має активних замовлень")
             return redirect('checkout')
 
 

@@ -121,9 +121,11 @@
                                 </label>
 
                                 <div class="caption">
+
                                     <div class="form-group"> {{ form.first_name_np }}</div>
                                     <div class="form-group"> {{ form.last_name_np }}</div>
                                     <div class="form-group"> {{ form.phone_np }}</div>
+                                    <div class="cart-manu">
                                     <select class="input-select" id="city-select" name="city-np">
                                         <option selected>Виберіть місто доставки</option>
                                     </select>
@@ -135,7 +137,11 @@
                                     </select>
                                     <br>
                                     <br>
-
+                                    </div>
+                                    <div class="cart-pc">
+                                        <div class="form-group"> {{ form.city_np }}</div>
+                                        <div class="form-group"> {{ form.address_np }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +206,6 @@
 <script src="{% static 'js/slick.min.js' %}"></script>
 <script src="{% static 'js/nouislider.min.js' %}"></script>
 <script src="{% static 'js/jquery.zoom.min.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
 <script src="{% static 'js/nppost.js' %}"></script>
 
 </html>
