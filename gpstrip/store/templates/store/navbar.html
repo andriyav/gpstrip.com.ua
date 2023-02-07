@@ -248,7 +248,13 @@
 									<a href="{% url 'cart' %}">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Корзина</span>
+                                        {% if user.is_authenticated %}
 										<div class="qty">{{ request.user|cart_item_count }}</div>
+                                        {% else %}
+                                        {% with total_qty=cart|length %}
+                                <div class="qty">{{total_qty}}</div>
+                                {% endwith %}
+                                        {% endif %}
 									</a>
 
 								</div>
