@@ -158,9 +158,10 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 try:
                     city_np_class = City.objects.get(ref=request.POST.get('city-np'))
                     order.city_np = city_np_class.name
+                    order.address_np = request.POST.get('address-np')
                 except:
-                    order.city_np = 'Адреса не вказана'
-                order.address_np = request.POST.get('address-np')
+                    order.city_np = form.cleaned_data.get('city_np')
+                    order.address_np = form.cleaned_data.get('address_np')
                 order.order_notes = form.cleaned_data.get('order_notes')
                 order.ordered_date = timezone.now()
                 order.total = order.get_total()
