@@ -331,11 +331,14 @@
 																{% if user.is_authenticated %}
 
                         										<div class="col-md-3">
+
                         											<div id="review-form">
-                        												<form class="review-form">
+                        												<form method="POST" class="review-form">
+																			{% csrf_token %}
                         													<input class="input" type="text" placeholder="Your Name">
                         													<input class="input" type="email" placeholder="Your Email">
-                        													<textarea class="input" placeholder="Your Review"></textarea>
+																			<div class="form-group">{{ form_feedback.feedback_text }}</div>
+                        													{% comment %}<textarea class="input" placeholder="Your Review"></textarea>{% endcomment %}
                         													<div class="input-rating">
                         														<span>Your Rating: </span>
                         														<div class="stars">
@@ -349,7 +352,9 @@
                         													<button class="primary-btn">Submit</button>
                         												</form>
                         											</div>
+
                         										</div>
+
 																{% endif %}
 
                         										<!-- /Review Form -->
