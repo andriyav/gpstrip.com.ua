@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'orders',
     'newsletter',
     'debug_toolbar',
+    'feedback',
 
 ]
 
@@ -76,6 +77,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart'
             ],
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            },
         },
     },
 ]
