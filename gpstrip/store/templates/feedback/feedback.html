@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for message in feedback %}
+<li>
+    <div class="review-heading">
+        <h5 class="name">{{message.user_feedback}}</h5>
+        <p class="date">22 ГРУДНЯ 2018, 10:03 PM</p>
+        <div class="review-rating">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-o empty"></i>
+        </div>
+    </div>
+    <div class="review-body">
+        <p>{{message.feedback_text}}</p>
+    </div>
+</li>
+{% endfor %}
+</body>
+</html>

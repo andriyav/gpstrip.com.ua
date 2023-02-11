@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
+
 {% load store_tags %}
+
 
 <html lang="en">
 <head>
@@ -267,61 +269,47 @@
                         										<div class="col-md-6">
                         											<div id="reviews">
                         												<ul class="reviews">
-                        													<li>
-                        														<div class="review-heading">
-                        															<h5 class="name">Андрій</h5>
-                        															<p class="date">22 ГРУДНЯ 2018, 10:03 PM</p>
-                        															<div class="review-rating">
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star-o empty"></i>
-                        															</div>
-                        														</div>
-                        														<div class="review-body">
-                        															<p>Трекер якісний, рекомендую.</p>
-                        														</div>
-                        													</li>
-                        													<li>
-                        														<div class="review-heading">
-                        															<h5 class="name">Василь</h5>
-                        															<p class="date">25 ГРУДНЯ 2018, 18:00</p>
-                        															<div class="review-rating">
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star-o empty"></i>
-                        															</div>
-                        														</div>
-                        														<div class="review-body">
-                        															<p>Дякую</p>
-                        														</div>
-                        													</li>
-                        													<li>
-                        														<div class="review-heading">
-                        															<h5 class="name">Володимир</h5>
-                        															<p class="date">29 ГРУДНЯ 2018, 12:03 PM</p>
-                        															<div class="review-rating">
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star"></i>
-                        																<i class="fa fa-star-o empty"></i>
-                        															</div>
-                        														</div>
-                        														<div class="review-body">
-                        															<p>Все на висоті, товар, обслуговування</p>
-                        														</div>
-                        													</li>
-                        												</ul>
-                        												<ul class="reviews-pagination">
-                        													<li class="active">1</li>
-                        													<li><a href="#">2</a></li>
-                        													<li><a href="#">3</a></li>
-                        													<li><a href="#">4</a></li>
-                        													<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+																			{% get_feedback %}
+
+<!--                        													<li>-->
+<!--                        														<div class="review-heading">-->
+<!--                        															<h5 class="name">Василь</h5>-->
+<!--                        															<p class="date">25 ГРУДНЯ 2018, 18:00</p>-->
+<!--                        															<div class="review-rating">-->
+<!--                        																<i class="fa fa-star"></i>-->
+<!--                        																<i class="fa fa-star"></i>-->
+<!--                        																<i class="fa fa-star"></i>-->
+<!--                        																<i class="fa fa-star"></i>-->
+<!--                        																<i class="fa fa-star-o empty"></i>-->
+<!--                        															</div>-->
+<!--                        														</div>-->
+<!--                        														<div class="review-body">-->
+<!--                        															<p>Дякую</p>-->
+<!--                        														</div>-->
+<!--                        													</li>-->
+<!--                        													<li>-->
+<!--                        														<div class="review-heading">-->
+<!--                        															<h5 class="name">Володимир</h5>-->
+<!--                        															<p class="date">29 ГРУДНЯ 2018, 12:03 PM</p>-->
+<!--                        															<div class="review-rating">-->
+<!--                        																<i class="fa fa-star"></i>-->
+<!--                        																<i class="fa fa-star"></i>-->
+<!--                        																<i class="fa fa-star"></i>-->
+<!--                        																<i class="fa fa-star"></i>-->
+<!--                        																<i class="fa fa-star-o empty"></i>-->
+<!--                        															</div>-->
+<!--                        														</div>-->
+<!--                        														<div class="review-body">-->
+<!--                        															<p>Все на висоті, товар, обслуговування</p>-->
+<!--                        														</div>-->
+<!--                        													</li>-->
+<!--                        												</ul>-->
+<!--                        												<ul class="reviews-pagination">-->
+<!--                        													<li class="active">1</li>-->
+<!--                        													<li><a href="#">2</a></li>-->
+<!--                        													<li><a href="#">3</a></li>-->
+<!--                        													<li><a href="#">4</a></li>-->
+<!--                        													<li><a href="#"><i class="fa fa-angle-right"></i></a></li>-->
                         												</ul>
                         											</div>
                         										</div>
@@ -333,11 +321,11 @@
                         										<div class="col-md-3">
 
                         											<div id="review-form">
-                        												<form method="POST" class="review-form">
+                        												<form method="POST"  class="review-form" action="{% url 'feedback-product' %}">
 																			{% csrf_token %}
                         													<input class="input" type="text" placeholder="Your Name">
                         													<input class="input" type="email" placeholder="Your Email">
-																			<div class="form-group">{{ form_feedback.feedback_text }}</div>
+																			<input class="input" name="feedback_text" type="text" placeholder="Відгук">
                         													{% comment %}<textarea class="input" placeholder="Your Review"></textarea>{% endcomment %}
                         													<div class="input-rating">
                         														<span>Your Rating: </span>

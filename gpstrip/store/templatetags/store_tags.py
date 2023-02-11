@@ -1,15 +1,17 @@
 from django import template
 from ..models import Category, Item, Order, OrderItem, Favorite, ONE_HUNDRED, FIVE_HUNDRED, TEN_HUNDRED, TWENTY_HUNDRED
+from feedback.models import Feedback
+
 
 register = template.Library()
 
-
-@register.simple_tag()
-def get_labeled(filter='Популярне'):
-    if not filter:
-        return Item.objects.all()
-    else:
-        return Item.objects.filter(label=filter)
+#
+# @register.simple_tag()
+# def get_labeled(filter='Популярне'):
+#     if not filter:
+#         return Item.objects.all()
+#     else:
+#         return Item.objects.filter(label=filter)
 
 
 #
@@ -117,3 +119,8 @@ def viewed(a, slug):
             a['recently_viewed'].insert(0, slug)
     a.modified = True
     return a['recently_viewed'], slug
+
+@register.inclusion_tag('feedback/feedback.html')
+def get_feedback():
+    feedback = Feedback.objects.all()
+    return {'feedback': feedback}
