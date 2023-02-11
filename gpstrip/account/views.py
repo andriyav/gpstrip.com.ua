@@ -28,13 +28,11 @@ def dashboard(request):
                 order_item.quantity = item_cart['qty']
                 order_item.save()
                 messages.info(request, "Кількість товару в корзині збільшена")
-                # return redirect("index")
             else:
                 order.items.add(order_item)
                 order_item.quantity = item_cart['qty']
                 order_item.save()
                 messages.info(request, "Товар добавлено до корзини")
-                # return redirect("index")
         else:
             ordered_date = timezone.now()
             order = Order.objects.create(
@@ -106,6 +104,3 @@ def account_activate(request, uidb64, token):
         return redirect('account:dashboard')
     else:
         return render(request, 'account/registration/activation_invalid.html')
-
-
-

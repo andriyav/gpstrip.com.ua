@@ -42,14 +42,12 @@ def cart_item_count(user):
             return qs[0].items.count()
     return 0
 
-
 @register.filter
 def get_cart_navbar(user):
     if user.is_authenticated:
         cart_item = OrderItem.objects.filter(user=user, ordered=False).select_related('item')
         if cart_item.exists():
             return cart_item
-
 
 @register.filter
 def get_favorite(user):
@@ -72,7 +70,6 @@ def get_favorite_list(user):
 @register.filter
 def get_cart_total_price(user):
     total = 0
-
     if user.is_authenticated:
         qs_order_item = OrderItem.objects.filter(user=user, ordered=False).select_related("item")
         for prices in qs_order_item:
@@ -82,11 +79,8 @@ def get_cart_total_price(user):
             else:
                 total_item = prices.quantity * prices.item.price
             total += total_item
-
     return total
 
-
-# self.quantity * self.item.price - (self.item.price * (self.item.discount / 100))
 @register.filter
 def favorite_item_count(user):
     if user.is_authenticated:
@@ -95,12 +89,10 @@ def favorite_item_count(user):
             return qs.count()
     return 0
 
-
 @register.inclusion_tag('store/list_viewed.html')
 def get_viewed(slug):
     item_viewed = Item.objects.filter(slug__in=slug).select_related('cat')
     return {'item_viewed': item_viewed}
-
 
 @register.inclusion_tag('store/battery_viewed.html')
 def battery_viewed(request):
@@ -121,6 +113,6 @@ def viewed(a, slug):
     return a['recently_viewed'], slug
 
 @register.inclusion_tag('feedback/feedback.html')
-def get_feedback():
-    feedback = Feedback.objects.all()
+def get_feedback(slug):
+    feedback = Feedback.objects.filter(slug=slug)
     return {'feedback': feedback}
