@@ -10,6 +10,31 @@
     <div class="review-heading">
         <h5 class="name">{{message.user_feedback}}</h5>
         <p class="date">{{message.time_feedback}}</p>
+        {% if message.rate == '1' %}
+        <div class="review-rating">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-o empty"></i>
+            <i class="fa fa-star-o empty"></i>
+            <i class="fa fa-star-o empty"></i>
+            <i class="fa fa-star-o empty"></i>
+        </div>
+        {% elif message.rate == '2' %}
+        <div class="review-rating">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-o empty"></i>
+            <i class="fa fa-star-o empty"></i>
+            <i class="fa fa-star-o empty"></i>
+        </div>
+        {% elif message.rate == '3' %}
+        <div class="review-rating">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-o empty"></i>
+            <i class="fa fa-star-o empty"></i>
+        </div>
+        {% elif message.rate == '4' %}
         <div class="review-rating">
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
@@ -17,6 +42,15 @@
             <i class="fa fa-star"></i>
             <i class="fa fa-star-o empty"></i>
         </div>
+        {% elif message.rate == '5' %}
+        <div class="review-rating">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+        </div>
+        {% endif %}
     </div>
     <div class="review-body">
         <p>{{message.feedback_text}}</p>

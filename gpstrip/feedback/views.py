@@ -11,7 +11,8 @@ def feedback_product(request):
                 Feedback.objects.get_or_create(feedback_text=request.POST['feedback_text'],
                                                user_feedback=request.user.first_name,
                                                time_feedback=timezone.now(),
-                                               slug=request.POST['slug']
+                                               slug=request.POST['slug'],
+                                               rate=request.POST['rating']
                                             )
                 break
     return redirect(request.META.get('HTTP_REFERER'))

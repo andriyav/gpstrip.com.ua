@@ -116,3 +116,10 @@ def viewed(a, slug):
 def get_feedback(slug):
     feedback = Feedback.objects.filter(slug=slug)
     return {'feedback': feedback}
+
+@register.filter
+def feedback_count(slug):
+    fd = Feedback.objects.filter(slug=slug)
+    if fd.exists():
+        return fd.count()
+    return 0

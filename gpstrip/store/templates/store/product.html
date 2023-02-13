@@ -156,7 +156,7 @@
                     <ul class="tab-nav">
                         <li class="active"><a data-toggle="tab" href="#tab1">Опис</a></li>
                         <li><a data-toggle="tab" href="#tab2">Деталі</a></li>
-                        <li><a data-toggle="tab" href="#tab3">Відгуки(3)</a></li>
+                        <li><a data-toggle="tab" href="#tab3">Відгуки: {{ item_view.slug|feedback_count }}</a></li>
                     </ul>
                     <!-- /product tab nav -->
                     <!-- product tab content -->
@@ -230,9 +230,9 @@
                         															<i class="fa fa-star-o"></i>
                         														</div>
                         														<div class="rating-progress">
-                        															<div></div>
+                        															<div style="width: 0%;"></div>
                         														</div>
-                        														<span class="sum">0</span>
+                        														<span class="sum">5</span>
                         													</li>
                         													<li>
                         														<div class="rating-stars">
@@ -243,7 +243,7 @@
                         															<i class="fa fa-star-o"></i>
                         														</div>
                         														<div class="rating-progress">
-                        															<div></div>
+                        															<div style="width: 0%;"></div>
                         														</div>
                         														<span class="sum">0</span>
                         													</li>
@@ -256,7 +256,7 @@
                         															<i class="fa fa-star-o"></i>
                         														</div>
                         														<div class="rating-progress">
-                        															<div></div>
+                        															<div style="width: 0%;"></div>
                         														</div>
                         														<span class="sum">0</span>
                         													</li>
@@ -264,7 +264,6 @@
                         											</div>
                         										</div>
                         										<!-- /Rating -->
-
                         										<!-- Reviews -->
                         										<div class="col-md-6">
                         											<div id="reviews">
