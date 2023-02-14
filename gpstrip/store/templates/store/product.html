@@ -269,6 +269,7 @@
                         											<div id="reviews">
                         												<ul class="reviews">
 																			{% get_feedback item_view.slug %}
+                                                                            {{item_view.slug|feedback_average_rate}}
                         												</ul>
                         											</div>
                         										</div>

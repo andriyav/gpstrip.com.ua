@@ -123,3 +123,11 @@ def feedback_count(slug):
     if fd.exists():
         return fd.count()
     return 0
+
+@register.filter
+def feedback_average_rate(slug):
+    fd = Feedback.objects.filter(slug=slug)
+    sum_rate = 0
+    for rate_num in fd:
+        sum_rate += int(rate_num.rate)
+    return sum_rate
