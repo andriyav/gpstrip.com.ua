@@ -185,14 +185,57 @@
                         										<div class="col-md-3">
                         											<div id="rating">
                         												<div class="rating-avg">
-                        													<span>4.5</span>
+                                                                            {% with average_rate=item_view.slug|feedback_average_rate %}
+                        													<span>{{average_rate|floatformat:1}}</span>
+                                                                            {% if average_rate == 0 %}
                         													<div class="rating-stars">
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        													</div>
+                                                                            {% elif average_rate > 0 and average_rate < 2 %}
+                                                                            <div class="rating-stars">
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        													</div>
+                                                                            {% elif average_rate >= 2 and average_rate < 3 %}
+                                                                            <div class="rating-stars">
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        													</div>
+                                                                            {% elif average_rate >= 3 and average_rate < 4 %}
+                                                                            <div class="rating-stars">
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star-o"></i>
+                        														<i class="fa fa-star-o"></i>
+                        													</div>
+                                                                            {% elif average_rate >= 4 and average_rate < 5 %}
+                                                                            <div class="rating-stars">
                         														<i class="fa fa-star"></i>
                         														<i class="fa fa-star"></i>
                         														<i class="fa fa-star"></i>
                         														<i class="fa fa-star"></i>
                         														<i class="fa fa-star-o"></i>
                         													</div>
+                                                                            {% elif average_rate == 5 %}
+                                                                            <div class="rating-stars">
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star"></i>
+                        														<i class="fa fa-star"></i>
+                        													</div>
+                                                                            {% endif %}
                         												</div>
                         												<ul class="rating">
                         													<li>
@@ -263,13 +306,14 @@
                         												</ul>
                         											</div>
                         										</div>
+                                                                {% endwith %}
                         										<!-- /Rating -->
                         										<!-- Reviews -->
                         										<div class="col-md-6">
                         											<div id="reviews">
                         												<ul class="reviews">
 																			{% get_feedback item_view.slug %}
-                                                                            {{item_view.slug|feedback_average_rate}}
+
                         												</ul>
                         											</div>
                         										</div>

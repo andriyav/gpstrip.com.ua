@@ -128,6 +128,10 @@ def feedback_count(slug):
 def feedback_average_rate(slug):
     fd = Feedback.objects.filter(slug=slug)
     sum_rate = 0
+    feed_c = feedback_count(slug)
     for rate_num in fd:
         sum_rate += int(rate_num.rate)
-    return sum_rate
+    if feed_c == 0:
+        return 0
+    else:
+        return sum_rate/feed_c
