@@ -135,3 +135,10 @@ def feedback_average_rate(slug):
         return 0
     else:
         return sum_rate/feed_c
+
+@register.filter
+def feedback_rate_qty(slug, rate):
+    fd = Feedback.objects.filter(slug=slug, rate=rate)
+    if fd.exists():
+        return fd.count()
+    return 0
