@@ -237,6 +237,7 @@
                         													</div>
                                                                             {% endif %}
                         												</div>
+
                         												<ul class="rating">
                         													<li>
                         														<div class="rating-stars">
@@ -247,10 +248,11 @@
                         															<i class="fa fa-star"></i>
                         														</div>
                         														<div class="rating-progress">
-                        															<div style="width: 80%;"></div>
+                        															<div style="width:{{item_view.slug|feedback_rate_percentage:'5'}}%;"></div>
                         														</div>
                         														<span class="sum">{{ item_view.slug|feedback_rate_qty:'5' }}</span>
                         													</li>
+
                         													<li>
                         														<div class="rating-stars">
                         															<i class="fa fa-star"></i>
@@ -260,7 +262,7 @@
                         															<i class="fa fa-star-o"></i>
                         														</div>
                         														<div class="rating-progress">
-                        															<div style="width: 60%;"></div>
+                        															<div style="width:{{item_view.slug|feedback_rate_percentage:'4'}}%;"></div>
                         														</div>
                         														<span class="sum">{{ item_view.slug|feedback_rate_qty:'4' }}</span>
                         													</li>
@@ -273,7 +275,7 @@
                         															<i class="fa fa-star-o"></i>
                         														</div>
                         														<div class="rating-progress">
-                        															<div style="width: 0%;"></div>
+                        															<div style="width: {{item_view.slug|feedback_rate_percentage:'3'}}%;"></div>
                         														</div>
                         														<span class="sum">{{ item_view.slug|feedback_rate_qty:'3' }}</span>
                         													</li>
@@ -286,7 +288,7 @@
                         															<i class="fa fa-star-o"></i>
                         														</div>
                         														<div class="rating-progress">
-                        															<div style="width: 0%;"></div>
+                        															<div style="width: {{item_view.slug|feedback_rate_percentage:'2'}}%;"></div>
                         														</div>
                         														<span class="sum">{{ item_view.slug|feedback_rate_qty:'2' }}</span>
                         													</li>
@@ -299,7 +301,7 @@
                         															<i class="fa fa-star-o"></i>
                         														</div>
                         														<div class="rating-progress">
-                        															<div style="width: 0%;"></div>
+                        															<div style="width: {{item_view.slug|feedback_rate_percentage:'1'}}%;"></div>
                         														</div>
                         														<span class="sum">{{ item_view.slug|feedback_rate_qty:'1' }}</span>
                         													</li>

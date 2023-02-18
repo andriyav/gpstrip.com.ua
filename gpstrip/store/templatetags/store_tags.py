@@ -124,6 +124,12 @@ def feedback_count(slug):
         return fd.count()
     return 0
 
+
+@register.filter
+def feedback_sum_rate(slug):
+    fd = Feedback.objects.filter(slug=slug)
+    return fd.count()
+
 @register.filter
 def feedback_average_rate(slug):
     fd = Feedback.objects.filter(slug=slug)
@@ -142,3 +148,12 @@ def feedback_rate_qty(slug, rate):
     if fd.exists():
         return fd.count()
     return 0
+
+@register.filter
+def feedback_rate_percentage(slug, rate):
+    if feedback_sum_rate(slug) == 0:
+        return 0
+    else:
+        return feedback_rate_qty(slug, rate) * 100/feedback_sum_rate(slug)
+
+
