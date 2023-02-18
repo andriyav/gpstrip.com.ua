@@ -220,14 +220,58 @@
                                     <h4 class="product-price">{{item.price}} грн </h4>
                                     {% endif %}
                                     <form method="get" action='{{item.get_add_to_favorite_url}}'>
+                                         {% with average_rate=item.slug|feedback_average_rate %}
+                                        {% if average_rate == 0 %}
+                                        <div class="product-rating">
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        {% elif average_rate > 0 and average_rate < 2 %}
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        {% elif average_rate >= 2 and average_rate < 3 %}
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        {% elif average_rate >= 3 and average_rate < 4 %}
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                        {% elif average_rate >= 4 and average_rate < 5 %}
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-o"></i>
+                                        </div>
+                                         {% elif average_rate == 5 %}
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
-
                                         </div>
+                                        {% endif %}
+                                        {% endwith %}
+
                                         <div class="product-btns">
                                             {% if user.is_authenticated %}
                                             {% if item.slug in request.user|get_favorite_list %}
@@ -242,9 +286,9 @@
                                             <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
                                                     class="tooltipp">add to wishlist</span></button>
                                             {% endif %}
-                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                                    class="tooltipp">add to compare</span></button>
-                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span>
+<!--                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span-->
+<!--                                                    class="tooltipp">add to compare</span></button>-->
+<!--                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span>-->
                                             </button>
                                     </form>
                                 </div>
