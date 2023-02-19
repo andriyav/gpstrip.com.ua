@@ -308,3 +308,17 @@ def return_terms(request):
 
 def contacts(request):
     return render(request, "store/contacts.html")
+
+def np_api_list(request):                                             # форма для передачі для пердачі на API нової пошти для отримання переліку міст нвової пошти. Форма взята з сайта нової пошти
+    params = '''{                                                
+    	"apiKey": "0139a34f622b2f7ac7cd63936a5f4150",            
+    	"modelName": "Address",                                  
+    	"calledMethod": "getCities",
+    	"methodProperties": { 
+    		"FindByString": ""
+    	}
+    }'''
+    url = 'https://api.novaposhta.ua/v2.0/json/'                 # url для відправки форми API
+    np = requests.post(url, params)                              # відправка форми API в json форматі
+    print(np.json()['data'])
+    return redirect("index")                                     # переадресація на сторінку крамниці

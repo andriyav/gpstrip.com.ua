@@ -1,74 +1,43 @@
-<!DOCTYPE html>
-{% load static %}
+ {% load static %}
+<!doctype html>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<html lang = "en">
+   <head>
+      <meta charset = "utf-8">
+      <title>jQuery UI Autocomplete functionality</title>
+      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-		<title>Electro - HTML Ecommerce Template</title>
+      <!-- Javascript -->
+      <script>
+   $.ajax({                                                          // функція виводу переліку міст першого випадаючого списку на сторінці checkout.html
+        type: 'GET',
+        url: '/city-json/',                                             // отримання переліку міст для виводу у випадаючому списку
+        success:function(response) {
 
- 		<!-- Google font -->
- 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+        const cityData = response.data
+           console.log(cityData.name)
+           cityData.map(item=>{
+              console.log(item.name)
+              const cityName = item.name
+           })
 
- 		<!-- Bootstrap -->
- 		<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+            $( "#automplete-1" ).autocomplete({
+               source: cityName
+            });
+         }});
+      </script>
+   </head>
 
- 		<!-- Slick -->
- 		<link type="text/css" rel="stylesheet" href="{% static 'css/slick.css' %}"/>
- 		<link type="text/css" rel="stylesheet" href="{% static 'css/slick-theme.css' %}"/>
-
- 		<!-- nouislider -->
- 		<link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css' %}"/>
-
- 		<!-- Font Awesome Icon -->
- 		<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-
- 		<!-- Custom stlylesheet -->
- 		<link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
-
-		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
-    </head>
-
-<body>
-{% include "store/navbar.html" %}
-<div class="container-fluid">
-<div id="breadcrumb" class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-10">
-<br>
-						<p> Доставка здійснюється безкоштовно Укрпоштою або Новою Поштою.</p>
-					</div>
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</div>
-</div>
-
-
-</body>
-{% include "store/footer.html" %}
-</body>
-
-<script src="{% static '/js/slick.min.js' %}"></script>
-<script src="{% static '/js/nouislider.min.js' %}"></script>
-<script src="{% static '/js/jquery.zoom.min.js' %}"></script>
-<script src="{% static '/js/main.js' %}"></script>
-<script src="{% static '/js/checkbox.js' %}"></script>
+   <body>
+      <!-- HTML -->
+      <div class = "ui-widget">
+         <p>Type "a" or "s"</p>
+         <label for = "automplete-1">Tags: </label>
+         <input id = "automplete-1">
+      </div>
+   </body>
+<script src="{% static 'js/slick.min.js' %}"></script>
 </html>
-
