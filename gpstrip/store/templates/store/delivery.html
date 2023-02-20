@@ -1,43 +1,23 @@
- {% load static %}
-<!doctype html>
+<div class="form-group">
+    <label for="input-datalist">Timezone</label>
+    <input type="text" class="form-control" placeholder="Timezone" list="list-timezone" id="input-datalist">
+    <datalist id="list-timezone">
+        <option>Asia/Aden</option>
+        <option>Asia/Aqtau</option>
+        <option>Asia/Baghdad</option>
+        <option>Asia/Barnaul</option>
+        <option>Asia/Chita</option>
+        <option>Asia/Dhaka</option>
+        <option>Asia/Famagusta</option>
+        <option>Asia/Hong_Kong</option>
+        <option>Asia/Jayapura</option>
+        <option>Asia/Kuala_Lumpur</option>
+        <option>Asia/Jakarta</option>
+    </datalist>
+</div>
 
-<html lang = "en">
-   <head>
-      <meta charset = "utf-8">
-      <title>jQuery UI Autocomplete functionality</title>
-      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
-         rel = "stylesheet">
-      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-      <!-- Javascript -->
-      <script>
-   $.ajax({                                                          // функція виводу переліку міст першого випадаючого списку на сторінці checkout.html
-        type: 'GET',
-        url: '/city-json/',                                             // отримання переліку міст для виводу у випадаючому списку
-        success:function(response) {
-
-        const cityData = response.data
-           console.log(cityData.name)
-           cityData.map(item=>{
-              console.log(item.name)
-              const cityName = item.name
-           })
-
-            $( "#automplete-1" ).autocomplete({
-               source: cityName
-            });
-         }});
-      </script>
-   </head>
-
-   <body>
-      <!-- HTML -->
-      <div class = "ui-widget">
-         <p>Type "a" or "s"</p>
-         <label for = "automplete-1">Tags: </label>
-         <input id = "automplete-1">
-      </div>
-   </body>
-<script src="{% static 'js/slick.min.js' %}"></script>
-</html>
+<script>
+    document.addEventListener('DOMContentLoaded', e => {
+        $('#input-datalist').autocomplete()
+    }, false);
+</script>
