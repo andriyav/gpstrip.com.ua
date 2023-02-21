@@ -1,6 +1,6 @@
     {% load static %}
     {% load store_tags %}
-    <html lang="en">
+    <html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -126,11 +126,10 @@
                                     <div class="form-group"> {{ form.last_name_np }}</div>
                                     <div class="form-group"> {{ form.phone_np }}</div>
                                     <div class="cart-manu">
-                                    <select class="input-select" id="city-select" name="city-np">
+                                    <div class="input-select" id="city-select" name="city-np">
                                         <option selected>Виберіть місто доставки</option>
-                                    </select>
+                                    </div>
 
-                                    <br>
                                     <br>
                                     <select class="input-select" id="address-select" name="address-np">
                                         <option id="address-text" selected>Виберіть відділення</option>
