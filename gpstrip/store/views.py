@@ -162,6 +162,7 @@ class CheckOutView(LoginRequiredMixin, ListView):
                 except:
                     order.city_np = form.cleaned_data.get('city_np')
                     order.address_np = form.cleaned_data.get('address_np')
+                order.order_total = request.POST.get('total-order')
                 order.order_notes = form.cleaned_data.get('order_notes')
                 order.ordered_date = timezone.now()
                 order.total = order.get_total()

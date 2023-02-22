@@ -116,6 +116,7 @@ class Order(models.Model):
     city_np = models.CharField(max_length=200, null=True)
     address_np = models.CharField(max_length=200, null=True)
     order_notes = models.TextField(max_length=5000, null=True, blank=True)
+    order_total = models.CharField(max_length=20, null=True, blank=True)
 
 
 
