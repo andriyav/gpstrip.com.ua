@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>{{title}}</title>
+    <title>GPSTrip-{{item_view.title}}</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -176,14 +176,14 @@
                         {% if user.is_authenticated %}
                         {% if item_view.slug in request.user|get_favorite_list %}
                         <li><a href="{% url 'add-to-favorite' item_view.slug %}">
-                            <i class="fa fa-heart"></i> добавити у вибране</a></li>
+                            <i class="fa fa-heart"></i> Занести в улюблене</a></li>
                         {% else %}
                         <li><a href="{% url 'add-to-favorite' item_view.slug %}">
-                            <i class="fa fa-heart-o"></i> добавити у вибране</a></li>
+                            <i class="fa fa-heart-o"></i> Занести в улюблене</a></li>
                         {% endif %}
                         {% else %}
                         <li><a href="{% url 'add-to-favorite' item_view.slug %}">
-                            <i class="fa fa-heart-o"></i> добавити у вибране</a></li>
+                            <i class="fa fa-heart-o"></i> Занести в улюблене</a></li>
                         {% endif %}
                     </ul>
                     <ul class="product-links">
