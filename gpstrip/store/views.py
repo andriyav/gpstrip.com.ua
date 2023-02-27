@@ -230,13 +230,23 @@ class Search(ListView):
 
 @login_required
 def add_to_favorite(request, item_slug):
+
     item = get_object_or_404(Item, slug=item_slug)
-    item_favorite, created = Favorite.objects.get_or_create(
-        item_favorite=item,
-        user=request.user,
-    )
-    item_favorite.save()
-    messages.success(request, "Товар добавлено в улюблене")
+    try:
+        item_favorite = Favorite.objects.get(
+            item_favorite=item,
+            user=request.user,
+        )
+        item_favorite.delete()
+        messages.info(request, "Товар було видалено з улюблених")
+
+    except:
+        item_favorite, created = Favorite.objects.get_or_create(
+            item_favorite=item,
+            user=request.user,
+        )
+        item_favorite.save()
+        messages.success(request, "Товар добавлено в улюблене")
 
     return redirect(request.META.get('HTTP_REFERER'))
 

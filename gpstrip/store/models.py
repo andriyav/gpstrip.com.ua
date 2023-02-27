@@ -56,6 +56,9 @@ class Item(models.Model):
     def get_add_to_favorite_url(self):
         return reverse('add-to-favorite', kwargs={'item_slug': self.slug})
 
+    def get_update_cart_url(self):
+        return reverse('update-cart', kwargs={'item_slug': self.slug})
+
 
 class Gallery(models.Model):
     image = models.ImageField(upload_to='gallery')
