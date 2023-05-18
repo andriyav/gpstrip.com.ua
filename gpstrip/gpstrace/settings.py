@@ -157,8 +157,8 @@ LOGIN_URL = '/account/login/'
 
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'andriyav@hotmail.com'
-EMAIL_HOST_PASSWORD = 'dreamcast1'
+EMAIL_HOST_USER = '*****'
+EMAIL_HOST_PASSWORD = '****'
 EMAIL_USE_TLS = True
 
 DEBUG_TOOLBAR_CONFIG = {
