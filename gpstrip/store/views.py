@@ -340,3 +340,12 @@ def np_api_list(request):                                             # форм
         city_list.append(city['Description'])
         city_ref.append(city['Ref'])
     return JsonResponse({'data': city_list, 'data_ref': city_ref})                                     # переадресація на сторінку крамниці
+
+def cv_feedback(request, number):
+    subject, from_email, to = 'Замовлення GPSTrace', 'andriyav@hotmail.com', 'andriyav@hotmail.com'
+    text_content = 'This is an important message.'
+    html_content = render_to_string('store/cv_feedback.html', {'number': number})
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+    return redirect('home')
